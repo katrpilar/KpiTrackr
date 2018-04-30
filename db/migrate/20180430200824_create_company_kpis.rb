@@ -6,7 +6,7 @@ class CreateCompanyKpis < ActiveRecord::Migration[5.1]
       t.string :unit
       t.integer :actual
       t.integer :target
-
+      t.integer :company_id
       t.timestamps
     end
   end

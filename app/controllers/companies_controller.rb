@@ -8,6 +8,8 @@ class CompaniesController < ApplicationController
 
 	  def create
 	  	@company = Company.new(params.require(:company).permit(:name))
+	  	@company.user = current_user
+	  	# binding.pry
 	    @company.save
 	    redirect_to company_path(@company)
 	  end

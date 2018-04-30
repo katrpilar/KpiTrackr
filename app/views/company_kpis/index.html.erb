@@ -1,7 +1,14 @@
+
+
+<h4>Company KPIs</h4>
 <ul>
 	<%@kpis.each do |kpi|%>
 		<li>
 			Type: <%=kpi.daterange%> - Name: <%=kpi.name%> - Unit: <%=kpi.unit%> - Actual: <%=kpi.actual%> - Target: <%=kpi.target%>
+
+			<%=link_to "Edit", "#{company_kpi_path(kpi) + '/edit'}" %>
 		</li>
 	<%end%>
 </ul>
+
+<a class="waves-effect waves-light btn" href="/company_kpis/new">Add New</a>

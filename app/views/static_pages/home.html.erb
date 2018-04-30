@@ -1,6 +1,9 @@
-<h1>This is my homepage</h1>
+<h4>This is my homepage</h4>
+
 
 <% if user_signed_in? %>
+	<a class="waves-effect waves-light btn" href="/companies/new">Create Company</a>
+
   <li>
   <%= link_to('Logout', destroy_user_session_path, method: :delete) %>        
   </li>

@@ -1,5 +1,5 @@
 <script type="text/javascript" src="javascripts/company_kpis.js"></script>
-<%= form_for(@kpi) do |f| %>
+<%= form_for @kpi do |f| %>
 	<%= f.radio_button :daterange, "yearly"%>
 	<%= f.label :daterange_yearly, "Measured Yearly"%>
 	<%= f.radio_button :daterange, "quarterly" %>
