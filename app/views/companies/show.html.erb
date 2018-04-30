@@ -1,14 +1,30 @@
-<h3><%=@company.name%></h3>
-<a class="waves-effect waves-light btn" href="/company_kpis">View KPIs</a>
+<h4><%=@company.name%></h4>
 
 <div class="row">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3"><a href="/company_kpis">Company KPIs</a></li>
+        <li class="tab col s3"><a href="#companykpis">Company KPIs</a></li>
         <li class="tab col s3"><a class="active" href="#test2">Test 2</a></li>
         <li class="tab col s3"><a href="#test3">Disabled Tab</a></li>
         <li class="tab col s3"><a href="#test4">Test 4</a></li>
       </ul>
+    </div>
+    <div id="companykpis" class="col s12">
+    	<% if @company.company_kpis %>
+	    	<ul>
+	    		<%@company.company_kpis.each do |kpi|%>
+					<li>
+						Type: <%=kpi.daterange%> - Name: <%=kpi.name%> - Unit: <%=kpi.unit%> - Actual: <%=kpi.actual%> - Target: <%=kpi.target%>
+
+						<%=link_to "Edit", "#{company_kpi_path(kpi) + '/edit'}" %>
+					</li>
+				<%end%>
+			</ul>
+			<a class="waves-effect waves-light btn" href="/company_kpis/new">Add New</a>
+    	<%else%>
+    		<a class="waves-effect waves-light btn" href="/company_kpis/new">Add New</a>
+    	<%end%>
+
     </div>
     <div id="test2" class="col s12">Test 2</div>
     <div id="test3" class="col s12">Test 3</div>
