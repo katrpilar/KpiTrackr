@@ -1,0 +1,17 @@
+<script type="text/javascript" src="javascripts/company_kpis.js"></script>
+<%= form_for(@kpi) do |f| %>
+	<%= f.radio_button :daterange, "yearly"%>
+	<%= f.label :daterange_yearly, "Measured Yearly"%>
+	<%= f.radio_button :daterange, "quarterly" %>
+	<%= f.label :daterange_quarterly, "Measured Quarterly"%>
+	<br>
+	<%= f.label :name%>
+	<%= f.text_field :name %>
+	<%= f.label :unit %>
+	<%= f.text_field :unit %>
+	<%= f.label :actual%>
+	<%= f.number_field :actual%>
+	<%= f.label :target%>
+	<%= f.number_field :target%>
+	<%= f.submit "Add KPI" %>
+<% end %>

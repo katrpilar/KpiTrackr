@@ -1,0 +1,7 @@
+<ul>
+	<%@kpis.each do |kpi|%>
+		<li>
+			Type: <%=kpi.daterange%> - Name: <%=kpi.name%> - Unit: <%=kpi.unit%> - Actual: <%=kpi.actual%> - Target: <%=kpi.target%>
+		</li>
+	<%end%>
+</ul>
