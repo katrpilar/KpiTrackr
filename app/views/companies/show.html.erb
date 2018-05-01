@@ -20,7 +20,10 @@
 						        		<p><%=kpi.daterange%> <%=kpi.unit%></p>
 						        		<h4><%=kpi.name%></h4>
 						        	</div>
-<!-- 						        	<hr class="white-text"> -->
+						        	<%currprogress =  ((kpi.actual/kpi.target)*100)%>
+						        	<div class="progress">
+						        	      <div class="determinate" <%="style=width: #{currprogress}%" %>></div>
+						        	  </div>
 						        	<div class="row center-align">
 						        		<div class="col s6 m6">
 						        			<div class="<%= 'red-text text-lighten-3' if kpi.target > kpi.actual %>">
