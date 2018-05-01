@@ -1,0 +1,6 @@
+<%@metric.company_kpi = CompanyKpi.find((params[:company_kpi][:company_kpi_id]).to_i)%>
+<%= form_for @metric do |f| %>
+	<%= f.label :metric%>
+	<%= f.number_field :metric %>
+	<%= f.submit "Submit" %>
+<% end %>

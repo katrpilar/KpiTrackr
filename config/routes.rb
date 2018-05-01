@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :actual_metric_updates
   resources :company_kpis
   resources :companies
   devise_for :users

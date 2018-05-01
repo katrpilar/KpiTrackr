@@ -1,5 +1,8 @@
-<h4><%=@company.name%></h4>
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
 
+<h4><%=@company.name%></h4>
 <div class="row">
     <div class="col s12">
       <ul class="tabs">
@@ -14,36 +17,43 @@
     		<div class="section">
 	    		<%@company.company_kpis.each do |kpi|%>						
 						    <div class="col s6 m4">
-						      <div class="card-panel light-grey">
-						        <span class="dark-grey-text">
+						      <div class="card light-grey">
+						      	<span class="dark-grey-text">
+						      	<div class="card-content">
 						        	<div class="center">
-						        		<p><%=kpi.daterange%> <%=kpi.unit%></p>
+						        		<p> <%=kpi.unit%></p>
 						        		<h4><%=kpi.name%></h4>
 						        	</div>
-						        	<%currprogress =  (kpi.actual.to_f/kpi.target.to_f)*100%>
+						        	<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
 						        	<div class="progress">
 						        	      <div class="determinate" style="width: <%=currprogress%>%;"></div>
 						        	  </div>
 						        	<div class="row center-align">
 						        		<div class="col s6 m6">
-						        			<div class="<%= 'red-text text-lighten-3' if kpi.target > kpi.actual %>">
-						        				<h6>Actual</h6><h4><%=kpi.actual%></h4>
+						        			<div>
+						        				<h6>Actual</h6><h4><%=kpi.current_actual%></h4>
 						        			</div>
 						        		</div>
 						        		<div class="col s6 m6">
-						        			<div class="<%= 'red-text text-lighten-3' if kpi.target > kpi.actual %>">
+						        			<div>
 						        				<h6>Target</h6><h4><%=kpi.target%></h4>
 						        			</div>
 						        		</div>
 						        	</div>
-						        	<div class="row">
-						        		<div class="col s6 m6 left-align">
-						        			
-						        		</div>
-						        		<div class="col s6 m6 right-align">
-						        			<%=link_to "Edit", "#{company_kpi_path(kpi) + '/edit'}" %>
-						        		</div>
-						        	</div>
+						        </div>
+						        	<div class="card-action">
+							        	<div class="row valign-center">
+							        		<div class="col s6 m6 left-align">
+							        			<p class="grey-text lighten-2" style="font-style: italic;"> Start: <%=kpi.target_start_date%> End: <%=kpi.target_end_date%></p>
+							        		</div>
+							        		<div class="col s6 m6 right-align">
+							        			<%=link_to '<i class="material-icons">add</i>
+	'.html_safe, new_actual_metric_update_path(:company_kpi => {:company_kpi_id => kpi.id})%>
+							        			<%=link_to '<i class="material-icons">edit</i>
+	'.html_safe, "#{company_kpi_path(kpi) + '/edit'}" %>
+							        		</div>
+							        	</div>
+							        </div>
 						        </span>
 						      </div>
 						    </div>

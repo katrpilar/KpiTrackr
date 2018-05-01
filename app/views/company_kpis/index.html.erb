@@ -4,7 +4,17 @@
 <ul>
 	<%@kpis.each do |kpi|%>
 		<li>
-			Type: <%=kpi.daterange%> - Name: <%=kpi.name%> - Unit: <%=kpi.unit%> - Actual: <%=kpi.actual%> - Target: <%=kpi.target%>
+			Name: <%=kpi.name%> - Unit: <%=kpi.unit%> - Actual: <%=kpi.current_actual%> - Target: <%=kpi.target%> - Start: <%=kpi.target_start_date%> End: <%=kpi.target_end_date%>
+
+			<br>
+			<ul>
+				<%kpi.actual_metric_updates.each do |met|%>
+					<li>
+						<%=met.metric%>
+					</li>
+
+				<%end%>
+			</ul>
 
 			<%=link_to "Edit", "#{company_kpi_path(kpi) + '/edit'}" %>
 		</li>
