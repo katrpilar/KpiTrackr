@@ -17,30 +17,33 @@
     		<div class="section">
 	    		<%@company.company_kpis.each do |kpi|%>						
 						    <div class="col s6 m4">
-						      <div class="card light-grey">
-						      	<span class="dark-grey-text">
-						      	<div class="card-content">
-						        	<div class="center">
-						        		<p> <%=kpi.unit%></p>
-						        		<h4><%=kpi.name%></h4>
-						        	</div>
-						        	<%if kpi.current_actual != nil %>
+						    	<%if kpi.current_actual != nil %>
 						        		<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
 						        	<%else%>
 						        		<%currprogress =  0%>
 						        	<%end%>
+						      <div class="card light-grey">
+						      	<span class="dark-grey-text">
+						      	<div class="card-content">
+						        	<div class="center">
+						        		<h4><%=kpi.name%><i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="<%=kpi.unit%>">info</i></h4>
+						        		<p class="grey-text lighten-2" style="font-style: italic;"> <%=kpi.target_start_date.to_formatted_s(:long)%> - <%=kpi.target_end_date.to_formatted_s(:long)%></p>
+						        	</div>
+						        	
 						        	<div class="progress">
-						        	      <div class="determinate" style="width: <%=currprogress%>%;"></div>
+						        	      <div class="determinate <%= 'red lighten-3' if kpi.target > currprogress/2 %>" style="width: <%=currprogress%>%;"></div>
 						        	  </div>
 						        	<div class="row center-align">
 						        		<div class="col s6 m6">
 						        			<div>
-						        				<h6>Actual</h6><h4><%=kpi.current_actual%></h4>
+						        				<h6>Actual</h6><h4><%=kpi.current_actual%><%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Update">add</i>
+	'.html_safe, new_actual_metric_update_path(:company_kpi => {:company_kpi_id => kpi.id})%></h4>
 						        			</div>
 						        		</div>
 						        		<div class="col s6 m6">
 						        			<div>
-						        				<h6>Target</h6><h4><%=kpi.target%></h4>
+						        				<h6>Target</h6><h4><%=kpi.target%><%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Edit KPI">edit</i>
+	'.html_safe, "#{company_kpi_path(kpi) + '/edit'}" %></h4>
 						        			</div>
 						        		</div>
 						        	</div>
@@ -48,13 +51,10 @@
 						        	<div class="card-action">
 							        	<div class="row valign-center">
 							        		<div class="col s6 m6 left-align">
-							        			<p class="grey-text lighten-2" style="font-style: italic;"> Start: <%=kpi.target_start_date%> End: <%=kpi.target_end_date%></p>
+							        			
 							        		</div>
 							        		<div class="col s6 m6 right-align">
-							        			<%=link_to '<i class="material-icons">add</i>
-	'.html_safe, new_actual_metric_update_path(:company_kpi => {:company_kpi_id => kpi.id})%>
-							        			<%=link_to '<i class="material-icons">edit</i>
-	'.html_safe, "#{company_kpi_path(kpi) + '/edit'}" %>
+							        			<p class="grey-text lighten-2" style="font-style: italic;"></p>
 							        		</div>
 							        	</div>
 							        </div>

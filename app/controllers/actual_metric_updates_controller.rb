@@ -8,7 +8,7 @@ class ActualMetricUpdatesController < ApplicationController
 
 	def create
 		@metric = ActualMetricUpdate.new(params.require(:actual_metric_update).permit(:metric, :company_kpi_id))
-		binding.pry
+		# binding.pry
 		# CompanyKpi.find(@met_comp)
 		if @metric.save
 		 redirect_to companies_path
