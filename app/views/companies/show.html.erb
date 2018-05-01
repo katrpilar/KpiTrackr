@@ -20,9 +20,9 @@
 						        		<p><%=kpi.daterange%> <%=kpi.unit%></p>
 						        		<h4><%=kpi.name%></h4>
 						        	</div>
-						        	<%currprogress =  ((kpi.actual/kpi.target)*100)%>
+						        	<%currprogress =  (kpi.actual.to_f/kpi.target.to_f)*100%>
 						        	<div class="progress">
-						        	      <div class="determinate" <%="style=width: #{currprogress}%" %>></div>
+						        	      <div class="determinate" style="width: <%=currprogress%>%;"></div>
 						        	  </div>
 						        	<div class="row center-align">
 						        		<div class="col s6 m6">
