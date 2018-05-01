@@ -13,6 +13,10 @@ class CompanyKpisController < ApplicationController
 		@kpi = CompanyKpi.new
 	end
 
+	# def met
+	# 	@metric = ActualMetricUpdate.new
+	# end
+
 
 	def create
 		# @kpi = CompanyKpi.new(params.require(:companykpi).permit(:type, :name, :unit, :actual, :target))

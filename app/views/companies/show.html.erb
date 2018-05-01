@@ -24,7 +24,11 @@
 						        		<p> <%=kpi.unit%></p>
 						        		<h4><%=kpi.name%></h4>
 						        	</div>
-						        	<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
+						        	<%if kpi.current_actual != nil %>
+						        		<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
+						        	<%else%>
+						        		<%currprogress =  0%>
+						        	<%end%>
 						        	<div class="progress">
 						        	      <div class="determinate" style="width: <%=currprogress%>%;"></div>
 						        	  </div>
