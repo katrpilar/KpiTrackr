@@ -1,6 +1,6 @@
-class CreateCompanyKpis < ActiveRecord::Migration[5.1]
+class CreateKpis < ActiveRecord::Migration[5.1]
   def change
-    create_table :company_kpis do |t|
+    create_table :kpis do |t|
       # t.string :daterange
       t.string :name
       t.string :unit

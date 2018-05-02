@@ -12,13 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20180501173735) do
 
-  create_table "actual_metric_updates", force: :cascade do |t|
-    t.integer "metric"
-    t.integer "company_kpi_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.integer "user_id"
@@ -26,13 +19,20 @@ ActiveRecord::Schema.define(version: 20180501173735) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "company_kpis", force: :cascade do |t|
+  create_table "kpis", force: :cascade do |t|
     t.string "name"
     t.string "unit"
     t.integer "target"
     t.date "target_start_date"
     t.date "target_end_date"
     t.integer "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "metrics", force: :cascade do |t|
+    t.integer "metric"
+    t.integer "kpi_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

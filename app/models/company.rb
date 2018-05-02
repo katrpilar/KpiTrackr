@@ -1,4 +1,4 @@
 class Company < ApplicationRecord
-	has_many :company_kpis
+	has_many :kpis
 	belongs_to :user
 end

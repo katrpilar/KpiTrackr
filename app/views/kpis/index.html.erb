@@ -8,7 +8,7 @@
 
 			<br>
 			<ul>
-				<%kpi.actual_metric_updates.each do |met|%>
+				<%kpi.metrics.each do |met|%>
 					<li>
 						<%=met.metric%>
 					</li>
@@ -16,9 +16,9 @@
 				<%end%>
 			</ul>
 
-			<%=link_to "Edit", "#{company_kpi_path(kpi) + '/edit'}" %>
+			<%=link_to "Edit", "#{kpi_path(kpi) + '/edit'}" %>
 		</li>
 	<%end%>
 </ul>
 
-<a class="waves-effect waves-light btn" href="/company_kpis/new">Add New</a>
+<a class="waves-effect waves-light btn" href="/kpis/new">Add New</a>

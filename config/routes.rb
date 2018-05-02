@@ -14,11 +14,11 @@ Rails.application.routes.draw do
 	# end
 
   resources :companies do
-  	resources :company_kpis
+  	resources :kpis
   end
 
-  resources :company_kpis do
-  	resources :actual_metric_updates, as: 'metrics'
+  resources :kpis do
+  	resources :metrics
   end
 
   devise_for :users

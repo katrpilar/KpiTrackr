@@ -14,9 +14,9 @@
       </ul>
     </div>
     <div id="companykpis" class="col s12">
-    	<% if @company.company_kpis %>
+    	<% if @company.kpis %>
     		<div class="section">
-	    		<%@company.company_kpis.each do |kpi|%>						
+	    		<%@company.kpis.each do |kpi|%>						
 						    <div class="col s6 m4">
 						    	<%if kpi.current_actual != nil %>
 						        		<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
@@ -38,13 +38,13 @@
 						        		<div class="col s6 m6">
 						        			<div>
 						        				<h6>Actual</h6><h4><%=kpi.current_actual%><%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Update">add</i>
-	'.html_safe, new_company_kpi_metric_path(kpi)%></h4>
+	'.html_safe,  new_kpi_metric_path(kpi)%></h4>
 						        			</div>
 						        		</div>
 						        		<div class="col s6 m6">
 						        			<div>
 						        				<h6>Target</h6><h4><%=kpi.target%><%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Edit KPI">edit</i>
-	'.html_safe, "#{company_kpi_path(kpi) + '/edit'}" %></h4>
+	'.html_safe, "#{kpi_path(kpi) + '/edit'}" %></h4>
 						        			</div>
 						        		</div>
 						        	</div>
@@ -64,9 +64,9 @@
 						    </div>
 				<%end%>
 			</div>
-			<a class="waves-effect waves-light btn" href="/company_kpis/new">Add New</a>
+			<a class="waves-effect waves-light btn" href="/kpis/new">Add New</a>
     	<%else%>
-    		<a class="waves-effect waves-light btn" href="/company_kpis/new">Add New</a>
+    		<a class="waves-effect waves-light btn" href="/kpis/new">Add New</a>
     	<%end%>
     </div>
     <div id="test2" class="col s12">Test 2</div>

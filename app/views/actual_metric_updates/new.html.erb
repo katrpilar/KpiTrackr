@@ -1,7 +1,0 @@
-<%@met_comp = (params[:company_kpi][:company_kpi_id]).to_i%>
-<%= form_for @metric do |f| %>
-	<%= f.label :metric%>
-	<%= f.number_field :metric %>
-	<%= f.hidden_field :company_kpi_id, :value => @met_comp%>
-	<%= f.submit "Submit" %>
-<% end %>
