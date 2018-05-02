@@ -6,10 +6,11 @@
 <div class="row">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3"><a href="#companykpis">Company KPIs</a></li>
-        <li class="tab col s3"><a class="active" href="#test2">Test 2</a></li>
-        <li class="tab col s3"><a href="#test3">Disabled Tab</a></li>
-        <li class="tab col s3"><a href="#test4">Test 4</a></li>
+        <li class="tab col s3"><a href="#companykpis">KPI</a></li>
+        <li class="tab col s3"><a class="active" href="#test2">Teams</a></li>
+        <li class="tab col s3"><a href="#test3">Goals</a></li>
+        <li class="tab col s3"><a href="#test4">Revenue Streams</a></li>
+        <li class="tab col s3"><a href="#test4">Updates</a></li>
       </ul>
     </div>
     <div id="companykpis" class="col s12">
@@ -37,7 +38,7 @@
 						        		<div class="col s6 m6">
 						        			<div>
 						        				<h6>Actual</h6><h4><%=kpi.current_actual%><%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Update">add</i>
-	'.html_safe, new_actual_metric_update_path(:company_kpi => {:company_kpi_id => kpi.id})%></h4>
+	'.html_safe, new_company_kpi_metric_path(kpi)%></h4>
 						        			</div>
 						        		</div>
 						        		<div class="col s6 m6">
