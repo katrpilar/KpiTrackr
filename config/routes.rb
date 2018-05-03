@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  resources :members
-  resources :teams
+  resources :members do
+    resources :kpis
+  end
+
+  resources :teams do
+    resources :kpis
+  end
 #   resources :actual_metric_updates
 
 	# scope path: ":company_kpi_id", as: "kpi" do
@@ -17,6 +22,10 @@ Rails.application.routes.draw do
 
   resources :companies do
   	resources :kpis
+  end
+
+  resources :companies do
+    resources :teams
   end
 
   resources :kpis do

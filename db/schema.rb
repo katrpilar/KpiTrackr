@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180501173735) do
+ActiveRecord::Schema.define(version: 20180502222821) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -25,7 +25,17 @@ ActiveRecord::Schema.define(version: 20180501173735) do
     t.integer "target"
     t.date "target_start_date"
     t.date "target_end_date"
-    t.integer "company_id"
+    t.string "kpiable_type"
+    t.integer "kpiable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kpiable_type", "kpiable_id"], name: "index_kpis_on_kpiable_type_and_kpiable_id"
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.string "name"
+    t.text "role"
+    t.integer "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -33,6 +43,14 @@ ActiveRecord::Schema.define(version: 20180501173735) do
   create_table "metrics", force: :cascade do |t|
     t.integer "metric"
     t.integer "kpi_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

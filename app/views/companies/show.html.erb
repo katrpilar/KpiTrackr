@@ -1,23 +1,23 @@
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+<%= render "layouts/header" %>
 
- <nav>
+ <nav class="grey lighten-5">
     <div class="nav-wrapper">
       <div class="col s12">
-        <a href="#!" class="breadcrumb"><%=@company.name%></a>
+        <a href="#!" class="breadcrumb cyan-text text-darken-4"><%=@company.name%></a>
         <!-- <a href="#!" class="breadcrumb">Team Name</a>
         <a href="#!" class="breadcrumb">User</a> -->
       </div>
     </div>
   </nav>
 
-<h4><%=@company.name%></h4>
 <div class="row">
     <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s3"><a href="#companykpis">KPI</a></li>
-        <li class="tab col s3"><a class="active" href="#test2">Teams</a></li>
+        <li class="tab col s3"><a class="active" href="#companykpis">KPI</a></li>
+        <li class="tab col s3"><a href="#teamsid">Teams</a></li>
         <li class="tab col s3"><a href="#test3">Goals</a></li>
         <li class="tab col s3"><a href="#test4">Revenue Streams</a></li>
         <li class="tab col s3"><a href="#test4">Updates</a></li>
@@ -74,12 +74,24 @@
 						    </div>
 				<%end%>
 			</div>
-			<a class="waves-effect waves-light btn" href="/kpis/new">Add New</a>
+			<a class="waves-effect waves-light btn" href="<%=new_company_kpi_path(@company)%>">Add New</a>
     	<%else%>
     		<a class="waves-effect waves-light btn" href="/kpis/new">Add New</a>
     	<%end%>
     </div>
-    <div id="test2" class="col s12">Test 2</div>
+    <div id="teamsid" class="col s12">
+    	<ul>
+    		<%@company.teams.each do |t|%>
+    			<li>
+    				<h4><%=t.name%></h4>
+    				<p><%=t.description%></p>
+    			</li>
+    		<%end%>
+    	</ul>
+
+    </div>
     <div id="test3" class="col s12">Test 3</div>
     <div id="test4" class="col s12">Test 4</div>
   </div>
+
+  <%= render "layouts/footer" %>
