@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :members
+  resources :teams
 #   resources :actual_metric_updates
 
 	# scope path: ":company_kpi_id", as: "kpi" do

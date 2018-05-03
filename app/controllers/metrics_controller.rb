@@ -18,7 +18,7 @@ class MetricsController < ApplicationController
 		# binding.pry
 		# Kpi.find(@met_comp)
 		if @metric.save
-		 redirect_to companies_path
+		 redirect_to company_path(@kpi.company)
 		end
 	end
 
