@@ -48,13 +48,13 @@
 						        		<div class="col s6 m6">
 						        			<div>
 						        				<h6>Actual</h6><h4><%=kpi.current_actual%><%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Update">add</i>
-	'.html_safe,  new_kpi_metric_path(kpi)%></h4>
+	'.html_safe,  new_company_kpi_metric_path(@company, kpi)%></h4>
 						        			</div>
 						        		</div>
 						        		<div class="col s6 m6">
 						        			<div>
 						        				<h6>Target</h6><h4><%=kpi.target%><%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Edit KPI">edit</i>
-	'.html_safe, "#{kpi_path(kpi) + '/edit'}" %></h4>
+	'.html_safe, "#{edit_company_kpi_path(@company, kpi) + '/edit'}" %></h4>
 						        			</div>
 						        		</div>
 						        	</div>

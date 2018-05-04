@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
   resources :members do
-    resources :kpis
+    resources :kpis do
+      resources :metrics
+    end
   end
 
   resources :teams do
-    resources :kpis
+    resources :kpis do
+      resources :metrics
+    end
   end
 #   resources :actual_metric_updates
 
@@ -21,16 +25,18 @@ Rails.application.routes.draw do
 	# end
 
   resources :companies do
-  	resources :kpis
+  	resources :kpis do
+      resources :metrics
+    end
   end
 
   resources :companies do
     resources :teams
   end
 
-  resources :kpis do
-  	resources :metrics
-  end
+  # resources :kpis do
+  # 	resources :metrics
+  # end
 
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

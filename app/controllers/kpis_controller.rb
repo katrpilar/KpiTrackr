@@ -14,20 +14,27 @@ class KpisController < ApplicationController
 	def new
 		# binding.pry
 		# User.first.company.kpis.create(name: "testing kpi")
-		@kpi = Company.find(params[:company_id]).kpis.new
-		# @kpi = Kpi.new
+		# @kpi = Company.find(params[:company_id]).kpis.new
+		@kpi = Kpi.new
+		@company = Company.find(params[:company_id])
 	end
 
 	def create
 		# binding.pry
-		if params[:company_id] != nil
+		
+		@kpi = Kpi.new(params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date, :kpiable))
+		if params[:company_id] != []
+			@kpi.kpiable = Company.find(params[:company_id])
+		elsif params[:team_id] != []
+			@kpi.kpiable = Team.find(params[:team_id])
+		elsif params[:member_id] != []
+			@kpi.kpiable = Member.find(params[:member_id])
 		end
-		@kpi = Kpi.new(params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date, :kpi_id))
 
 		# binding.pry
 		if @kpi.save
 		 # redirect_to company_kpi_path(@kpi)
-		 redirect_to kpis_path
+		 redirect_to companies_path(@kpi.company)
 		end
 	end
 
