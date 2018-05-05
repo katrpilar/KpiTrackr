@@ -20,21 +20,30 @@ class KpisController < ApplicationController
 	end
 
 	def create
-		# binding.pry
 		
 		@kpi = Kpi.new(params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date, :kpiable))
-		if params[:company_id] != []
+
+		# binding.pry
+
+		# params.keys.select{|key| key.to_s.match(/[a-zA-Z]+_id/)}
+		# /[^(_id)]/.match(params[par[0]])
+
+		# @kpiable = find_kpiable
+		# @kpi = @kpiable.kpis.build(params[:kpi])
+
+
+		if params.has_key?(:company_id)
 			@kpi.kpiable = Company.find(params[:company_id])
-		elsif params[:team_id] != []
+		elsif params.has_key?(:team_id)
 			@kpi.kpiable = Team.find(params[:team_id])
-		elsif params[:member_id] != []
+		elsif params.has_key?(:member_id)
 			@kpi.kpiable = Member.find(params[:member_id])
 		end
 
 		# binding.pry
 		if @kpi.save
 		 # redirect_to company_kpi_path(@kpi)
-		 redirect_to companies_path(@kpi.company)
+		 redirect_to company_path(@kpi.kpiable)
 		end
 	end
 
@@ -46,6 +55,11 @@ class KpisController < ApplicationController
 		@kpi = Kpi.find(params[:id])
 		@kpi.update(params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date))
 		redirect_to action: 'index'
+	end
+
+	def destroy
+		Kpi.find(params[:id]).destroy
+		redirect_to company_path(current_user.company)
 	end
 
 	# private
@@ -69,4 +83,13 @@ class KpisController < ApplicationController
        			@kpiable = Company.find(params[:company_id])
        		end
        end
+
+       # def find_kpiable
+       #   params.each do |name, value|
+       #     if name =~ /(.+)_id$/
+       #       return $1.classify.constantize.find(value)
+       #     end
+       #   end
+       #   nil
+       # end
 end

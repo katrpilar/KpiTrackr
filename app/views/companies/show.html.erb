@@ -13,6 +13,7 @@
     </div>
   </nav>
 
+
 <div class="row">
     <div class="col s12">
       <ul class="tabs">
@@ -27,7 +28,7 @@
     	<% if @company.kpis %>
     		<div class="section">
 	    		<%@company.kpis.each do |kpi|%>						
-						    <div class="col s6 m4">
+						    <div class="col s6 m3">
 						    	<%if kpi.current_actual != nil %>
 						        		<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
 						        	<%else%>
@@ -36,39 +37,43 @@
 						      <div class="card light-grey">
 						      	<span class="dark-grey-text">
 						      	<div class="card-content">
-						        	<div class="center">
-						        		<h4><%=kpi.name%><i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="<%=kpi.unit%>">info</i></h4>
+						      		<div class="row center-align">
+						      			<div class="col s6 m6">
+						      				<div>
+						      					<h6>Current</h6><h4><%=kpi.current_actual%></h4>
+						      				</div>
+						      			</div>
+						      			<div class="col s6 m6">
+						      				<div>
+						      					<h6>Goal</h6><h4><%=kpi.target%></h4>
+						      				</div>
+						      			</div>
+						      		</div>
+						      		<div class="progress tooltipped" data-position="right" data-tooltip="<%=currprogress%>% to Goal">
+						      		      <div class="determinate <%= 'red lighten-3' if kpi.target > currprogress/2 %>" style="width: <%=currprogress%>%;"></div>
+						      		  </div>
+						        	<div class="row center">
+						        		<h5><%=kpi.name%><i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="<%=kpi.unit%>">info</i></h5>
+
 						        		<p class="grey-text lighten-2" style="font-style: italic;"> <%=kpi.target_start_date.to_formatted_s(:long)%> - <%=kpi.target_end_date.to_formatted_s(:long)%></p>
 						        	</div>
 						        	
-						        	<div class="progress">
-						        	      <div class="determinate <%= 'red lighten-3' if kpi.target > currprogress/2 %>" style="width: <%=currprogress%>%;"></div>
-						        	  </div>
-						        	<div class="row center-align">
-						        		<div class="col s6 m6">
-						        			<div>
-						        				<h6>Actual</h6><h4><%=kpi.current_actual%><%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Update">add</i>
-	'.html_safe,  new_company_kpi_metric_path(@company, kpi)%></h4>
-						        			</div>
+						        	<div class="row center">
+						        		<div class="col s4">
+						        		<%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Add Update">add</i>
+						        			'.html_safe,  new_company_kpi_metric_path(@company, kpi)%>
 						        		</div>
-						        		<div class="col s6 m6">
-						        			<div>
-						        				<h6>Target</h6><h4><%=kpi.target%><%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Edit KPI">edit</i>
-	'.html_safe, "#{edit_company_kpi_path(@company, kpi) + '/edit'}" %></h4>
-						        			</div>
+						        		<div class="col s4">
+						        		<%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Edit Kpi">edit</i>
+						        			'.html_safe, "#{edit_company_kpi_path(@company, kpi)}" %>
+						        		</div>
+						        		<div class="col s4">
+						        		<%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Delete Kpi">delete</i>
+						        			'.html_safe, company_kpi_path(@company, kpi), method: :delete %>
 						        		</div>
 						        	</div>
 						        </div>
-						        	<div class="card-action">
-							        	<div class="row valign-center">
-							        		<div class="col s6 m6 left-align">
-							        			
-							        		</div>
-							        		<div class="col s6 m6 right-align">
-							        			<p class="grey-text lighten-2" style="font-style: italic;"></p>
-							        		</div>
-							        	</div>
-							        </div>
+			
 						        </span>
 						      </div>
 						    </div>

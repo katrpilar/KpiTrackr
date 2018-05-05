@@ -1,5 +1,6 @@
 class MetricsController < ApplicationController
 	def new
+		@company = Company.find(params[:company_id])
 		@kpi = Kpi.find(params[:kpi_id])
 		@metric = Metric.new(kpi: @kpi)
 
@@ -9,16 +10,18 @@ class MetricsController < ApplicationController
 
 
 	def create
+
+		@company = Company.find(params[:company_id])
 		@kpi = Kpi.find(params[:kpi_id])
 		# params.require(:metric).permit(:metric)
-		@metric = Metric.new(params.require(:metric).permit(:metric, :kpi_id))
+		@metric = Metric.new(params.require(:metric).permit(:metric, :kpi_id, :company_id))
 		@metric.kpi = @kpi
-		binding.pry
 
 		# binding.pry
 		# Kpi.find(@met_comp)
+		# binding.pry
 		if @metric.save
-		 redirect_to company_path(@kpi.company)
+		 redirect_to company_path(@company)
 		end
 	end
 
