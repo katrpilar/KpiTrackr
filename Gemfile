@@ -39,6 +39,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 
 gem 'carrierwave', '~> 1.2', '>= 1.2.2'
+gem 'mini_magick'
 
 
 

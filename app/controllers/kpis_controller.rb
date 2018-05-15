@@ -54,7 +54,8 @@ class KpisController < ApplicationController
 	def update
 		@kpi = Kpi.find(params[:id])
 		@kpi.update(params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date))
-		redirect_to action: 'index'
+		@company = current_user.company
+		redirect_to company_path(@company)
 	end
 
 	def destroy

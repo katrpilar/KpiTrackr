@@ -1,18 +1,40 @@
-<%= render "header" %>
+<%= render "layouts/header" %>
 
 <!-- <h4>This is my homepage</h4>
  -->
+ <%if user_signed_in? && !Company.exists?(:user_id => current_user.id)%>
+ 	<section>
+ 	  <div class="row">
+ 	  	<div class="container">
+ 	  		<div class="col m6 s12">
+ 	  			<h5>Get Started By Creating a Company</h5>
+ 	  			<a class="waves-effect waves-light btn" href="/companies/new">Create Company</a>
+ 	  		</div>
+ 	  		<div class="col m6 s12">
+ 	  			<h5>Or Search to Join an Existing Company</h5>
+ 	  			<a class="waves-effect waves-light btn" href="#">Search Companies</a>
+ 	  		</div>
+ 	  	</div>
+ 	      <!-- <div class="slider">
+ 	       <ul class="slides">
+ 	         <li>
+ 	           <img src="https://78.media.tumblr.com/61d39e11b44c31f2eccc5a9de5ceb39e/tumblr_o18589HiPf1teue7jo1_1280.jpg">
+ 	           <div class="caption center-align">
+ 	             <h3>Get Started</h3>
+ 	             <a class="waves-effect waves-light btn" href="/companies/new">Create Company</a>
+ 	           </div>
+ 	         </li>
+ 	       </ul>
+ 	      </div> -->
+ 	  </div>
+ 	  </section>
+ <%end%>
 
-<% if user_signed_in? %>
-	<a class="waves-effect waves-light btn" href="/companies/new">Create Company</a>
+<%= render "layouts/footer" %>
 
-  <li>
-  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>        
-  </li>
-<% else %>
-  <li>
-  <%= link_to('Login', new_user_session_path)  %>  
-  </li>
-<% end %>
-
-<%= render "footer" %>
+<script type="text/javascript">
+	$(document).ready(function () {
+	    // Plugin initialization
+	    $('.slider').slider();
+	})
+</script>

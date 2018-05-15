@@ -1,0 +1,15 @@
+<script type="text/javascript" src="javascripts/company_kpis.js"></script>
+
+<%= form_for([@kpiable, @kpi]) do |f| %>
+	<%= f.label :name%>
+	<%= f.text_field :name %>
+	<%= f.label :unit %>
+	<%= f.text_field :unit %>
+	<%= f.label :target%>
+	<%= f.number_field :target%>
+	<%= f.label :target_start_date%>
+	<%= f.date_field :target_start_date, class: 'datepicker' %>
+	<%= f.label :target_end_date%>
+	<%= f.date_field :target_end_date, class: 'datepicker' %>
+	<%= f.submit "Update KPI" %>
+<% end %>

@@ -1,3 +1,13 @@
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<style type="text/css">
+	.fixed-action-btn {
+  float: right !important;
+  position: absolute !important;
+  right: 5px !important;
+  top: 5px !important;
+  }
+</style>
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -27,51 +37,77 @@
     <div id="companykpis" class="col s12">
     	<% if @company.kpis %>
     		<div class="section">
-	    		<%@company.kpis.each do |kpi|%>						
-						    <div class="col s6 m3">
+	    		<%@company.kpis.each do |kpi|%>
+	    			<%mets = []%>
+	    			<%=kpi.metrics.each do |i|%>
+	    					<%v = [i.metric]%>
+	    					<%v << i.created_at.strftime("%m/%d/%Y")%>
+	    					<%mets << v%>
+	    				<%end%>
+	    			<script type="text/javascript">
+	    				google.charts.load('current', {packages: ['corechart', 'line']});
+	    				google.charts.setOnLoadCallback(drawBackgroundColor);
+
+	    				function drawBackgroundColor() {
+	    				      var data = new google.visualization.DataTable();
+	    				      data.addColumn('number', 'X');
+	    				      data.addColumn('number', 'Updates');
+
+	    				      data.addRows(mets)
+
+	    				      var options = {
+	    				        hAxis: {
+	    				          title: 'Updated'
+	    				        },
+	    				        vAxis: {
+	    				          title: 'Amount'
+	    				        },
+	    				        backgroundColor: '#f1f8e9'
+	    				      };
+
+	    				      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+	    				      chart.draw(data, options);
+	    				    }
+	    			</script>					
+						    <div class="col s6 m6">
 						    	<%if kpi.current_actual != nil %>
 						        		<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
 						        	<%else%>
 						        		<%currprogress =  0%>
 						        	<%end%>
 						      <div class="card light-grey">
+
 						      	<span class="dark-grey-text">
 						      	<div class="card-content">
 						      		<div class="row center-align">
+						      			<h5><%=kpi.name%></h5>
+						      			<p><%=kpi.unit%></p>
+						      			<div id="chart_div"></div>
+						      			<p style="font-style: italic;"> <%=kpi.target_start_date.to_formatted_s(:long)%> - <%=kpi.target_end_date.to_formatted_s(:long)%></p>
 						      			<div class="col s6 m6">
 						      				<div>
-						      					<h6>Current</h6><h4><%=kpi.current_actual%></h4>
+						      					<h4><%=kpi.current_actual%></h4><h6>Current</h6>
 						      				</div>
 						      			</div>
 						      			<div class="col s6 m6">
 						      				<div>
-						      					<h6>Goal</h6><h4><%=kpi.target%></h4>
+						      					<h4><%=kpi.target%></h4><h6>Goal</h6>
 						      				</div>
 						      			</div>
 						      		</div>
 						      		<div class="progress tooltipped" data-position="right" data-tooltip="<%=currprogress%>% to Goal">
 						      		      <div class="determinate <%= 'red lighten-3' if kpi.target > currprogress/2 %>" style="width: <%=currprogress%>%;"></div>
 						      		  </div>
-						        	<div class="row center">
-						        		<h5><%=kpi.name%><i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="<%=kpi.unit%>">info</i></h5>
-
-						        		<p class="grey-text lighten-2" style="font-style: italic;"> <%=kpi.target_start_date.to_formatted_s(:long)%> - <%=kpi.target_end_date.to_formatted_s(:long)%></p>
-						        	</div>
 						        	
-						        	<div class="row center">
-						        		<div class="col s4">
-						        		<%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Add Update">add</i>
-						        			'.html_safe,  new_company_kpi_metric_path(@company, kpi)%>
-						        		</div>
-						        		<div class="col s4">
-						        		<%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Edit Kpi">edit</i>
-						        			'.html_safe, "#{edit_company_kpi_path(@company, kpi)}" %>
-						        		</div>
-						        		<div class="col s4">
-						        		<%=link_to '<i class="tiny material-icons tooltipped" data-position="bottom" data-tooltip="Delete Kpi">delete</i>
-						        			'.html_safe, company_kpi_path(@company, kpi), method: :delete %>
-						        		</div>
+						        	<div class="card-action">
+						        		<span class="grey-text">
+						        			<%=link_to "UPDATE", new_company_kpi_metric_path(@company, kpi)%>
+						        			<%=link_to "EDIT", "#{edit_company_kpi_path(@company, kpi)}" %>
+						        			<%=link_to "DELETE", company_kpi_path(@company, kpi), method: :delete %>
+						        		</span>
 						        	</div>
+
+						        	
 						        </div>
 			
 						        </span>
@@ -84,18 +120,36 @@
     		<a class="waves-effect waves-light btn" href="/kpis/new">Add New</a>
     	<%end%>
     </div>
-    <div id="teamsid" class="col s12">
-    	<ul>
-    		<%@company.teams.each do |t|%>
-    			<li>
-    				<h4><%=t.name%></h4>
-    				<p><%=t.description%></p>
-    			</li>
-    		<%end%>
-    	</ul>
+    
+    <div id="teamsid" class="col 12 s12">
+    	<a class="waves-effect waves-light btn" href="/teams/new">Create Team</a>
+	<%@company.teams.each do |t|%>
+		<div class="col s12 m6">
+		<ul class="collection with-header">
+			<li class="collection-header"><h4><%=t.name%><%=link_to '<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Add Member">add</i>'.html_safe,  new_member_path%></h4>
+				<p><%=t.description%></p></li>
+			<%t.members.each do |m|%>
+				<li class="collection-item avatar">
+			      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW2de1DnoYMy2eAJkE7yonqrNijWzZwJHyji7xVCoLTotK2giw" alt="" class="circle">
+			      <span class="title"><%=m.name%></span>
+			      <p><%=m.role%>
+			      </p>
+			      <span class="secondary-content">
+<!-- 			      <a href="members/<%=m.id%>/delete" ><i class="material-icons">delete</i></a>
+ -->			      <%=link_to '<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Delete Kpi">delete</i>
+			      	'.html_safe, member_path(m), method: :delete %>
+			      <a href="#!"><i class="material-icons">arrow_forward</i></a>
+			      </span>
+			    </li>
+			<%end%>
+		  </ul>
+		</div>
+	<%end%>
+</div>
+    
+    <div id="test3" class="col s12">
 
     </div>
-    <div id="test3" class="col s12">Test 3</div>
     <div id="test4" class="col s12">Test 4</div>
   </div>
 
