@@ -1,17 +1,13 @@
  $(document).ready(function(){
     $('.tabs').tabs();
-    $('.fixed-action-btn').floatingActionButton();
-    $('select').formSelect();
-    $('.fixed-action-btn').floatingActionButton();
     $('.sidenav').sidenav();
+    $('.button-collapse').sideNav({
+      menuWidth: 300, // Default is 240
+      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    }
+  );
+    $('.collapsible').collapsible();
+    
   });
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.fixed-action-btn');
-    var instances = M.FloatingActionButton.init(elems, {
-      direction: 'left',
-      hoverEnabled: false
-    });
-  });
 

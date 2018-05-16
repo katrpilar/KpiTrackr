@@ -7,22 +7,18 @@
   right: 5px !important;
   top: 5px !important;
   }
+
+  .sidenav-overlay{
+    	opacity: 0 !important;
+    }
+  
 </style>
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 </head>
 <%= render "layouts/header" %>
-
- <nav class="grey lighten-5">
-    <div class="nav-wrapper">
-      <div class="col s12">
-        <a href="#!" class="breadcrumb cyan-text text-darken-4"><%=@company.name%></a>
-        <!-- <a href="#!" class="breadcrumb">Team Name</a>
-        <a href="#!" class="breadcrumb">User</a> -->
-      </div>
-    </div>
-  </nav>
-
 
 <div class="row">
     <div class="col s12">
@@ -35,89 +31,155 @@
       </ul>
     </div>
     <div id="companykpis" class="col s12">
+    	<div class="row">
+    		<h5><%=@company.name%> <a class="btn" href="/kpis/new">Add Company Kpi</a></h5>
+    	</div>
     	<% if @company.kpis %>
     		<div class="section">
 	    		<%@company.kpis.each do |kpi|%>
-	    			<%mets = []%>
-	    			<%=kpi.metrics.each do |i|%>
-	    					<%v = [i.metric]%>
-	    					<%v << i.created_at.strftime("%m/%d/%Y")%>
-	    					<%mets << v%>
-	    				<%end%>
-	    			<script type="text/javascript">
-	    				google.charts.load('current', {packages: ['corechart', 'line']});
-	    				google.charts.setOnLoadCallback(drawBackgroundColor);
+	    			<%if kpi.metrics.exists?%>	    			
+		    			<script type="text/javascript">
+		    				google.charts.load('current', {packages: ['corechart', 'line']});
+		    				google.charts.setOnLoadCallback(drawBackgroundColor);
 
-	    				function drawBackgroundColor() {
-	    				      var data = new google.visualization.DataTable();
-	    				      data.addColumn('number', 'X');
-	    				      data.addColumn('number', 'Updates');
+		    				function drawBackgroundColor() {
+		    				      var data = new google.visualization.DataTable();
+		    				      data.addColumn('date', 'Updated');
+		    				      data.addColumn('number', 'Amount');
 
-	    				      data.addRows(mets)
+		    				      var mets = []
+		    				      
+			    				      <%kpi.metrics.each do |i|%>
+			    				      		var v = [new Date(<%=i.created_at.year%>, <%=i.created_at.month%>, <%=i.created_at.day%>)]
+			    				      		v.push(<%=i.metric%>)
+			    				      		mets.push(v)
+			    				      	<%end%>
+		    				      data.addRows(mets)
 
-	    				      var options = {
-	    				        hAxis: {
-	    				          title: 'Updated'
-	    				        },
-	    				        vAxis: {
-	    				          title: 'Amount'
-	    				        },
-	    				        backgroundColor: '#f1f8e9'
-	    				      };
+		    				      var options = {
+		    				        hAxis: {	    				          
+		    				          gridlines: {
+		    				          	color: 'transparent'
+		    				          },
+		    				          baselineColor: '#000000',
+		    				          textStyle: {
+		    				          	color: 'black'
+		    				          }
+		    				        },
+		    				        vAxis: {	    				          
+		    				          gridlines: {
+		    				          	color: 'transparent'
+		    				          },
+		    				          baselineColor: '#000000',
+		    				          textStyle: {
+		    				          	color: 'black'
+		    				          }
+		    				        },
+		    				        series: {
+					                    0: { color: '#000000', lineWidth: 1 },
+					                    1: { color: '#000000', lineWidth: 1 }
+					                },
+		    				        legend: 'none',
+		    				        backgroundColor: '#ffffff'
+		    				      };
 
-	    				      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-	    				      chart.draw(data, options);
-	    				    }
-	    			</script>					
-						    <div class="col s6 m6">
-						    	<%if kpi.current_actual != nil %>
-						        		<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
-						        	<%else%>
-						        		<%currprogress =  0%>
-						        	<%end%>
-						      <div class="card light-grey">
+		    				      var chart<%=kpi.id%> = new google.visualization.LineChart(document.getElementById('chart_div-<%=kpi.id%>'));
+		    				      chart<%=kpi.id%>.draw(data, options);
+		    				    }
+		    			</script>
+	    			<%end%>
+				
+					    <div class="col s6 m6">
+					    	<%if kpi.current_actual != nil %>
+					        		<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
+					        	<%else%>
+					        		<%currprogress =  0%>
+					        	<%end%>
+					      <div class="card light-grey">
+					      	<a href="#" data-target="slide-out-<%=kpi.id%>" id="slide-trigger-<%=kpi.id%>" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-						      	<span class="dark-grey-text">
-						      	<div class="card-content">
-						      		<div class="row center-align">
-						      			<h5><%=kpi.name%></h5>
-						      			<p><%=kpi.unit%></p>
-						      			<div id="chart_div"></div>
-						      			<p style="font-style: italic;"> <%=kpi.target_start_date.to_formatted_s(:long)%> - <%=kpi.target_end_date.to_formatted_s(:long)%></p>
-						      			<div class="col s6 m6">
-						      				<div>
-						      					<h4><%=kpi.current_actual%></h4><h6>Current</h6>
-						      				</div>
-						      			</div>
-						      			<div class="col s6 m6">
-						      				<div>
-						      					<h4><%=kpi.target%></h4><h6>Goal</h6>
-						      				</div>
-						      			</div>
-						      		</div>
-						      		<div class="progress tooltipped" data-position="right" data-tooltip="<%=currprogress%>% to Goal">
-						      		      <div class="determinate <%= 'red lighten-3' if kpi.target > currprogress/2 %>" style="width: <%=currprogress%>%;"></div>
-						      		  </div>
-						        	
-						        	<div class="card-action">
-						        		<span class="grey-text">
-						        			<%=link_to "UPDATE", new_company_kpi_metric_path(@company, kpi)%>
-						        			<%=link_to "EDIT", "#{edit_company_kpi_path(@company, kpi)}" %>
-						        			<%=link_to "DELETE", company_kpi_path(@company, kpi), method: :delete %>
-						        		</span>
-						        	</div>
+					      	<ul id="slide-out-<%=kpi.id%>" class="sidenav" style="position: absolute; display: inline-block; width: 200px; height: 100%;">
+				      	      <li><a href="#!">First Sidebar Link</a></li>
+				      	      <li><a href="#!">Second Sidebar Link</a></li>
+					      	 </ul>
+					      	    
+					      	<script type="text/javascript">
+					      		$(document).ready(function(){
+						      		$('#slide-out-<%=kpi.id%>').hide();
+						      		$('#slide-trigger-<%=kpi.id%>').click(function() {
+						      			$("#slide-out-<%=kpi.id%>").show();
+						      		});
+						      		$('.sidenav-overlay').click(function() {
+						      			$("#slide-out-<%=kpi.id%>").hide();
+						      		});
+						      		
+					      		});
 
-						        	
+					      	</script>
+							      	
+
+
+					      	<span class="dark-grey-text">
+					      	<div class="card-content">
+					      		<div class="row center-align">	
+					      			
+					      			
+
+				        			<div class="row">
+					        			<h5><%=kpi.target%> <%=kpi.name%> (<%=kpi.unit%>)</h5>		      				
+					      				<p>From <%=kpi.target_start_date.to_formatted_s(:long)%> To <%=kpi.target_end_date.to_formatted_s(:long)%></p>
+				      			    </div>
+				      			    <div class="row">
+						      				
+					      			  	<div class="progress grey lighten-3" style="height: 10px;">
+					      			      <div class="determinate green lighten-3<%= 'red lighten-3' if kpi.target/2 > kpi.current_actual %>" style="width: <%=currprogress%>%;"></div>
+					      			  	</div>
+					      			  	<p style="font-weight: 500;"><%=currprogress.round(1)%>% to Goal - <%=(kpi.target_end_date - Date.today).to_i%> Days Remain</p>
+				      			    </div>			      			  	
+						      		<div class="row">
+						      			<a class="btn-floating" href="<%=new_company_kpi_metric_path(@company, kpi)%>"><i class="large material-icons">add</i></a>
+					        			<a class="btn-floating" href="<%=edit_company_kpi_path(@company, kpi)%>"><i class="large material-icons">edit</i></a>
+					        			<%=link_to '<a class="btn-floating"><i class="large material-icons">delete</i></a>'.html_safe, company_kpi_path(@company, kpi), method: :delete %>
+				        			</div>	
+					      								      			
+					      		</div>						        	
+					        </div>
+					        <%if kpi.metrics.exists?%>
+						        <div class="card-tabs">
+					              <ul class="tabs tabs-fixed-width">
+					                <li class="tab"><a class="active" href="#graph-<%=kpi.id%>">Charted Progress</a></li>
+					                <li class="tab"><a  href="#allmetrics-<%=kpi.id%>">All Updates</a></li>
+					              </ul>
+					            </div>
+
+
+
+						        <div class="card-content">
+						        	<div class="row" id="graph-<%=kpi.id%>">
+							      		<div id="chart_div-<%=kpi.id%>"></div>
+							      	</div>
+							      	<div id="allmetrics-<%=kpi.id%>">
+								      	<ul class="collection">
+									      	<%kpi.metrics.order(created_at: :desc).each do |mt|%>
+									      		<li class="collection-item">
+									      			Last Updated to <strong><%=mt.metric%></strong> on <%=mt.created_at.to_formatted_s(:long)%>
+									      			<%=link_to "Delete", company_kpi_metric_path(@company, kpi, mt), method: :delete %>
+									      			
+									      		</li>
+									      	<%end%>
+								      	</ul>
+							      	</div>						        		
 						        </div>
-			
-						        </span>
-						      </div>
-						    </div>
+					        <%end%>
+		
+					        </span>
+					      </div>
+					    </div>
 				<%end%>
 			</div>
 			<a class="waves-effect waves-light btn" href="<%=new_company_kpi_path(@company)%>">Add New</a>
     	<%else%>
-    		<a class="waves-effect waves-light btn" href="/kpis/new">Add New</a>
+    		
     	<%end%>
     </div>
     
@@ -154,3 +216,12 @@
   </div>
 
   <%= render "layouts/footer" %>
+  <script language="javascript">
+   $('.button-collapse').sideNav({
+      menuWidth: 300, // Default is 240
+      closeOnClick: true,
+  // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    }
+  );
+  $('.collapsible').collapsible();
+ </script>

@@ -27,6 +27,8 @@ class MetricsController < ApplicationController
 
 	def destroy
 		@metric = Metric.find(params[:id]).destroy
+
+		redirect_to company_path(current_user.company)
 	end
 end
 
