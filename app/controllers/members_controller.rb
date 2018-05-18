@@ -17,6 +17,10 @@ class MembersController < ApplicationController
 
 	def show
 		@member = Member.find(params[:id])
+		@team = @member.team
+		# if @member.kpis.exists?
+		# 	@kpis = @member.kpis
+		# end
 	end
 
 	def update

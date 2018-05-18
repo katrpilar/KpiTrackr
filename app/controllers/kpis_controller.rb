@@ -16,7 +16,23 @@ class KpisController < ApplicationController
 		# User.first.company.kpis.create(name: "testing kpi")
 		# @kpi = Company.find(params[:company_id]).kpis.new
 		@kpi = Kpi.new
-		@company = Company.find(params[:company_id])
+		# @company = Company.find(params[:company_id])
+
+		if params.has_key?(:company_id)
+			@company = Company.find(params[:company_id])
+		elsif params.has_key?(:team_id)
+			@company = Team.find(params[:team_id]).company
+		elsif params.has_key?(:member_id)
+			@company = Member.find(params[:member_id]).team.company
+		end
+
+		# if params.has_key?(:company_id)
+		# 	@company = Company.find(params[:company_id])
+		# elsif params.has_key?(:team_id)
+		# 	@team = Team.find(params[:team_id])
+		# elsif params.has_key?(:member_id)
+		# 	@member = Member.find(params[:member_id])
+		# end
 	end
 
 	def create
@@ -43,7 +59,7 @@ class KpisController < ApplicationController
 		# binding.pry
 		if @kpi.save
 		 # redirect_to company_kpi_path(@kpi)
-		 redirect_to company_path(@kpi.kpiable)
+		 redirect_to company_path(current_user.company)
 		end
 	end
 
@@ -80,8 +96,15 @@ class KpisController < ApplicationController
 
 	private 
        def set_kpiable
-       		if params[:company_id] != nil
+       		# if params[:company_id] != nil
+       		# 	@kpiable = Company.find(params[:company_id])
+       		# end
+       		if params.has_key?(:company_id)
        			@kpiable = Company.find(params[:company_id])
+       		elsif params.has_key?(:team_id)
+       			@kpiable = Team.find(params[:team_id])
+       		elsif params.has_key?(:member_id)
+       			@kpiable = Member.find(params[:member_id])
        		end
        end
 

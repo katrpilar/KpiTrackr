@@ -7,6 +7,14 @@
     }
   );
     $('.collapsible').collapsible();
+
+    $('#slide-out-<%=kpi.id%>').hide();
+    $('#slide-trigger-<%=kpi.id%>').click(function() {
+    	$("#slide-out-<%=kpi.id%>").show();
+    });
+    $('.sidenav-overlay').click(function() {
+    	$("#slide-out-<%=kpi.id%>").hide();
+    });
     
   });
 

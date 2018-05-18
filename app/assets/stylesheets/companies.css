@@ -1,3 +1,30 @@
 // Place all the styles related to the Companies controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.chart {
+  width: 100%; 
+  min-height: auto;
+}
+.fixed-action-btn {
+  float: right !important;
+  position: absolute !important;
+  right: 5px !important;
+  top: 5px !important;
+  }
+
+  .sidenav-overlay{
+    	opacity: 0 !important;
+    }
+
+  #main-tabs{
+  	background-color: transparent !important;
+  }
+
+  #main-tabs .tab a{
+  	color: #ffffff;
+  }
+
+  #main-tabs .indicator{
+  	background-color: #A5D6A7 !important;
+  	height: 4px !important;
+  }

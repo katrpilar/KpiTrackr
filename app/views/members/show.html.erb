@@ -1,6 +1,5 @@
 
 <%= render "layouts/header" %>
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style type="text/css">
 	.fixed-action-btn {
@@ -34,39 +33,43 @@
 	<div class="row valign-wrapper">
 		<div class="col s3 m3">
 			<div class="right-align">
-				<img class="responsive-img" src="https://vignette.wikia.nocookie.net/logopedia/images/5/59/Coca-Cola_logo_2007.jpg">
+				<img class="responsive-img" src="https://www.weact.org/wp-content/uploads/2016/10/Blank-profile.png">
 			</div>
 		</div>
 		<div class="col s6 m6">
 			<div class="left-align">
-			<h3 class="flow-text"><%=@company.name%></h3>
+			<h4><%=@member.name%></h4>
+			<p class="flow-text"><%=@member.role%></p>
+			<h5><%=@team.name%></h5>
+			<p><%=@team.description%></p>
 			</div>
 		</div>
 		<div class="col s3 m3">
 			<div class="right-align">
-			<a class="btn" href="<%=new_company_kpi_path(@company)%>">Add Company Kpi</a>
+				<a class="btn" href="<%=new_member_kpi_path(@member)%>">Add KPI</a>
 			</div>
 		</div>
 		</div>
 	</div>
 </div>
 
+
+
 <div class="section">
 <div class="row">
-    <div class="col s12 teal lighten-1">
+    <!-- <div class="col s12 teal lighten-1">
       <ul class="tabs" id="main-tabs">
-        <li class="tab col s3"><a class="active" href="#companykpis">KPI</a></li>
-        <li class="tab col s3"><a href="#teamsid">Teams</a></li>
+        <li class="tab col s3"><a class="active" href="#memberkpis">My KPIs</a></li>
+        <li class="tab col s3"><a href="#teamsid">Edit Profile</a></li>
         <li class="tab col s3"><a href="#test3">Goals</a></li>
         <li class="tab col s3"><a class="white-text" href="#test4">Revenue Streams</a></li>
         <li class="tab col s3"><a href="#test4">Updates</a></li>
       </ul>
-    </div>
-    <div id="companykpis" class="col s12">
-    	<% if @company.kpis.find_by_kpiable_type("Company") %>
+    </div> -->
+    <div id="memberkpis" class="col s12">
+    	<% if @member.kpis.exists? %>
     		<div class="section">
-<!--     			Company.first.kpis.find_by_kpiable_type("Company")
- -->	    		<%@company.kpis.where("kpiable_type = ?", "Company").each do |kpi|%>
+    		<%@member.kpis.each do |kpi|%>
 	    			<%if kpi.metrics.exists?%>	    			
 		    			<script type="text/javascript">
 		    				google.charts.load('current', {packages: ['corechart', 'line']});
@@ -169,9 +172,9 @@
 					      			  	<p style="font-weight: 500;"><%=currprogress.round(1)%>% to Goal - <%=(kpi.target_end_date - Date.today).to_i%> Days Remain</p>
 				      			    </div>			      			  	
 						      		<div class="row">
-						      			<a class="btn-floating" href="<%=new_company_kpi_metric_path(@company, kpi)%>"><i class="large material-icons">add</i></a>
-					        			<a class="btn-floating" href="<%=edit_company_kpi_path(@company, kpi)%>"><i class="large material-icons">edit</i></a>
-					        			<%=link_to '<a class="btn-floating"><i class="large material-icons">delete</i></a>'.html_safe, company_kpi_path(@company, kpi), method: :delete %>
+						      			<a class="btn-floating" href="<%=new_member_kpi_metric_path(@member, kpi)%>"><i class="large material-icons">add</i></a>
+					        			<a class="btn-floating" href="<%=edit_member_kpi_path(@member, kpi)%>"><i class="large material-icons">edit</i></a>
+					        			<%=link_to '<a class="btn-floating"><i class="large material-icons">delete</i></a>'.html_safe, member_kpi_path(@member, kpi), method: :delete %>
 				        			</div>	
 					      								      			
 					      		</div>
@@ -185,7 +188,7 @@
 								      	<%kpi.metrics.order(created_at: :desc).each do |mt|%>
 								      		<li class="collection-item">
 								      			Last Updated to <strong><%=mt.metric%></strong> on <%=mt.created_at.to_formatted_s(:long)%>
-								      			<%=link_to "Delete", company_kpi_metric_path(@company, kpi, mt), method: :delete %>
+								      			<%=link_to "Delete", member_kpi_metric_path(@member, kpi, mt), method: :delete %>
 								      			
 								      		</li>
 								      	<%end%>
@@ -214,47 +217,5 @@
     		
     	<%end%>
     </div>
-    
-    <div id="teamsid" class="col 12 s12">
-    	<a class="waves-effect waves-light btn" href="/teams/new">Create Team</a>
-	<%@company.teams.each do |t|%>
-		<div class="col s12 m6">
-		<ul class="collection with-header">
-			<li class="collection-header"><h4><%=t.name%><%=link_to '<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Add Member">add</i>'.html_safe,  new_member_path%></h4>
-				<p><%=t.description%></p></li>
-			<%t.members.each do |m|%>
-				<li class="collection-item avatar">
-			      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW2de1DnoYMy2eAJkE7yonqrNijWzZwJHyji7xVCoLTotK2giw" alt="" class="circle">
-			      <span class="title"><%=m.name%></span>
-			      <p><%=m.role%>
-			      </p>
-			      <span class="secondary-content">
-<!-- 			      <a href="members/<%=m.id%>/delete" ><i class="material-icons">delete</i></a>
- -->			      <%=link_to '<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Delete Kpi">delete</i>
-			      	'.html_safe, member_path(m), method: :delete %>
-			      <a href="#!"><i class="material-icons">arrow_forward</i></a>
-			      </span>
-			    </li>
-			<%end%>
-		  </ul>
-		</div>
-	<%end%>
 </div>
-    
-    <div id="test3" class="col s12">
-
-    </div>
-    <div id="test4" class="col s12">Test 4</div>
-  </div>
-</div>
-
-  <%= render "layouts/footer" %>
-  <script language="javascript">
-   $('.button-collapse').sideNav({
-      menuWidth: 300, // Default is 240
-      closeOnClick: true,
-  // Closes side-nav on <a> clicks, useful for Angular/Meteor
-    }
-  );
-  $('.collapsible').collapsible();
- </script>
+<%= render "layouts/footer" %>

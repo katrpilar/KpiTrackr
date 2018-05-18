@@ -15,7 +15,8 @@ class CompaniesController < ApplicationController
 	  end
 
 	  def show
-	  	@company, @kpiable = Company.find(params[:id])
+	  	@company = Company.find(params[:id])
+	  	# @company, @kpiable = Company.find(params[:id])
 	  end
 
 	  def update
