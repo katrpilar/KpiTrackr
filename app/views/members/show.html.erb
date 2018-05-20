@@ -10,7 +10,7 @@
   }
 
   .sidenav-overlay{
-    	opacity: 0 !important;
+    	/*opacity: 0 !important;*/
     }
 
   #main-tabs{
@@ -28,30 +28,21 @@
   
 </style>
 
-<div class="section">
-	<div class="container">
-	<div class="row valign-wrapper">
-		<div class="col s3 m3">
-			<div class="right-align">
-				<img class="responsive-img" src="https://www.weact.org/wp-content/uploads/2016/10/Blank-profile.png">
-			</div>
-		</div>
-		<div class="col s6 m6">
-			<div class="left-align">
-			<h4><%=@member.name%></h4>
-			<p class="flow-text"><%=@member.role%></p>
-			<h5><%=@team.name%></h5>
-			<p><%=@team.description%></p>
-			</div>
-		</div>
-		<div class="col s3 m3">
-			<div class="right-align">
-				<a class="btn" href="<%=new_member_kpi_path(@member)%>">Add KPI</a>
-			</div>
-		</div>
-		</div>
-	</div>
-</div>
+
+	
+	<nav>
+	<div class="nav-wrapper teal lighten-2">
+	      <div class="col s12 valign-wrapper">
+	      	<a href="<%=company_path(@team.company)%>" class="breadcrumb"><%=@team.company.name%></a>
+	        <a href="#!" class="breadcrumb"><%=@team.name%></a>
+	        <a href="<%=member_path(@member)%>" class="breadcrumb avatar valign-wrapper"><img src="https://vignette.wikia.nocookie.net/logopedia/images/5/59/Coca-Cola_logo_2007.jpg" alt="" class="circle responsive-img" style="width: 50px; height: auto;"><%=@member.name%></a>
+	      </div>
+	    </div>
+	</nav>
+	<div class="section">
+	    	<h5><%=@member.name%><a class="btn-flat" href="<%=new_member_kpi_path(@member)%>">Add KPI</a>
+	</h5></div>
+
 
 
 
@@ -131,28 +122,31 @@
 					        		<%currprogress =  0%>
 					        	<%end%>
 					      <div class="card light-grey">
-					      	<a href="#" data-target="slide-out-<%=kpi.id%>" id="slide-trigger-<%=kpi.id%>" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+					      	
 
-					      	<ul id="slide-out-<%=kpi.id%>" class="sidenav tabs" style="position: absolute; display: inline-block; width: 200px; height: 100%;">
+					      			      	
+
+					      	<ul id="slide-out-<%=kpi.id%>" class="sidenav tabs" style="position: absolute; display: inline-block; width: 200px; height: 100%; z-index: 1;">
 					      	  <li class="tab" style="display: block;"><a class="active" href="#kpi-<%=kpi.id%>">Kpi</a></li>
 				      	      <li class="tab" style="display: block;"><a href="#graph-<%=kpi.id%>">Progress</a></li>
 				      	      <li class="tab" style="display: block;"><a href="#allmetrics-<%=kpi.id%>">Updates</a></li>
 					      	 </ul>
-					      	    
-					      	<script type="text/javascript">
-					      		$(document).ready(function(){
-						      		$('#slide-out-<%=kpi.id%>').hide();
-						      		$('#slide-trigger-<%=kpi.id%>').click(function() {
-						      			$("#slide-out-<%=kpi.id%>").show();
-						      		});
-						      		$('.sidenav-overlay').click(function() {
-						      			$("#slide-out-<%=kpi.id%>").hide();
-						      		});
-						      		
-					      		});
+					      	 <a href="#" data-target="slide-out-<%=kpi.id%>" id="slide-trigger-<%=kpi.id%>" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+					      	    <script type="text/javascript">
+					      	      		$(document).ready(function(){
+					      		      		$('#slide-out-<%=kpi.id%>').hide();
+					      		      		$("#slide-trigger-<%=kpi.id%>").click(function() {
+					      		      			$("#slide-out-<%=kpi.id%>").show();
+					      		      		});
+					      		      		$("div.sidenav-overlay").click(function() {
+					      		      			alert( "Handler for .click() called." );
+					      		      			$("#slide-out-<%=kpi.id%>").hide();
+					      		      		});
+					      		      		
+					      	      		});
 
-					      	</script>
-							      	
+					      	      	</script>
+					      	
 
 
 					      	<span class="dark-grey-text">
@@ -172,9 +166,9 @@
 					      			  	<p style="font-weight: 500;"><%=currprogress.round(1)%>% to Goal - <%=(kpi.target_end_date - Date.today).to_i%> Days Remain</p>
 				      			    </div>			      			  	
 						      		<div class="row">
-						      			<a class="btn-floating" href="<%=new_member_kpi_metric_path(@member, kpi)%>"><i class="large material-icons">add</i></a>
+						      			<a class="btn-floating" href="<%=new_member_kpi_metric_path(@member, kpi)%>"><i class="large material-icons">file_upload</i></a>
 					        			<a class="btn-floating" href="<%=edit_member_kpi_path(@member, kpi)%>"><i class="large material-icons">edit</i></a>
-					        			<%=link_to '<a class="btn-floating"><i class="large material-icons">delete</i></a>'.html_safe, member_kpi_path(@member, kpi), method: :delete %>
+					        			<%=link_to '<i class="large material-icons">delete</i>'.html_safe, member_kpi_path(@member, kpi), method: :delete, data: { confirm: 'Are you sure?' }, :class=>"btn-floating" %>
 				        			</div>	
 					      								      			
 					      		</div>
@@ -217,5 +211,6 @@
     		
     	<%end%>
     </div>
+</div>
 </div>
 <%= render "layouts/footer" %>

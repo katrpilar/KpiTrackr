@@ -39,7 +39,7 @@ class MetricsController < ApplicationController
 		# Kpi.find(@met_comp)
 		# binding.pry
 		if @metric.save && params.has_key?(:company_id)
-		 redirect_to company_path(@company)
+		 redirect_to company_path(@kpi.kpiable)
 		 elsif @metric.save && params.has_key?(:team_id)
 		 	redirect_to team_path(@kpi.team)
 		elsif @metric.save && params.has_key?(:member_id)
