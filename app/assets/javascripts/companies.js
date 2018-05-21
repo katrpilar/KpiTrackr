@@ -9,5 +9,11 @@
     $('.collapsible').collapsible();
     $('.tooltipped').tooltip();    
   });
+ window.onload = function(){
+     var timedifference = new Date().getTimezoneOffset();
+     var tz = moment.tz.guess();
+     // var test = moment(date).offsetUtc()
+     // document.getElementById('output').innerHTML = test;
+ };
 
 

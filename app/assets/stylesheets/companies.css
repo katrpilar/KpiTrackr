@@ -5,26 +5,41 @@
   width: 100%; 
   min-height: auto;
 }
+
 .fixed-action-btn {
   float: right !important;
   position: absolute !important;
   right: 5px !important;
   top: 5px !important;
-  }
+}
 
-  .sidenav-overlay{
-    	opacity: 0 !important;
-    }
+ /* .sidenav-overlay{
+      opacity: 0 !important;
+    }*/
 
   #main-tabs{
-  	background-color: transparent !important;
+    background-color: transparent !important;
   }
 
   #main-tabs .tab a{
-  	color: #ffffff;
+    color: #ffffff;
   }
 
   #main-tabs .indicator{
-  	background-color: #A5D6A7 !important;
-  	height: 4px !important;
+    background-color: #A5D6A7 !important;
+    height: 4px !important;
   }
+
+  .side-tabs .tab a{
+    color: #26a69a !important;
+  }
+
+  .side-tabs .indicator{
+    background-color: #26a69a !important;
+/*    height: 4px !important;
+*/  }
+
+  .side-tabs .tab a.active{
+     font-weight: 900;
+/*     background-color: #4db6ac !important;
+*/  }

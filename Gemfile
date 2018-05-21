@@ -41,6 +41,11 @@ gem 'devise'
 gem 'carrierwave', '~> 1.2', '>= 1.2.2'
 gem 'mini_magick'
 
+gem 'momentjs-rails'
+
+
+gem 'moment_timezone-rails', '~> 0.5.0'
+
 
 
 # Use Capistrano for deployment
