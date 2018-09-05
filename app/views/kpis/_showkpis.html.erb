@@ -1,6 +1,6 @@
 <div id="kpis" class="col s12">
 		<div class="section">
-			<h5>All <%=controller_name%> KPIs<a class="btn-flat" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a></h5>
+			<h5>All <%=controller_name%> KPIs<a class="btn" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a></h5>
 		</div>
 		<% if @kpis %>
 		<div class="section">
@@ -94,9 +94,11 @@
 							</div>
 
 							<div class="row">
-								<a class="btn-floating tooltipped" href="<%=new_kpi_metric_path(kpi)%>" data-position="bottom" data-tooltip="I am a tooltip"><i class="large material-icons">file_upload</i></a>
-								<a class="btn-floating" href="<%=edit_kpi_path(kpi)%>"><i class="large material-icons">edit</i></a>
-								<%=link_to '<a class="btn-floating"><i class="large material-icons">delete</i></a>'.html_safe, kpi_path(kpi), method: :delete %>
+								<a class="btn-floating tooltipped" href="<%=new_kpi_metric_path(kpi)%>" data-position="bottom" data-tooltip="Update Metric"><i class="large material-icons">file_upload</i></a>
+								<a class="btn-floating tooltipped" href="<%=edit_kpi_path(kpi)%>" data-position="bottom" data-tooltip="Edit"><i class="large material-icons">edit</i></a>
+								
+								<%= link_to '<i class="large material-icons">delete</i>'.html_safe, kpi, :method => :delete, :confirm => "You sure?",
+                                :title => "Delete #{kpi.name}", :class => "btn-floating" %>
 							</div>						      			
 						</div>
 
