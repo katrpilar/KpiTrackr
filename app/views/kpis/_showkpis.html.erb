@@ -97,8 +97,7 @@
 								<a class="btn-floating tooltipped" href="<%=new_kpi_metric_path(kpi)%>" data-position="bottom" data-tooltip="Update Metric"><i class="large material-icons">file_upload</i></a>
 								<a class="btn-floating tooltipped" href="<%=edit_kpi_path(kpi)%>" data-position="bottom" data-tooltip="Edit"><i class="large material-icons">edit</i></a>
 								
-								<%= link_to '<i class="large material-icons">delete</i>'.html_safe, kpi, :method => :delete, :confirm => "You sure?",
-                                :title => "Delete #{kpi.name}", :class => "btn-floating" %>
+								<%= link_to '<i class="large material-icons">delete</i>'.html_safe, kpi, :method => :delete, data: {:confirm => "You sure you want to delete this kpi?"}, :title => "Delete #{kpi.name}", :class => "btn-floating" %>
 							</div>						      			
 						</div>
 

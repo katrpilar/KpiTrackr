@@ -5,9 +5,13 @@ Company
 	+Allow for Profile Photo
 	Ability to preview profile photos
 
+Metric
+	Allow for a metric to be edited
+	Allow for metric date to be changed (Would need to create migration)
+
 Teams
-	Allow teams to have and create KPIs
-	Create Team pages
+	+Allow teams to have and create KPIs
+	+Create Team pages
 	Show kpis on the page
 	Allow for teams to have objectives
 	Allow Profile Photo
@@ -31,7 +35,11 @@ KPI
 				Toggl Options between: Goal_metric && Update (current_metric amount)
 
 Users/Members
-	Need to find a way to add members/users to a company
+	Need to find a way to add members/users to a company (using invitable)
 	Cannot view companies/kpis etc that they don't belong to
 	Allow to add profile photo
 	Allow for indivuals to have/create KPIs that can only be seen on their profile page
+
+
+UX/UI
+	Make google Charts responsive

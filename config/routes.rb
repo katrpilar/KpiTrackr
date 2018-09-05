@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     resources :members, only: [:edit, :update, :destroy] do
       resources :kpis, only: [:create, :new]
     end
+
+    resources :members, only: [:show]
   # end
 
   

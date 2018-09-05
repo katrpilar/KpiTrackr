@@ -2,15 +2,12 @@ class MembersController < ApplicationController
 	before_action :authenticate_user!
 
 	def new
-		# binding.pry
 		@member = Member.new
 		if !@member.team_id
 			@team = Team.find(params[:team_id]) unless @member.team
 		else 
 			@team = Team.find(@member.team_id)
 		end
-		# @team = params[:team]
-		# binding.pry
 	end
 
 
@@ -25,17 +22,12 @@ class MembersController < ApplicationController
 	  	redirect_to company_path(current_user.company)
 	  else
 	  	render :new
-	  	# render new_team_member_path(@team)
-	  	# render new_team_member_path(@team).to_s
 	  end
 	end
 
 	def show
 		@member = Member.find(params[:id])
-		@team = @member.team
-		# if @member.kpis.exists?
-		# 	@kpis = @member.kpis
-		# end
+		@kpis = @member.kpis
 	end
 
 	def update

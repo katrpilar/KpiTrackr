@@ -12,12 +12,7 @@ class KpisController < ApplicationController
 	end
 
 	def new
-		# binding.pry
-		# User.first.company.kpis.create(name: "testing kpi")
-		# @kpi = Company.find(params[:company_id]).kpis.new
 		@kpi = Kpi.new
-		# @company = Company.find(params[:company_id])
-
 		if params.has_key?(:company_id)
 			@company = Company.find(params[:company_id])
 		elsif params.has_key?(:team_id)
@@ -25,14 +20,6 @@ class KpisController < ApplicationController
 		elsif params.has_key?(:member_id)
 			@company = Member.find(params[:member_id]).team.company
 		end
-
-		# if params.has_key?(:company_id)
-		# 	@company = Company.find(params[:company_id])
-		# elsif params.has_key?(:team_id)
-		# 	@team = Team.find(params[:team_id])
-		# elsif params.has_key?(:member_id)
-		# 	@member = Member.find(params[:member_id])
-		# end
 	end
 
 	def create
@@ -48,25 +35,19 @@ class KpisController < ApplicationController
 
 		if @kpi.valid?
 			@kpi.save
-			# redirect_to company_kpi_path(@kpi)
-			redirect_to company_path(current_user.company)
+			case @kpi.kpiable_type
+			when "Company"				
+				redirect_to company_path(current_user.company)
+			when "Team"
+				redirect_to team_path(Team.find(@kpi.kpiable_id))
+			when "Member"
+				redirect_to member_path(Member.find(@kpi.kpiable_id))
+			else
+				redirect_to :root_path
+			end
 		else 
 			render :new
-			#redirect_back(fallback_location: root_path)
 		end
-
-		# binding.pry
-
-		# params.keys.select{|key| key.to_s.match(/[a-zA-Z]+_id/)}
-		# /[^(_id)]/.match(params[par[0]])
-
-		# @kpiable = find_kpiable
-		# @kpi = @kpiable.kpis.build(params[:kpi])
-
-
-		
-
-		# binding.pry
 	end
 
 	def edit
@@ -85,26 +66,8 @@ class KpisController < ApplicationController
 		redirect_to company_path(current_user.company)
 	end
 
-	# private
-	# def set_owner
-	# 	# @kpi_owner = params[params.keys.last]
-	# 	if /company/.match(params.to_s) != nil
-	# 		@kpi_owner = Company.find(params[:company_id])
-	# 		return @kpi_owner
-	# 	elsif /team/.match(params.to_s) != nil
-	# 		@kpi_owner = Team.find(params[:team_id])
-	# 		return @kpi_owner
-	# 	elsif /member/.match(params.to_s) != nil
-	# 		@kpi_owner = Member.find(params[:member_id])
-	# 		return @kpi_owner
-	# 	end
-	# end
-
 	private 
        def set_kpiable
-       		# if params[:company_id] != nil
-       		# 	@kpiable = Company.find(params[:company_id])
-       		# end
        		if params.has_key?(:company_id)
        			@kpiable = Company.find(params[:company_id])
        		elsif params.has_key?(:team_id)
@@ -113,14 +76,4 @@ class KpisController < ApplicationController
        			@kpiable = Member.find(params[:member_id])
        		end
        end
-
-
-       # def find_kpiable
-       #   params.each do |name, value|
-       #     if name =~ /(.+)_id$/
-       #       return $1.classify.constantize.find(value)
-       #     end
-       #   end
-       #   nil
-       # end
 end
