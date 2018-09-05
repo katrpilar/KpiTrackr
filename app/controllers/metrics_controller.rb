@@ -27,24 +27,61 @@ class MetricsController < ApplicationController
 		# params.require(:metric).permit(:metric)
 		@metric = Metric.new(params.require(:metric).permit(:metric, :kpi_id, :company_id, :kpiable))
 		@metric.kpi = @kpi
-		if params.has_key?(:company_id)
-			@kpi.kpiable = Company.find(params[:company_id])
-		elsif params.has_key?(:team_id)
-			@kpi.kpiable = Team.find(params[:team_id])
-		elsif params.has_key?(:member_id)
-			@kpi.kpiable = Member.find(params[:member_id])
+		binding.pry
+		if @metric.valid?
+			@metric.save
+			case @kpi.kpiable_type
+			when "Company"
+				redirect_to company_path(@kpi.kpiable)
+			when "Team"
+				redirect_to team_path(@kpi.kpiable)
+			when "Member"
+				redirect_to member_path(@kpi.kpiable)
+			else
+				render :new
+			end
+		else
+			render :new
 		end
+
+		# if params.has_key?(:company_id)
+		# 	@kpi.kpiable = Company.find(params[:company_id])
+		# 	if @metric.valid?
+		# 		@metric.save
+		# 		redirect_to company_path(@kpi.kpiable)
+		# 	else
+		# 		render :new
+		# 	end
+		# elsif params.has_key?(:team_id)
+		# 	@kpi.kpiable = Team.find(params[:team_id])
+		# 	if @metric.valid?
+		# 		@metric.save
+		# 		redirect_to team_path(@kpi.kpiable)
+		# 	else
+		# 		render :new
+		# 	end
+		# elsif params.has_key?(:member_id)
+		# 	@kpi.kpiable = Member.find(params[:member_id])
+		# 	if @metric.valid?
+		# 		@metric.save
+		# 		redirect_to member_path(@kpi.kpiable)
+		# 	else
+		# 		render :new
+		# 	end
+		# else
+		# 	render :new
+		# end
 
 		# binding.pry
 		# Kpi.find(@met_comp)
 		# binding.pry
-		if @metric.save && params.has_key?(:company_id)
-		 redirect_to company_path(@kpi.kpiable)
-		 elsif @metric.save && params.has_key?(:team_id)
-		 	redirect_to team_path(@kpi.team)
-		elsif @metric.save && params.has_key?(:member_id)
-			redirect_to member_path(@kpi.kpiable)
-		end
+		# if @metric.save && params.has_key?(:company_id)
+		#  redirect_to company_path(@kpi.kpiable)
+		#  elsif @metric.save && params.has_key?(:team_id)
+		#  	redirect_to team_path(@kpi.team)
+		# elsif @metric.save && params.has_key?(:member_id)
+		# 	redirect_to member_path(@kpi.kpiable)
+		# end
 	end
 
 	def destroy

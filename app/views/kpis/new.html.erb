@@ -1,6 +1,15 @@
 <script type="text/javascript" src="javascripts/company_kpis.js"></script>
-
 <%= form_for([@kpiable, @kpi]) do |f| %>
+	<% if @kpi.errors.any? %>
+    <div id="error_explanation">
+      <h2>There were some errors:</h2>
+      <ul>
+        <% @kpi.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 	<%= f.label :name%>
 	<%= f.text_field :name %>
 	<%= f.label :unit %>

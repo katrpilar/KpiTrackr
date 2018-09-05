@@ -3,201 +3,37 @@
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <%=stylesheet_link_tag "companies.css"%>
-
+<!-- 
+<ul id="slide-out" class="sidenav sidenav-fixed">
+      <li><a href="#!">First Sidebar Link</a></li>
+      <li><a href="#!">Second Sidebar Link</a></li>
+    </ul>
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
+<body>
 <div class="row">
-	<nav>
-		<div class="nav-wrapper teal lighten-2">
-			<div class="col s12">
-				<a href="<%=company_path(@company)%>" class="breadcrumb avatar valign-wrapper">
-					<img src="https://vignette.wikia.nocookie.net/logopedia/images/5/59/Coca-Cola_logo_2007.jpg" alt="" class="circle responsive-img" style="width: 50px; height: auto;">
-					<%=@company.name%>
-				</a>
-			</div>
-		</div>
-	</nav>
+	<%= render "companyinfo" %>
+
+
+          
+
 	<div class="col s12 teal lighten-1">
 		<ul class="tabs" id="main-tabs">
-			<li class="tab col s3"><a class="active" href="#companykpis">Company KPIs</a></li>
-			<li class="tab col s3"><a href="#teamsid">Teams</a></li>
-			<li class="tab col s3"><a href="#test3">Goals</a></li>
+			<li class="tab col s6"><a class="active" href="#companykpis">Company KPIs</a></li>
+			<li class="tab col s6"><a href="#teamsid">Teams</a></li>
+			<!-- <li class="tab col s3"><a href="#test3">Goals</a></li>
 			<li class="tab col s3"><a class="white-text" href="#test4">Revenue Streams</a></li>
-			<li class="tab col s3"><a href="#test4">Updates</a></li>
+			<li class="tab col s3"><a href="#test4">Updates</a></li> -->
 		</ul>
 	</div>
-	<div id="companykpis" class="col s12">
-		<div class="section">
-			<h5>All Company KPIs<a class="btn-flat" href="<%=new_company_kpi_path(@company)%>">Add New</a></h5>
-		</div>
-		<% if @company.kpis.find_by_kpiable_type("Company") %>
-		<div class="section">
-		<%@company.kpis.where("kpiable_type = ?", "Company").each do |kpi|%>
-			<%if kpi.metrics.exists?%>	    			
-				<script type="text/javascript">
-				google.charts.load('current', {packages: ['corechart', 'line']});
-				google.charts.setOnLoadCallback(drawBackgroundColor);
+	<%= render "companykpis"%>
+	<%= render "teams/index" %>
 
-				function drawBackgroundColor() {
-				var data = new google.visualization.DataTable();
-				data.addColumn('date', 'Updated');
-				data.addColumn('number', 'Amount');
-
-				var mets = []
-
-				<%kpi.metrics.each do |i|%>
-				var v = [new Date(<%=i.created_at.to_f*1000%>)]
-				v.push(<%=i.metric%>)
-				mets.push(v)
-				<%end%>
-				data.addRows(mets)
-				var chartwidth = $('.card-title').width();
-
-				var options = {
-				width: chartwidth,
-				hAxis: {	
-
-				gridlines: {
-				color: 'transparent'
-				},
-				baselineColor: '#000000',
-				textStyle: {
-				color: 'white'
-				}
-				},
-				vAxis: {	
-				gridlines: {
-				color: 'transparent'
-				},
-				baselineColor: '#000000',
-				textStyle: {
-				color: 'black'
-				}
-				},
-				series: {
-				0: { color: '#000000', lineWidth: 2 },
-				1: { color: '#000000', lineWidth: 2 }
-				},
-				legend: 'none',
-				backgroundColor: '#ffffff',
-				};
-
-				var chart<%=kpi.id%> = new google.visualization.LineChart(document.getElementById('chart_div-<%=kpi.id%>'));
-				chart<%=kpi.id%>.draw(data, options);
-				}
-				</script>
-			<%end%>
-
-			<div class="col s12 m6">
-				<%if kpi.current_actual != nil %>
-				<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
-				<%else%>
-				<%currprogress =  0%>
-				<%end%>
-				<div class="card light-grey" id="card-<%=kpi.id%>">
-					<span class="dark-grey-text">
-
-						<div class="card-tabs">
-						<ul class="tabs tabs-fixed-width side-tabs" style="z-index: 100;">
-						<li class="tab" ><a class="active" href="#kpi-<%=kpi.id%>">Details</a></li>
-						<li class="tab" ><a href="#allmetrics-<%=kpi.id%>">Updates</a></li>
-						<li class="tab" ><a href="#graph-<%=kpi.id%>">Progress</a></li>
-						</ul>
-						</div>
-					<div class="card-content">
-						<div class="center-align">
-							<span class="card-title"><%=kpi.target%> <%=kpi.name%> (<%=kpi.unit%>)</span>
-						</div>
-
-						<div class="row center-align" id="kpi-<%=kpi.id%>">
-							<div class="row">
-								<p>From <%=kpi.target_start_date.to_formatted_s(:long)%> To <%=kpi.target_end_date.to_formatted_s(:long)%></p>
-							</div>
-
-							<div class="row">
-								<div class="progress grey lighten-3" style="height: 10px;">
-								<div class="determinate green lighten-3<%= 'red lighten-3' if kpi.target/2 > kpi.current_actual %>" style="width: <%=currprogress%>%;"></div>
-								</div>
-								<p style="font-weight: 500;"><%=currprogress.round(1)%>% to Goal - <%=(kpi.target_end_date - Date.today).to_i%> Days Remain</p>
-							</div>
-
-							<div class="row">
-								<a class="btn-floating tooltipped" href="<%=new_company_kpi_metric_path(@company, kpi)%>" data-position="bottom" data-tooltip="I am a tooltip"><i class="large material-icons">file_upload</i></a>
-								<a class="btn-floating" href="<%=edit_company_kpi_path(@company, kpi)%>"><i class="large material-icons">edit</i></a>
-								<%=link_to '<a class="btn-floating"><i class="large material-icons">delete</i></a>'.html_safe, company_kpi_path(@company, kpi), method: :delete %>
-							</div>						      			
-						</div>
-
-						<div class="row" id="graph-<%=kpi.id%>">
-							<div class="col s12 m12">
-								<div id="chart_div-<%=kpi.id%>" class="chart"></div>
-							</div>
-						</div>
-
-						<div class="row" id="allmetrics-<%=kpi.id%>">
-							<ul class="collection">
-								<%kpi.metrics.order(created_at: :desc).each do |mt|%>
-									<li class="collection-item">
-									<script type="text/javascript">								      				
-									var m = moment();
-									var userzone = moment.parseZone(m).utcOffset();
-									var newdate = moment("<%=mt.created_at%>").utcOffset(userzone).format('YYYY-MM-DD hh:mm A');
-									</script>
-									Last Updated to <strong><%=mt.metric%></strong> on 
-									<script type="text/javascript">
-									document.write(newdate)
-									</script>
-									<%=link_to "Delete", company_kpi_metric_path(@company, kpi, mt), method: :delete %>
-									</li>
-								<%end%>
-							</ul>
-						</div>							        	
-					</div>
-					</span>
-
-					<div class="center-align">
-					<%=link_to 'Add Update',  new_company_kpi_metric_path(@company, kpi), :class=>"btn", :style=>"width: 100% !important;"%>
-					</div>
-				</div>
-			</div>
-		<%end%>
-		</div>
-	<%end%>
-	</div>
-
-<div class="container" id="teamsid">
-	<div class="col m12 s12">
-		<a class="btn-floating" href="/teams/new"><i class="material-icons">add</i></a>
-
-		<%@company.teams.each do |t|%>
-			<div class="col s12 m6">
-				<ul class="collection with-header">
-					<li class="collection-header"><h4 class="flow-text"><%=t.name%></h4><p><%=t.description%></p></li>
-					<%t.members.each do |m|%>
-					<li class="collection-item avatar">
-						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW2de1DnoYMy2eAJkE7yonqrNijWzZwJHyji7xVCoLTotK2giw" alt="" class="circle">
-						<span class="title"><%= link_to m.name, member_path(m)%></span>
-						<p><%=m.role%></p>
-						<span class="secondary-content">
-							<%=link_to '<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Delete Kpi">delete</i>
-							'.html_safe, member_path(m), method: :delete %>
-							<a href="#!"><i class="material-icons">arrow_forward</i></a>
-						</span>
-					</li>
-					<%end%>
-					<div class="center-align">
-						<%=link_to 'Add Team Member',  new_member_path, :class=>"btn", :style=>"width: 100% !important;"%>
-					</div>
-				</ul>
-			</div>
-		<%end%>
-	</div>
-</div>
-
-<div id="test3" class="col s12">
+<!-- <div id="test3" class="col s12">
 
 </div>
 <div id="test4" class="col s12">Test 4</div>
+</div> -->
 </div>
-
-
+</body>
   <%= render "layouts/footer" %>
  

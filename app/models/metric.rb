@@ -4,4 +4,6 @@ class Metric < ApplicationRecord
 	def set_company(idnum)
 		return idnum
 	end
+
+	validates :metric, presence: true
 end

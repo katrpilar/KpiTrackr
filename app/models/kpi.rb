@@ -7,8 +7,15 @@ class Kpi < ApplicationRecord
 
 	# serialize :actual, Array
 
+	validates :name, presence: true
+  validates :target, presence: true
+  validates :target_start_date, presence: true
+  validates :target_end_date, presence: true
+
+
 	def current_actual
-		if self.metrics == []
+		# binding.pry
+		if self.metrics === [] || self.metrics === nil
 			# binding.pry
 			return 0
 		else

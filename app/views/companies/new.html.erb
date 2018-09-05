@@ -1,4 +1,15 @@
 <%= form_for(@company) do |f| %>
+	<% if @company.errors.any? %>
+	    <div id="error_explanation">
+	      <h2>There were some errors:</h2>
+	      <ul>
+	        <% @company.errors.full_messages.each do |message| %>
+	          <li><%= message %></li>
+	        <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+	<%= f.label :company_name%>
   <%= f.text_field :name %>
   <%= f.submit "Create Company" %>
 <% end %>

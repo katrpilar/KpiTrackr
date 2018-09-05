@@ -2,16 +2,31 @@ class MembersController < ApplicationController
 	before_action :authenticate_user!
 
 	def new
+		# binding.pry
 		@member = Member.new
+		if !@member.team_id
+			@team = Team.find(params[:team_id]) unless @member.team
+		else 
+			@team = Team.find(@member.team_id)
+		end
+		# @team = params[:team]
+		# binding.pry
 	end
 
 
 	def create
 		@member = Member.new(params.require(:member).permit(:name, :role))
-		@member.team = current_user.company.teams.first
 		# binding.pry
-	  if @member.save
-	  	redirect_to company_path(@member.team.company)
+		@member.team = Team.find(params[:team_id])
+		@team = @member.team
+		# binding.pry
+	  if @member.valid?
+	  	@member.save
+	  	redirect_to company_path(current_user.company)
+	  else
+	  	render :new
+	  	# render new_team_member_path(@team)
+	  	# render new_team_member_path(@team).to_s
 	  end
 	end
 

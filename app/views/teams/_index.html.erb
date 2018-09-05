@@ -1,0 +1,29 @@
+<div class="container" id="teamsid">
+	<div class="col m12 s12">
+		<a class="btn-floating" href="/teams/new"><i class="material-icons">add</i></a>
+
+		<%@company.teams.each do |t|%>
+			<div class="col s12 m6">
+				<ul class="collection with-header">
+					<li class="collection-header"><h4 class="flow-text"><%=t.name%></h4><p><%=t.description%></p></li>
+					<%t.members.each do |m|%>
+					<li class="collection-item avatar">
+						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW2de1DnoYMy2eAJkE7yonqrNijWzZwJHyji7xVCoLTotK2giw" alt="" class="circle">
+						<span class="title"><%= link_to m.name, member_path(m)%></span>
+						<p><%=m.role%></p>
+						<span class="secondary-content">
+							<%=link_to '<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Delete">delete</i>
+							'.html_safe, member_path(m), method: :delete %>
+							<a href="#!"><i class="material-icons">arrow_forward</i></a>
+						</span>
+					</li>
+					<%end%>
+					<div class="center-align">
+						<%=link_to 'Add Team Member',  new_team_member_path(t), :class=>"btn", :style=>"width: 100% !important;"%>
+					</div>
+				</ul>
+			</div>
+		<%end%>
+	</div>
+</div>
+

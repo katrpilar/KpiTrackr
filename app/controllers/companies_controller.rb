@@ -9,20 +9,32 @@ class CompaniesController < ApplicationController
 	  def create
 	  	@company = Company.new(params.require(:company).permit(:name))
 	  	@company.user = current_user
-	  	# binding.pry
-	    @company.save
-	    redirect_to company_path(@company)
+
+	  	if @company.valid?
+				@company.save
+	    	redirect_to company_path(@company)
+	    else
+	    	render new_company_path
+	    end
 	  end
 
 	  def show
-	  	@company = Company.find(params[:id])
+	  	if Company.find(params[:id]).user == current_user
+	  		@company = Company.find(params[:id])
+	  	else
+	  		redirect_to '/'
+	  	end
 	  	# @company, @kpiable = Company.find(params[:id])
 	  end
 
 	  def update
-	    @company = Company.find(params[:id])
-	    @company.update(params.require(:name))
-	    redirect_to company_path(@company)
+	  	if Company.find(params[:id]).user == current_user
+		    @company = Company.find(params[:id])
+		    @company.update(params.require(:name))
+		    redirect_to company_path(@company)
+	    else
+  			redirect_to '/'
+	  	end
 	  end
 
 end
