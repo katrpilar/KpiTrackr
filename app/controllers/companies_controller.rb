@@ -21,6 +21,7 @@ class CompaniesController < ApplicationController
 	  def show
 	  	if Company.find(params[:id]).user == current_user
 	  		@company = Company.find(params[:id])
+	  		@kpis = @company.kpis
 	  	else
 	  		redirect_to '/'
 	  	end

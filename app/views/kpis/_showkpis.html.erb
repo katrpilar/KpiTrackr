@@ -1,10 +1,10 @@
-<div id="companykpis" class="col s12">
+<div id="kpis" class="col s12">
 		<div class="section">
-			<h5>All Company KPIs<a class="btn-flat" href="<%=new_company_kpi_path(@company)%>">Add New</a></h5>
+			<h5>All <%=controller_name%> KPIs<a class="btn-flat" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a></h5>
 		</div>
-		<% if @company.kpis.find_by_kpiable_type("Company") %>
+		<% if @kpis %>
 		<div class="section">
-		<%@company.kpis.where("kpiable_type = ?", "Company").each do |kpi|%>
+		<%@kpis.each do |kpi|%>
 			<%if kpi.metrics.exists?%>	    			
 				<script type="text/javascript">
 				google.charts.load('current', {packages: ['corechart', 'line']});

@@ -1,5 +1,10 @@
-module ApplicationHelper
-		def find_all_kpis
+module KpiableHelper
+
+	def create_new
+		
+	end
+
+	def find_all_kpis
 		case controller_name
 		when "Company"
 			binding.pry

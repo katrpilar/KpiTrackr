@@ -1,0 +1,40 @@
+<%= render "layouts/header" %>
+<nav>
+	<div class="nav-wrapper teal lighten-2 ">
+		<div class="col s12">
+			<a href="<%=company_path(@team.company)%>" class="breadcrumb avatar">
+				<%= image_tag @team.company.avatar, :class => "circle responsive-img", :style => "width: 50px; height: 50px;"%>
+				<%=@team.company.name%>
+			</a>
+			<a href="<%=team_path(@team)%>" class="breadcrumb avatar">
+				<%= image_tag @team.company.avatar, :class => "circle responsive-img", :style => "width: 50px; height: 50px;"%>
+				<%=@team.name%>
+			</a>
+		</div>
+	</div>
+</nav>
+
+<body>
+<div class="row">
+         
+
+	<div class="col s12 teal lighten-1">
+		<ul class="tabs" id="main-tabs">
+			<li class="tab col s6"><a class="active" href="#kpis">Team KPIs</a></li>
+			<li class="tab col s6"><a href="#membersid">Members</a></li>
+			<!-- <li class="tab col s3"><a href="#test3">Goals</a></li>
+			<li class="tab col s3"><a class="white-text" href="#test4">Revenue Streams</a></li>
+			<li class="tab col s3"><a href="#test4">Updates</a></li> -->
+		</ul>
+	</div>
+	<%= render "kpis/showkpis"%>
+
+<!-- <div id="test3" class="col s12">
+
+</div>
+<div id="test4" class="col s12">Test 4</div>
+</div> -->
+</div>
+</body>
+  <%= render "layouts/footer" %>
+ 

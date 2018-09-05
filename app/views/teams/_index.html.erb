@@ -5,7 +5,7 @@
 		<%@company.teams.each do |t|%>
 			<div class="col s12 m6">
 				<ul class="collection with-header">
-					<li class="collection-header"><h4 class="flow-text"><%=t.name%></h4><p><%=t.description%></p></li>
+					<li class="collection-header"><a href="<%=team_path(t)%>"><h4 class="flow-text"><%=t.name%></h4></a><p><%=t.description%></p></li>
 					<%t.members.each do |m|%>
 					<li class="collection-item avatar">
 						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW2de1DnoYMy2eAJkE7yonqrNijWzZwJHyji7xVCoLTotK2giw" alt="" class="circle">

@@ -2,8 +2,8 @@ Need to add validations to models
 	+Added validations to: Company, Kpi, Metric, Members
 
 Company
-	Allow for Profile Photo
-
+	+Allow for Profile Photo
+	Ability to preview profile photos
 
 Teams
 	Allow teams to have and create KPIs

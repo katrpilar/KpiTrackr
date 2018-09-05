@@ -16,4 +16,9 @@ class TeamsController < ApplicationController
 			render :new
 		end
 	end
+
+	def show
+		@team = Team.find(params[:id])
+		@kpis = @team.kpis
+	end
 end
