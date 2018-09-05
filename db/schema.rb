@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180903043458) do
+ActiveRecord::Schema.define(version: 20180905180645) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "avatar"
   end
 
   create_table "kpis", force: :cascade do |t|
@@ -69,7 +70,6 @@ ActiveRecord::Schema.define(version: 20180903043458) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "username"
-    t.string "avatar"
     t.string "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"

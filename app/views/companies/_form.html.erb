@@ -1,0 +1,25 @@
+<div class="row">
+	<div class="col s6 offset-s3">
+		<div class="container">
+<%= form_for(@company) do |f| %>
+<% binding.pry%>
+	<% if @company.errors.any? %>
+	    <div id="error_explanation">
+	      <h2>There were some errors:</h2>
+	      <ul>
+	        <% @company.errors.full_messages.each do |message| %>
+	          <li><%= message %></li>
+	        <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+	<%= f.label :name, 'Enter your company name'%>
+  <%= f.text_field :name, :class =>'input-field' %>
+	<%= f.label :avatar, 'Upload your company logo'%><br>
+  <%= f.file_field :avatar, :class => "file-field input-field" %>
+  <br>
+  <%= f.submit action_name == 'new' ? "Create Company" : "Update Company", :class => "waves-effect waves-light btn" %>
+<% end %>
+</div>
+</div>	
+</div>
