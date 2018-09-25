@@ -37,7 +37,7 @@
   }
 
 .card-header-section{
-  background-color: #4EC0A3 !important;
+  background-color: #07A67E !important;
 }
 .card-action-section{
   background-color: #FFA10A !important;
@@ -74,5 +74,44 @@
   .side-tabs .tab a.active{
      font-weight: 900;}
 }
+
+.collapsible{
+  margin-bottom: 0px !important;
+}
+
+span div div ul.collapsible{
+  margin-bottom: 0px !important;
+}
+
+.collapsible li.active i {
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+  transform: rotate(180deg);
+}
+
+.spinner-layer {
+    border-color: white !important;
+      }
+
+  #overlay {
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #5886C1; /* Green background with opacity */
+    z-index: 2000; /* Specify a stack order in case you're using a different order for other elements */
+    }
+
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* bring your own prefixes transform: translate(-50%, -50%);*/
+
+    }
+
 /*     background-color: #4db6ac !important;
 */  

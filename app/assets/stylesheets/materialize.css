@@ -2606,7 +2606,7 @@ ul:not(.browser-default) > li {
 }
 
 a {
-  color: #039be5;
+  color: #FFA068;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -5836,8 +5836,8 @@ button.btn-floating {
   border-top: 1px solid #ddd;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
-  margin: 0.5rem 0 1rem 0;
-}
+/*  margin: 0.5rem 0 1rem 0;
+*/}
 
 .collapsible-header {
   display: -webkit-box;
@@ -8334,7 +8334,7 @@ input[type=range].focused:focus:not(.active)::-ms-thumb {
 }
 
 .slider .indicators .indicator-item.active {
-  background-color: #4CAF50;
+  background-color: #FFA10A;
 }
 
 .carousel {

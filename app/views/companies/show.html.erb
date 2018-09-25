@@ -7,5 +7,67 @@
 </script>
 <%=stylesheet_link_tag "companies.css"%>
 
+<nav class="nav-extended z-depth-0 profile-orange hide-on-small-only" style="height: 15%;">
+	<div class="nav-content profile-orange">
+			<div class="row valign-wrapper hide-on-small-only" style="padding-top: 15px; padding-bottom: 10px;">
+				<div class="col m4 l2 offset-l1 right-align">
+					<a href="<%=company_path(@company)%>" class="breadcrumb avatar">
+						<%= image_tag @company.avatar, :class => "circle responsive-img", :style => "width: 150px; height: 150px;"%>
+					</a>
+				</div>
+				<div class="col m4 l3 pull-l2 left-align">
+					<h2><%=@company.name%></h2>
+						<ul class="tabs tabs-fixed-width left" id="main-tabs" style="width:200px;">
+							<li class="tab"><a class="white-text" href="#kpis">KPI</a></li>
+							<li class="tab"><a class="white-text" href="#teamsid">TEAM</a></li>
+						</ul>
+				</div>
+				<div class="col m4 l2"><a class="btn-large white blue-text text-lighten-1" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a>
+				</div>
+			</div>
+	</div>
+</nav>
+
+<nav class="nav-extended profile-orange show-on-small hide-on-med-and-up" style="height: 15%;">
+	<div class="nav-content transparent">
+		<div class="row " style="padding-top: 15px;">
+				<div class="col s12 center">
+					<a href="<%=company_path(@company)%>" class="breadcrumb avatar">
+						<%= image_tag @company.avatar, :class => "circle responsive-img", :style => "width: 80px; height: 80px;"%>
+					</a>
+					<h6><%=@company.name%></h6>
+				</div>
+			</div>
+			<div class="row valign-wrapper" >
+				<script type="text/javascript">					
+					// var test = document.querySelector("#main-tabs li a").classList.contains("active");
+
+
+					// if(!test){
+					// 	var link = document.getElementById("mainbtn");
+					// 	link.setAttribute("href", "xyz.php");
+					// };
+
+					document.getElementById("tabtwo").onclick = function() {
+				    document.getElementById("mainbtn").href='/teams/new'; 
+				  };
+
+					
+				</script>
+					<div class="col s12 center-align"><a id="mainbtn" class="btn white blue-text text-lighten-1" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a>
+					</div>				
+				</div>
+				<hr>
+			<div class="row valign-wrapper" >
+				<div class="col s12 center-align">
+					<ul class="tabs tabs-fixed-width center" id="main-tabs" style="width: 100%;">
+						<li class="tab"><a class="white-text" href="#kpis">KPI</a></li>
+						<li class="tab"><a id="tabtwo" class="white-text" href="#teamsid">TEAM</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+</nav>
+
 	<%= render "kpis/showkpis"%>
 	<%= render "teams/index"%>

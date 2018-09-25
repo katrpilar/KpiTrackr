@@ -1,8 +1,7 @@
+
 <div id="kpis" class="grey lighten-4">
 	<%if controller_name != "companies"%>
-		<div class="section">
-			<h5>All <%=controller_name%> KPIs<a class="btn" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a></h5>
-		</div>
+		
 		<%end%>
 		<% if @kpis %>
 			<div class="row">
@@ -56,7 +55,7 @@
 					backgroundColor: 'transparent',
 					};
 
-					var chart<%=kpi.id%> = new google.visualization.LineChart(document.getElementById('chart_div-<%=kpi.id%>'));
+					var chart<%=kpi.id%> = new google.visualization.AreaChart(document.getElementById('chart_div-<%=kpi.id%>'));
 					chart<%=kpi.id%>.draw(data, options);
 
 
@@ -104,10 +103,15 @@
 									</div>
 
 		
-						<ul class="collapsible z-depth-0" id="allmetrics-<%=kpi.id%>">
+						<ul class="collapsible z-depth-0">
 							<li>
-								<div class="collapsible-header center-align card-header-section">
-									<p class="center-align white-text">ALL UPDATES</p>
+								<div class="collapsible-header center-align card-header-section white-text">
+									<div class="col s6 left-align">
+	       						<p>ALL UPDATES</p>
+	       					</div>
+	       					<div class="col s6 right-align">
+       							<i class="material-icons right-align">expand_less</i>
+       						</div>
 								</div>
 								<div class="collapsible-body white">
 									<ul class="collection white">
@@ -116,15 +120,23 @@
 										var userzone = moment.parseZone(m).utcOffset();
 										</script>
 									<%kpi.metrics.order(created_at: :desc).each do |mt|%>
-										<li class="collection-item card-header-section white-text ">
+										<li class="collection-item card-header-section white-text left-align">
 										<script type="text/javascript">								      				
-										var newdate = moment("<%=mt.created_at%>").utcOffset(userzone).format('YYYY-MM-DD hh:mm A');
+										var newdate = moment("<%=mt.created_at%>").utcOffset(userzone).format('LLLL');
 										</script>
-										<strong><%=mt.metric%></strong> on 
-										<script type="text/javascript">
-										document.write(newdate)
-										</script>
-										<%=link_to "Delete", metric_path(mt), method: :delete %>
+											<div class="row valign-center">
+												<div class="col s4 left-align">
+													<h5 style="border-right:1px solid #fff;height:100%"><%=mt.metric%></h5>
+												</div>
+												<div class="col s6 left-align">
+													<p><script type="text/javascript">
+													document.write(newdate)
+													</script></p>
+												</div>
+												<div class="col s2 left-align valign-center">												
+													<%=link_to '<i class="large material-icons white-text">clear</i>'.html_safe, metric_path(mt), method: :delete, data: {:confirm => "Sure you want to delete this update?"}, :class => "btn-flat" %>
+												</div>
+											</div>
 										</li>
 									<%end%>
 								</ul>

@@ -2,13 +2,15 @@
 
 
 <div id="teamsid" class="row grey lighten-4">
-		<div class="section">
-			<h5>All Teams<a class="btn" href="<%= new_team_path%>">Add New</a></h5>
+		<div class="section center-align">
+			<h5>All Teams</h5>
+			<a class="btn" href="<%= new_team_path%>">Add New</a>
 		</div>
+		<div class="container">
 		<%@company.teams.each do |t|%>
 			<div class="col s12 m6 l6 xl6">
 				<div class="card">
-				<ul class="collapsible">
+				<ul class="collapsible" style="margin-bottom: 0;">
 					<li class="center">
 						<div class="container" style="position: relative !important;">
 							<%= image_tag t.team_pic, :class => "circle responsive-img", :style => "width: 120px; height: 120px;"%>
@@ -17,7 +19,6 @@
 							<a href="<%=team_path(t)%>"><h4 class="flow-text"><%=t.name%></h4></a>
 						
 						<p><%=t.description%></p>
-						<a class="btn" href="<%= new_team_member_path(t)%>">Add Member</a>
 					</li>
 					<%t.members.each do |m|%>
 					<li> 
@@ -40,10 +41,14 @@
 					<%end%>
 					
 				</ul>
+				<div class="card-action center-align card-action-section">
+					<a class="btn-floating transparent z-depth-0 center" href="<%= new_team_member_path(t)%>"><i class="large material-icons white-text">add</i></a>
+				</div>
 
 			</div>
 			</div>
 
 		<%end%>
+	</div>
 </div>
 

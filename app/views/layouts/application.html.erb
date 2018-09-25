@@ -6,7 +6,15 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <%=stylesheet_link_tag "companies.css"%>
 
+    <script>
+    $(window).on('load', function() {
+             $('.preloader').delay(600).fadeOut('slow');
+             $('.preloader-wrapper').delay(500).fadeOut();
+         });
+    </script>
   <title>KPI TRACKR</title>
   <link href="https://fonts.googleapis.com/css?family=Palanquin" rel="stylesheet">
 
@@ -31,41 +39,49 @@
 	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	  <%=stylesheet_link_tag "materialize.css"%>
 
-	  <%if controller_name == "companies"%>
-	    <%= render "companies/companyinfo" %>
-	  <%end%>
+	  
 
 
 
   </head>
 
   <body>
+    <div class="preloader hero" id="overlay">
+      <div class="preloader-wrapper big active centered">
+            <div class="spinner-layer spinner-blue" style="z-index:3000;">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
     <%= yield %>
   </body>
 
-  <footer class="page-footer teal darken-4">
+  <footer class="page-footer grey darken-4" >
   <span class="white-text">
           <div class="container">
             <div class="row">
               <div class="col l6 s12">
-                <h5 >Footer Content</h5>
-                <p >You can use rows and columns here to organize your footer content.</p>
+                <h5>Welcome to KPI Trackr</h5>
+                <p>Data-driven collaboration simplified.</p>
               </div>
               <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
+                <h5 class="white-text">Connect</h5>
                 <ul>
-                  <li><a href="#!">Link 1</a></li>
-                  <li><a href="#!">Link 2</a></li>
-                  <li><a href="#!">Link 3</a></li>
-                  <li><a href="#!">Link 4</a></li>
+                  <li><a href="#!">Coming Soon</a></li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="footer-copyright">
             <div class="container">
-            © 2014 Copyright Text
-            <a class="right" href="#!">More Links</a>
+              Made with <i class="fa fa-heart fa-2g" aria-hidden="true"></i> by <a href="http://www.productoptimist.com" style="color:white;"><u>Product Optimist</u></a> (Katrina Brinson)           
+              <a class="right" href="https://www.linkedin.com/in/katrinabrinson/">LinkedIn</a>
             </div>
           </div>
         </span>
