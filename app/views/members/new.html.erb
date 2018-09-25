@@ -13,5 +13,7 @@
 	<%= f.text_field :name %>
 	<%= f.label :role %>
 	<%= f.text_field :role %>
+	<%= f.label :picture, 'Upload your profile picture'%><br>
+  <%= f.file_field :picture, :class => "file-field input-field" %>
 	<%= f.submit "Create Member" %>
 <% end %>

@@ -1,29 +1,49 @@
-<div class="container" id="teamsid">
-	<div class="col m12 s12">
-		<a class="btn-floating" href="/teams/new"><i class="material-icons">add</i></a>
 
+
+
+<div id="teamsid" class="row grey lighten-4">
+		<div class="section">
+			<h5>All Teams<a class="btn" href="<%= new_team_path%>">Add New</a></h5>
+		</div>
 		<%@company.teams.each do |t|%>
-			<div class="col s12 m6">
-				<ul class="collection with-header">
-					<li class="collection-header"><a href="<%=team_path(t)%>"><h4 class="flow-text"><%=t.name%></h4></a><p><%=t.description%></p></li>
+			<div class="col s12 m6 l6 xl6">
+				<div class="card">
+				<ul class="collapsible">
+					<li class="center">
+						<div class="container" style="position: relative !important;">
+							<%= image_tag t.team_pic, :class => "circle responsive-img", :style => "width: 120px; height: 120px;"%>
+							<a class="btn-floating" href="<%=edit_team_path(t)%>" style="position: absolute; left: 55%; top: 65%;"><i class="medium material-icons white-text">edit</i></a>
+						</div>
+							<a href="<%=team_path(t)%>"><h4 class="flow-text"><%=t.name%></h4></a>
+						
+						<p><%=t.description%></p>
+						<a class="btn" href="<%= new_team_member_path(t)%>">Add Member</a>
+					</li>
 					<%t.members.each do |m|%>
-					<li class="collection-item avatar">
-						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW2de1DnoYMy2eAJkE7yonqrNijWzZwJHyji7xVCoLTotK2giw" alt="" class="circle">
-						<span class="title"><%= link_to m.name, member_path(m)%></span>
-						<p><%=m.role%></p>
-						<span class="secondary-content">
-							<%=link_to '<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Delete">delete</i>
-							'.html_safe, member_path(m), method: :delete %>
-							<a href="#!"><i class="material-icons">arrow_forward</i></a>
-						</span>
+					<li> 
+						<div class="collapsible-header avatar">
+							<%= image_tag m.picture, :class => "circle responsive-img", :style => "width: 50px; height: 50px;"%>
+								<div class="col s6">
+									<h6 class="left-align grey-text text-darken-4"><%= link_to m.name, member_path(m), :class=>"grey-text text-darken-4"%></h6>
+								</div>
+								<div class="col s6">
+									<p class="right-align grey-text text-lighten-1"><%=m.role%></p>
+								</div>
+						</div>
+						
+						<div class="collapsible-body teal lighten-2">
+							<span><%=link_to '<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Delete">delete</i>
+							'.html_safe, member_path(m), method: :delete, :class=>"white-text" %><%=link_to '<i class="material-icons tooltipped" data-position="bottom" data-tooltip="Edit">edit</i>
+							'.html_safe, edit_member_path(m), :class=>"white-text" %></span>
+						</div>
 					</li>
 					<%end%>
-					<div class="center-align">
-						<%=link_to 'Add Team Member',  new_team_member_path(t), :class=>"btn", :style=>"width: 100% !important;"%>
-					</div>
+					
 				</ul>
+
 			</div>
+			</div>
+
 		<%end%>
-	</div>
 </div>
 

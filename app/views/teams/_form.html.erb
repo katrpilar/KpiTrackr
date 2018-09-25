@@ -1,0 +1,26 @@
+<div class="row">
+	<div class="col s6 offset-s3">
+		<div class="container">
+			<%= form_for @team do |f|%>
+			<% if @team.errors.any? %>
+				    <div id="error_explanation">
+				      <h2>There were some errors:</h2>
+				      <ul>
+				        <% @team.errors.full_messages.each do |message| %>
+				          <li><%= message %></li>
+				        <% end %>
+				      </ul>
+				    </div>
+				  <% end %>
+				<%= f.label :name%>
+				<%= f.text_field :name %>
+				<%= f.label :description %>
+				<%= f.text_field :description %>
+				<%= f.label :team_pic, 'Upload your company logo'%><br>
+			  <%= f.file_field :team_pic, :class => "file-field input-field" %>
+				<br>
+				<%= f.submit action_name == "new" ? "Create Team" : "Update Team", :class => "waves-effect waves-light btn"%>
+			<% end %>
+</div>
+</div>
+</div>

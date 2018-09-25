@@ -1,4 +1,4 @@
-module KpiableHelper
+module KpisHelper
 
 	def create_new
 		

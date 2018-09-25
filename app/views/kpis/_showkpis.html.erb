@@ -1,9 +1,12 @@
-<div id="kpis" class="col s12">
+<div id="kpis" class="grey lighten-4">
+	<%if controller_name != "companies"%>
 		<div class="section">
 			<h5>All <%=controller_name%> KPIs<a class="btn" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a></h5>
 		</div>
+		<%end%>
 		<% if @kpis %>
-		<div class="section">
+			<div class="row">
+				<div class="container">
 		<%@kpis.each do |kpi|%>
 			<%if kpi.metrics.exists?%>	    			
 				<script type="text/javascript">
@@ -11,129 +14,141 @@
 				google.charts.setOnLoadCallback(drawBackgroundColor);
 
 				function drawBackgroundColor() {
-				var data = new google.visualization.DataTable();
-				data.addColumn('date', 'Updated');
-				data.addColumn('number', 'Amount');
+					var data = new google.visualization.DataTable();
+					data.addColumn('date', 'Updated');
+					data.addColumn('number', 'Amount');
+					var mets = []
 
-				var mets = []
+					<%kpi.metrics.each do |i|%>
+						var v = [new Date(<%=i.created_at.to_f*1000%>)]
+						v.push(<%=i.metric%>)
+						mets.push(v)
+					<%end%>
+					data.addRows(mets)
+					var chartwidth = $('.card').width();
 
-				<%kpi.metrics.each do |i|%>
-				var v = [new Date(<%=i.created_at.to_f*1000%>)]
-				v.push(<%=i.metric%>)
-				mets.push(v)
-				<%end%>
-				data.addRows(mets)
-				var chartwidth = $('.card-title').width();
+					var options = {
+					width: chartwidth,
+					hAxis: {	
 
-				var options = {
-				width: chartwidth,
-				hAxis: {	
+					gridlines: {
+					color: 'transparent'
+					},
+					baselineColor: '#ffffff',
+					textStyle: {
+					color: 'white'
+					}
+					},
+					vAxis: {	
+					gridlines: {
+					color: 'transparent'
+					},
+					baselineColor: '#ffffff',
+					textStyle: {
+					color: 'white'
+					}
+					},
+					series: {
+					0: { color: '#ffffff', lineWidth: 2 },
+					1: { color: '#ffffff', lineWidth: 2 }
+					},
+					legend: 'none',
+					backgroundColor: 'transparent',
+					};
 
-				gridlines: {
-				color: 'transparent'
-				},
-				baselineColor: '#000000',
-				textStyle: {
-				color: 'white'
-				}
-				},
-				vAxis: {	
-				gridlines: {
-				color: 'transparent'
-				},
-				baselineColor: '#000000',
-				textStyle: {
-				color: 'black'
-				}
-				},
-				series: {
-				0: { color: '#000000', lineWidth: 2 },
-				1: { color: '#000000', lineWidth: 2 }
-				},
-				legend: 'none',
-				backgroundColor: '#ffffff',
-				};
+					var chart<%=kpi.id%> = new google.visualization.LineChart(document.getElementById('chart_div-<%=kpi.id%>'));
+					chart<%=kpi.id%>.draw(data, options);
 
-				var chart<%=kpi.id%> = new google.visualization.LineChart(document.getElementById('chart_div-<%=kpi.id%>'));
-				chart<%=kpi.id%>.draw(data, options);
+
+
+					// google.visualization.events.addListener(chart<%=kpi.id%>, 'select', selectHandler);
+					// function selectHandler() {
+					//   var selection = chart<%=kpi.id%>.getSelection();
+					//   var message = '';
+					//     for (var i = 0; i < selection.length; i++) {
+					//       var item = selection[i];
+					//         var props = data.getValue(i, i);
+					//         var vals = data.getValue(i++, i);
+					//         message += vals;					     
+					//     }
+					//     if(confirm('Do you want to DELETE the metric update ' + message) == true){
+					//     	alert('Deleted');
+					//     }
+					// }
+
 				}
 				</script>
 			<%end%>
-
-			<div class="col s12 m6">
+			<div class="col s12 m12 l12 xl6">
 				<%if kpi.current_actual != nil %>
-				<%currprogress =  (kpi.current_actual.to_f/kpi.target.to_f)*100%>
+					<%currprogress = (kpi.current_actual.to_f/kpi.target.to_f)*100%>
 				<%else%>
-				<%currprogress =  0%>
+					<%currprogress = 0%>
 				<%end%>
-				<div class="card light-grey" id="card-<%=kpi.id%>">
-					<span class="dark-grey-text">
-
-						<div class="card-tabs">
-						<ul class="tabs tabs-fixed-width side-tabs" style="z-index: 100;">
-						<li class="tab" ><a class="active" href="#kpi-<%=kpi.id%>">Details</a></li>
-						<li class="tab" ><a href="#allmetrics-<%=kpi.id%>">Updates</a></li>
-						<li class="tab" ><a href="#graph-<%=kpi.id%>">Progress</a></li>
-						</ul>
-						</div>
-					<div class="card-content">
-						<div class="center-align">
-							<span class="card-title"><%=kpi.target%> <%=kpi.name%> (<%=kpi.unit%>)</span>
-						</div>
-
-						<div class="row center-align" id="kpi-<%=kpi.id%>">
-							<div class="row">
-								<p>From <%=kpi.target_start_date.to_formatted_s(:long)%> To <%=kpi.target_end_date.to_formatted_s(:long)%></p>
-							</div>
-
-							<div class="row">
-								<div class="progress grey lighten-3" style="height: 10px;">
-								<div class="determinate green lighten-3<%= 'red lighten-3' if kpi.target/2 > kpi.current_actual %>" style="width: <%=currprogress%>%;"></div>
+				<div class="card card-header-section" id="card-<%=kpi.id%>">
+					<div class="section transparent white-text center-align ">
+					<%=kpi.target_start_date.to_formatted_s(:long)%>-<%=kpi.target_end_date.to_formatted_s(:long)%><br>
+					<span class="card-title"><%=kpi.target%> <%=kpi.name%> (<%=kpi.unit%>)</span><br>
+					<div class="progress green lighten-5" style="height: 10px;">
+								<div class="determinate <%= 'light-green' if kpi.target/2 < kpi.current_actual %><%= 'red lighten-3' if kpi.target/2 > kpi.current_actual %>" style="width: <%=currprogress%>%;">
 								</div>
-								<p style="font-weight: 500;"><%=currprogress.round(1)%>% to Goal - <%=(kpi.target_end_date - Date.today).to_i%> Days Remain</p>
 							</div>
+					<%=currprogress.round(1)%>% to Goal - <%=(kpi.target_end_date - Date.today).to_i%> Days Remain
+						
+					</div>								
+					<span class="dark-grey-text">
+					<div class="card-content" style="padding-top: 0px !important;">
+						<div class="center-align">
+								<div class="col s12 m12 card-header-section">
+										<div id="chart_div-<%=kpi.id%>" class="chart"></div>
+									</div>
 
-							<div class="row">
-								<a class="btn-floating tooltipped" href="<%=new_kpi_metric_path(kpi)%>" data-position="bottom" data-tooltip="Update Metric"><i class="large material-icons">file_upload</i></a>
-								<a class="btn-floating tooltipped" href="<%=edit_kpi_path(kpi)%>" data-position="bottom" data-tooltip="Edit"><i class="large material-icons">edit</i></a>
-								
-								<%= link_to '<i class="large material-icons">delete</i>'.html_safe, kpi, :method => :delete, data: {:confirm => "You sure you want to delete this kpi?"}, :title => "Delete #{kpi.name}", :class => "btn-floating" %>
-							</div>						      			
-						</div>
-
-						<div class="row" id="graph-<%=kpi.id%>">
-							<div class="col s12 m12">
-								<div id="chart_div-<%=kpi.id%>" class="chart"></div>
-							</div>
-						</div>
-
-						<div class="row" id="allmetrics-<%=kpi.id%>">
-							<ul class="collection">
-								<%kpi.metrics.order(created_at: :desc).each do |mt|%>
-									<li class="collection-item">
-									<script type="text/javascript">								      				
-									var m = moment();
-									var userzone = moment.parseZone(m).utcOffset();
-									var newdate = moment("<%=mt.created_at%>").utcOffset(userzone).format('YYYY-MM-DD hh:mm A');
-									</script>
-									Last Updated to <strong><%=mt.metric%></strong> on 
-									<script type="text/javascript">
-									document.write(newdate)
-									</script>
-									<%=link_to "Delete", metric_path(mt), method: :delete %>
-									</li>
-								<%end%>
-							</ul>
-						</div>							        	
+		
+						<ul class="collapsible z-depth-0" id="allmetrics-<%=kpi.id%>">
+							<li>
+								<div class="collapsible-header center-align card-header-section">
+									<p class="center-align white-text">ALL UPDATES</p>
+								</div>
+								<div class="collapsible-body white">
+									<ul class="collection white">
+										<script type="text/javascript">
+											var m = moment();
+										var userzone = moment.parseZone(m).utcOffset();
+										</script>
+									<%kpi.metrics.order(created_at: :desc).each do |mt|%>
+										<li class="collection-item card-header-section white-text ">
+										<script type="text/javascript">								      				
+										var newdate = moment("<%=mt.created_at%>").utcOffset(userzone).format('YYYY-MM-DD hh:mm A');
+										</script>
+										<strong><%=mt.metric%></strong> on 
+										<script type="text/javascript">
+										document.write(newdate)
+										</script>
+										<%=link_to "Delete", metric_path(mt), method: :delete %>
+										</li>
+									<%end%>
+								</ul>
+								</div>
+							</li>
+						</ul>
+									
+						</div>						        	
 					</div>
 					</span>
 
-					<div class="center-align">
-					<%=link_to 'Add Update',  new_kpi_metric_path(kpi), :class=>"btn", :style=>"width: 100% !important;"%>
+
+					<div class="card-action center-align card-action-section" id="kpi-<%=kpi.id%>">
+						<a class="btn-flat" href="<%=new_kpi_metric_path(kpi)%>" data-position="bottom" data-tooltip="Update Metric"><i class="large material-icons white-text">file_upload</i></a>
+						<a class="btn-flat" href="<%=edit_kpi_path(kpi)%>" data-position="bottom" data-tooltip="Edit"><i class="large material-icons white-text">edit</i></a>
+						
+						<%= link_to '<i class="large material-icons white-text">delete</i>'.html_safe, kpi, :method => :delete, data: {:confirm => "You sure you want to delete this kpi?"}, :title => "Delete", :class => "btn-flat" %>
+					</div>
+
 					</div>
 				</div>
-			</div>
 		<%end%>
-		</div>
+	</div>
+					</div>
+
 	<%end%>
 	</div>

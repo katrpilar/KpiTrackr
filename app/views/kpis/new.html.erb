@@ -1,3 +1,4 @@
+
 <script type="text/javascript" src="javascripts/company_kpis.js"></script>
 <%= form_for([@kpiable, @kpi]) do |f| %>
 	<% if @kpi.errors.any? %>
@@ -17,8 +18,8 @@
 	<%= f.label :target%>
 	<%= f.number_field :target%>
 	<%= f.label :target_start_date%>
-	<%= f.date_field :target_start_date, class: 'datepicker' %>
+	<%= f.date_field :target_start_date, :class => 'datepicker', :type => 'text' %>
 	<%= f.label :target_end_date%>
-	<%= f.date_field :target_end_date, class: 'datepicker' %>
+	<%= f.date_field :target_end_date, :class => 'datepicker', :type => 'text' %>
 	<%= f.submit "Add KPI" %>
 <% end %>

@@ -5,14 +5,15 @@ class MetricsController < ApplicationController
 	def new
 		@kpi = Kpi.find(params[:kpi_id])
 		@metric = Metric.new(kpi: @kpi)
+		@company = current_user.company
 
-		if params.has_key?(:company_id)
-			@company = Company.find(params[:company_id])
-		elsif params.has_key?(:team_id)
-			@company = Team.find(params[:team_id]).company
-		elsif params.has_key?(:member_id)
-			@company = Member.find(params[:member_id]).team.company
-		end
+		# if params.has_key?(:company_id)
+		# 	@company = Company.find(params[:company_id])
+		# elsif params.has_key?(:team_id)
+		# 	@company = Team.find(params[:team_id]).company
+		# elsif params.has_key?(:member_id)
+		# 	@company = Member.find(params[:member_id]).team.company
+		# end
 	end
 
 

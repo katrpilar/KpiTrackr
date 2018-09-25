@@ -8,6 +8,10 @@
   );
     $('.collapsible').collapsible();
     $('.tooltipped').tooltip();    
+    $('.datepicker').datepicker();
+    $('.collapsible').collapsible();
+
+
   });
  window.onload = function(){
      var timedifference = new Date().getTimezoneOffset();

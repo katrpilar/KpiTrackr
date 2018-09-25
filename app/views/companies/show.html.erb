@@ -1,23 +1,11 @@
 
-<%= render "layouts/header" %>
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">google.charts.load('current', {packages: ['charteditor']});</script>
+<script type="text/javascript">
+	var m = moment();
+  var userzone = moment.parseZone(m).utcOffset();
+</script>
 <%=stylesheet_link_tag "companies.css"%>
 
-<body>
-<div class="row">
-	<%= render "companyinfo" %>         
-
-	<div class="col s12 teal lighten-1">
-		<ul class="tabs" id="main-tabs">
-			<li class="tab col s6"><a class="active" href="#kpis">Company KPIs</a></li>
-			<li class="tab col s6"><a href="#teamsid">Teams</a></li>
-		</ul>
-	</div>
 	<%= render "kpis/showkpis"%>
 	<%= render "teams/index"%>
-
-</div>
-</body>
-  <%= render "layouts/footer" %>
- 

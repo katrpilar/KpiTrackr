@@ -26,7 +26,11 @@ Add metric quality ratings
 	Impact (1-5)
 
 KPI
+	+Change goal dates input to datepicker format
 	Allow user to create collections/categories of KPIs
+	Designate time duration: Quarterly, Monthly, Yearly
+	Chart Avg needed trendline to show what's needed to meet the goal metric
+	Tie to a goal
 	Allow user to add a comment to the kpi when adding an update
 	Add ability to star a kpi to make appear in the top section
 	Add ability to create calculated metrics on New KPI page
@@ -40,6 +44,8 @@ Users/Members
 	Allow to add profile photo
 	Allow for indivuals to have/create KPIs that can only be seen on their profile page
 
+Goal
+		Allow for MoM, YoY, etc goals that are tied to Kpis
 
 UX/UI
 	Make google Charts responsive

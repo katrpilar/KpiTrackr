@@ -12,7 +12,7 @@ class MembersController < ApplicationController
 
 
 	def create
-		@member = Member.new(params.require(:member).permit(:name, :role))
+		@member = Member.new(params.require(:member).permit(:name, :role, :picture))
 		# binding.pry
 		@member.team = Team.find(params[:team_id])
 		@team = @member.team

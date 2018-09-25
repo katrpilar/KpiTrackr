@@ -16,6 +16,32 @@
  /* .sidenav-overlay{
       opacity: 0 !important;
     }*/
+.collapsible-body {
+  padding:0px !important;
+}
+.profile-orange{
+  background-color: #FF650A !important;
+}
+
+.kpi-card-color{
+    background-color: #073269 !important;
+   
+/*    background-color: #FFA10A !important;
+*/
+
+  }
+
+.content-background-color{
+    background-color: #4EC0A3 !important;
+
+  }
+
+.card-header-section{
+  background-color: #4EC0A3 !important;
+}
+.card-action-section{
+  background-color: #FFA10A !important;
+}
 
   #main-tabs{
     background-color: transparent !important;
@@ -26,8 +52,12 @@
   }
 
   #main-tabs .indicator{
-    background-color: #A5D6A7 !important;
-    height: 4px !important;
+    background-color: #ffffff !important;
+    height: 2px !important;
+  }
+
+  .tabs .tab a.active{
+    font-weight: 900;
   }
 
   .side-tabs .tab a{
@@ -38,8 +68,11 @@
     background-color: #26a69a !important;
 /*    height: 4px !important;
 */  }
-
+.card-content{
+  padding: 0 !important;
+}
   .side-tabs .tab a.active{
-     font-weight: 900;
+     font-weight: 900;}
+}
 /*     background-color: #4db6ac !important;
-*/  }
+*/  
