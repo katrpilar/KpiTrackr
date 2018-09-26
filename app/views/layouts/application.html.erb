@@ -15,12 +15,18 @@
              $('.preloader-wrapper').delay(500).fadeOut();
          });
     </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">google.charts.load('current', {packages: ['charteditor']});</script>
+    <script type="text/javascript">
+      var m = moment();
+      var userzone = moment.parseZone(m).utcOffset();
+    </script>
   <title>KPI TRACKR</title>
   <link href="https://fonts.googleapis.com/css?family=Palanquin" rel="stylesheet">
 
 	<nav class="grey lighten-5">
 	    <div class="nav-wrapper z-depth-1">
-	      <a href="#" class="brand-logo grey-text text-darken-2">KpiTrackr</a>
+	      <a href="/" class="brand-logo grey-text text-darken-2">KpiTrackr</a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li><a href="/" class="grey-text text-darken-2">Home</a></li>
 	        <% if user_signed_in?%>

@@ -2,22 +2,23 @@
 
 <nav class="profile-orange">
 	<div class="nav-wrapper profile-orange ">
-		<div class="row">
+		<div class="row valign-wrapper">
 		<div class="col m8 l10">
 			<div class="valign-wrapper">
 			<a href="<%=company_path(@team.company)%>" class="breadcrumb avatar valign-wrapper">
-				<%= image_tag @team.company.avatar, :class => "circle responsive-img", :style => "width: 50px; height: 50px;"%>
+				<%= image_tag @team.company.avatar, :class => "circle responsive-img hide-on-small-only", :style => "width: 50px; height: 50px;"%>
 				<h6><%=@team.company.name%></h6>
 			</a>
 			<a href="<%=team_path(@team)%>" class="breadcrumb avatar valign-wrapper">
-				<%= image_tag @team.team_pic, :class => "circle responsive-img", :style => "width: 50px; height: 50px;"%>
+				<%= image_tag @team.team_pic, :class => "circle responsive-img hide-on-small-only", :style => "width: 50px; height: 50px;"%>
 				<h6><%=@team.name%></h6>
 			</a>			
 		</div>
 		
 		</div>
 		<div class="col m4 l2">
-				<a class="btn-large white blue-text text-lighten-1" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a>
+				<a class="btn-large white blue-text text-lighten-1 hide-on-small-only" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a>
+				<a class="btn white blue-text text-lighten-1 show-on-small hide-on-med-and-up" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a>
 		</div>
 	</div>
 	</div>
@@ -29,7 +30,7 @@
 	<div class="col s12 teal lighten-1">
 		<ul class="tabs" id="main-tabs">
 			<li class="tab col s6"><a class="active" href="#kpis">Team KPIs</a></li>
-			<li class="tab col s6"><a href="#membersid">Members</a></li>
+			<li class="tab col s6 disabled"><a href="#membersid">Members</a></li>
 		</ul>
 	</div>
 	<%= render "kpis/showkpis"%>

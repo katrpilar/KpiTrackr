@@ -56,14 +56,38 @@ class KpisController < ApplicationController
 
 	def update
 		@kpi = Kpi.find(params[:id])
-		@kpi.update(params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date))
+		
 		@company = current_user.company
-		redirect_to company_path(@company)
+		if @kpi.update(params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date))
+			case @kpi.kpiable_type
+			when "Company"				
+				redirect_to company_path(current_user.company)
+			when "Team"
+				redirect_to team_path(Team.find(@kpi.kpiable_id))
+			when "Member"
+				redirect_to member_path(Member.find(@kpi.kpiable_id))
+			else
+				redirect_to :root_path
+			end
+		else
+			render :edit
+		end
+		# redirect_to company_path(@company)
 	end
 
 	def destroy
-		Kpi.find(params[:id]).destroy
-		redirect_to company_path(current_user.company)
+		@kpi = Kpi.find(params[:id])
+		@kpi.destroy
+		case @kpi.kpiable_type
+			when "Company"				
+				redirect_to company_path(current_user.company)
+			when "Team"
+				redirect_to team_path(Team.find(@kpi.kpiable_id))
+			when "Member"
+				redirect_to member_path(Member.find(@kpi.kpiable_id))
+			else
+				redirect_to :root_path
+			end
 	end
 
 	private 

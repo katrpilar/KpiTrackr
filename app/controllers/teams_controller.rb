@@ -28,13 +28,18 @@ class TeamsController < ApplicationController
 
 	def update
 		@team = Team.find(params[:id])
-		@team.update(params.require(:team).permit(:name, :description, :company_id, :team_pic))
-		binding.pry
-		redirect_to company_path(current_user.company)
+		if @team.update(params.require(:team).permit(:name, :description, :company_id, :team_pic))
+			redirect_to team_path(@team)
+		else
+			render :edit
+		end
+		# redirect_to company_path(current_user.company)
 	end
 
 	def destroy
-		Team.find(params[:id]).destroy
-		redirect_to (company_path(current_user.company))
+		@team = Team.find(params[:id])
+		@company = @team.company
+		@team.destroy
+		redirect_to (company_path(@company))
 	end
 end

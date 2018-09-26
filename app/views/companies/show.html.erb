@@ -1,10 +1,5 @@
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">google.charts.load('current', {packages: ['charteditor']});</script>
-<script type="text/javascript">
-	var m = moment();
-  var userzone = moment.parseZone(m).utcOffset();
-</script>
+
 <%=stylesheet_link_tag "companies.css"%>
 
 <nav class="nav-extended z-depth-0 profile-orange hide-on-small-only" style="height: 15%;">
@@ -35,7 +30,7 @@
 					<a href="<%=company_path(@company)%>" class="breadcrumb avatar">
 						<%= image_tag @company.avatar, :class => "circle responsive-img", :style => "width: 80px; height: 80px;"%>
 					</a>
-					<h6><%=@company.name%></h6>
+					<h5><%=@company.name%></h5>
 				</div>
 			</div>
 			<div class="row valign-wrapper" >
@@ -48,9 +43,9 @@
 					// 	link.setAttribute("href", "xyz.php");
 					// };
 
-					document.getElementById("tabtwo").onclick = function() {
-				    document.getElementById("mainbtn").href='/teams/new'; 
-				  };
+					// document.getElementById("tabtwo").onclick = function() {
+				 //    document.getElementById("mainbtn").href='/teams/new'; 
+				 //  };
 
 					
 				</script>

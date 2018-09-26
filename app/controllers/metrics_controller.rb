@@ -40,9 +40,21 @@ class MetricsController < ApplicationController
 	end
 
 	def destroy
-		@metric = Metric.find(params[:id]).destroy
+		@metric = Metric.find(params[:id])
+		@kpi = @metric.kpi
+		@metric.destroy
+		case @kpi.kpiable_type
+			when "Company"
+				redirect_to company_path(@kpi.kpiable)
+			when "Team"
+				redirect_to team_path(@kpi.kpiable)
+			when "Member"
+				redirect_to member_path(@kpi.kpiable)
+			else
+				redirect_to company_path(current_user.company)
+			end
 
-		redirect_to company_path(current_user.company)
+		# redirect_to company_path(current_user.company)
 	end
 
 	def set_kpiable

@@ -9,6 +9,31 @@
 </script>
 <%=stylesheet_link_tag "companies.css"%>
 
+
+<nav class="grey darken-4">
+	<div class="nav-wrapper grey darken-4">
+		<div class="row">
+		<div class="col s12">
+			<div class="valign-wrapper">
+			<a href="<%=company_path(@team.company)%>" class="breadcrumb avatar valign-wrapper">
+				<%= image_tag @team.company.avatar, :class => "circle responsive-img hide-on-small-only", :style => "width: 50px; height: 50px;"%>
+				<h6><%=@team.company.name%></h6>
+			</a>
+			<a href="<%=team_path(@team)%>" class="breadcrumb avatar valign-wrapper">
+				<%= image_tag @team.team_pic, :class => "circle responsive-img hide-on-small-only", :style => "width: 50px; height: 50px;"%>
+				<h6><%=@team.name%></h6>
+			</a>
+			<a href="<%=member_path(@member)%>" class="breadcrumb avatar valign-wrapper">
+				<%= image_tag @member.picture, :class => "circle responsive-img hide-on-small-only", :style => "width: 50px; height: 50px;"%>
+				<h6><%=@member.name%></h6>
+			</a>			
+			</div>
+		</div>
+	</div>
+	</div>
+</nav>
+
+
 <nav class="nav-extended z-depth-0 profile-orange hide-on-small-only" style="height: 15%;">
 	<div class="nav-content profile-orange">
 			<div class="row valign-wrapper hide-on-small-only" style="padding-top: 15px; padding-bottom: 10px;">
@@ -18,13 +43,11 @@
 					</a>
 				</div>
 				<div class="col m4 l3 pull-l2 left-align">
-					<a class="btn-flat white-text" href="<%=company_path(@member.team.company)%>"><%=@member.team.company.name%></a>
-
-					<h2><%=@member.name%></h2>
+					<h2><%=@member.name%><div class="chip white-text card-action-section" style="display: inline !important; font-size: 12px !important; vertical-align: super !important;"><%=@member.role%></div></h2>
 
 						<ul class="tabs tabs-fixed-width left" id="main-tabs" style="width:200px;">
 							<li class="tab"><a class="white-text" href="#kpis">KPI</a></li>
-							<li class="tab"><a class="white-text" href="#teamsid">BIO</a></li>
+							<li class="tab disabled"><a class="white-text" href="#teamsid">BIO</a></li>
 						</ul>
 				</div>
 				<div class="col m4 l2"><a class="btn-large white blue-text text-lighten-1" href="<%= new_member_kpi_path(@member)%>">Add New</a>
@@ -38,10 +61,9 @@
 		<div class="row " style="padding-top: 15px;">
 				<div class="col s12 center">
 					<a href="<%=company_path(@member.team.company)%>" class="breadcrumb avatar">
-						<%= image_tag @member.picture, :class => "circle responsive-img", :style => "width: 80px; height: 80px;"%>
+						<%= image_tag @member.picture, :class => "circle responsive-img ", :style => "width: 80px; height: 80px;"%>
 					</a>
-					<h6><%=@member.name%></h6>
-					<%=link_to @member.team.company.name, company_path(@member.team.company)%>
+					<h5><%=@member.name%></h5>
 				</div>
 			</div>
 			<div class="row valign-wrapper" >
@@ -68,7 +90,7 @@
 				<div class="col s12 center-align">
 					<ul class="tabs tabs-fixed-width center" id="main-tabs" style="width: 100%;">
 						<li class="tab"><a class="white-text" href="#kpis">KPI</a></li>
-						<li class="tab"><a id="tabtwo" class="white-text" href="#teamsid">TEAM</a></li>
+						<li class="tab disabled"><a id="tabtwo" class="white-text" href="#teamsid">BIO</a></li>
 					</ul>
 				</div>
 			</div>

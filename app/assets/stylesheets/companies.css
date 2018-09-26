@@ -83,7 +83,7 @@ span div div ul.collapsible{
   margin-bottom: 0px !important;
 }
 
-.collapsible li.active i {
+.collapsible li.active .collapsible-header i {
   -ms-transform: rotate(180deg); /* IE 9 */
   -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
   transform: rotate(180deg);

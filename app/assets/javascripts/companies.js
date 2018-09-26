@@ -2,6 +2,7 @@
     $('.tabs').tabs();
     $('.sidenav').sidenav();
     $('.slider').slider();
+    $('.chips').chips();
 
     $('.button-collapse').sidenav({
       menuWidth: 300, // Default is 240

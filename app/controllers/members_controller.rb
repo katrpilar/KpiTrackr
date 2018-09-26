@@ -10,7 +10,6 @@ class MembersController < ApplicationController
 		end
 	end
 
-
 	def create
 		@member = Member.new(params.require(:member).permit(:name, :role, :picture))
 		# binding.pry
@@ -27,13 +26,24 @@ class MembersController < ApplicationController
 
 	def show
 		@member = Member.find(params[:id])
+		@team = @member.team
 		@kpis = @member.kpis
+	end
+
+	def edit
+		@member = Member.find(params[:id])
+		@team = @member.team
+
 	end
 
 	def update
 	  @member = Member.find(params[:id])
-	  @member.update(params.require(:member).permit(:name, :role))
-	  redirect_to company_path(@member.company)
+	  @team = @member.team
+	  if @member.update(params.require(:member).permit(:name, :role))
+	  	redirect_to member_path(@member)
+	  else
+	  	render :edit
+	  end
 	end
 
 	def destroy

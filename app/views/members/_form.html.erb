@@ -1,0 +1,26 @@
+
+<div class="row">
+	<div class="col s6 offset-s3">
+		<div class="container">
+			<%= form_for @member do |f|%>
+				<% if @member.errors.any? %>
+				  <div id="error_explanation">
+				    <h2>There were some errors:</h2>
+				    <ul>
+				      <% @member.errors.full_messages.each do |message| %>
+				        <li><%= message %></li>
+				      <% end %>
+				    </ul>
+				  </div>
+				<% end %>
+				<%= f.label :name%>
+				<%= f.text_field :name %>
+				<%= f.label :role %>
+				<%= f.text_field :role %>
+				<%= f.label :picture, 'Upload your profile picture'%><br>
+			  <%= f.file_field :picture, :class => "file-field input-field" %>
+				<%= f.submit action_name == "new" ? "Add Team Member" : "Update Member", :class => "waves-effect waves-light btn"%>
+			<% end %>
+		</div>
+	</div>
+</div>

@@ -1,19 +1,2 @@
-<%= form_for @member, url: team_members_path(@team), html: { method: :create } do |f|%>
-	<% if @member.errors.any? %>
-	  <div id="error_explanation">
-	    <h2>There were some errors:</h2>
-	    <ul>
-	      <% @member.errors.full_messages.each do |message| %>
-	        <li><%= message %></li>
-	      <% end %>
-	    </ul>
-	  </div>
-	<% end %>
-	<%= f.label :name%>
-	<%= f.text_field :name %>
-	<%= f.label :role %>
-	<%= f.text_field :role %>
-	<%= f.label :picture, 'Upload your profile picture'%><br>
-  <%= f.file_field :picture, :class => "file-field input-field" %>
-	<%= f.submit "Create Member" %>
-<% end %>
+<h6>Create a new team member</h6>
+<%= render "form"%>
