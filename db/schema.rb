@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20180906221118) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.integer "user_id"
@@ -27,7 +30,7 @@ ActiveRecord::Schema.define(version: 20180906221118) do
     t.date "target_start_date"
     t.date "target_end_date"
     t.string "kpiable_type"
-    t.integer "kpiable_id"
+    t.bigint "kpiable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["kpiable_type", "kpiable_id"], name: "index_kpis_on_kpiable_type_and_kpiable_id"
@@ -78,7 +81,7 @@ ActiveRecord::Schema.define(version: 20180906221118) do
     t.datetime "invitation_accepted_at"
     t.integer "invitation_limit"
     t.string "invited_by_type"
-    t.integer "invited_by_id"
+    t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
