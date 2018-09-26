@@ -9,6 +9,7 @@ class Kpi < ApplicationRecord
 
 	validates :name, presence: true
   validates :target, presence: true
+  validates :target, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
   validates :target_start_date, presence: true
   validates :target_end_date, presence: true
 
