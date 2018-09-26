@@ -10,7 +10,7 @@ class Metric < ApplicationRecord
 	# 	return kpi.current_actual
 	# end
 	validates :metric, presence: true
-	validates :metric, :numericality => { :only_integer => true, :greater_than_or_equal_to => kpi_id }
+	validates :metric, :numericality => { :only_integer => true }
 
 	# def discount_cannot_be_greater_than_total_value
  #    if discount > total_value
