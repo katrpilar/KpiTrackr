@@ -5,19 +5,23 @@
 <nav class="nav-extended z-depth-0 profile-orange hide-on-small-only" style="height: 15%;">
 	<div class="nav-content profile-orange">
 			<div class="row valign-wrapper hide-on-small-only" style="padding-top: 15px; padding-bottom: 10px;">
-				<div class="col m4 l2 offset-l1 right-align">
-					<a href="<%=company_path(@company)%>" class="breadcrumb avatar">
-						<%= image_tag @company.avatar, :class => "circle responsive-img", :style => "width: 150px; height: 150px;"%>
-					</a>
+				<div class="col m4 l2 offset-l1 xl3 right-align">
+
+					<div class="container" style="position:relative !important;">
+						<%= image_tag @company.avatar, :class => "circle responsive-img", :style => "width: 150px; height: 150px; "%>
+						<div class="valign-wrapper">
+							<a class="btn-floating white-text center-align" href="<%=edit_company_path(@company)%>" style="position: absolute; left: 80%; top: 65%;"><i class="material-icons" style="line-height: unset;">edit</i></a>
+						</div>
+					</div>
 				</div>
-				<div class="col m4 l3 pull-l2 left-align">
+				<div class="col m4 l3 pull-l2 xl6 left-align">
 					<h2><%=@company.name%></h2>
 						<ul class="tabs tabs-fixed-width left" id="main-tabs" style="width:200px;">
 							<li class="tab"><a class="white-text" href="#kpis">KPI</a></li>
 							<li class="tab"><a class="white-text" href="#teamsid">TEAM</a></li>
 						</ul>
 				</div>
-				<div class="col m4 l2"><a class="btn-large white blue-text text-lighten-1" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a>
+				<div class="col m4 l2 xl3"><a class="btn-large white blue-text text-lighten-1" href="<%= @company ? new_company_kpi_path(@company) : @team ? new_team_kpi_path(@team) : new_member_kpi_path(@member)%>">Add New</a>
 				</div>
 			</div>
 	</div>

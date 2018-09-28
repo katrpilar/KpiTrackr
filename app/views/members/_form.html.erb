@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col s6 offset-s3">
 		<div class="container">
-			<%= form_for @member do |f|%>
+			<%= form_for @member, url: action_name == "new" ? team_members_path(@team) : member_path(@member) do |f|%>
 				<% if @member.errors.any? %>
 				  <div id="error_explanation">
 				    <h2>There were some errors:</h2>
