@@ -55,6 +55,7 @@ gem 'moment_timezone-rails', '~> 0.5.0'
 gem 'omniauth-google-oauth2', '~> 0.5.3'
 
 gem 'dotenv-rails'
+gem 'carrierwave-aws', '~> 1.3'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
