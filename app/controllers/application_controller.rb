@@ -19,4 +19,5 @@ class ApplicationController < ActionController::Base
     	user.permit(:username, :email, :password, :password_confirmation, :current_password, :avatar, :avatar_cache, :remove_avatar)
     end
   end
+
 end

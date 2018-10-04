@@ -13,17 +13,11 @@ class KpisController < ApplicationController
 
 	def new
 		@kpi = Kpi.new
-		if params.has_key?(:company_id)
-			@company = Company.find(params[:company_id])
-		elsif params.has_key?(:team_id)
-			@company = Team.find(params[:team_id]).company
-		elsif params.has_key?(:member_id)
-			@company = Member.find(params[:member_id]).team.company
-		end
+		set_kpi_instance
 	end
 
 	def create
-		
+		#abstract out strong params to a private method
 		@kpi = Kpi.new(params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date, :kpiable))
 		if params.has_key?(:company_id)
 			@kpi.kpiable = Company.find(params[:company_id])
@@ -99,5 +93,14 @@ class KpisController < ApplicationController
        		elsif params.has_key?(:member_id)
        			@kpiable = Member.find(params[:member_id])
        		end
+       end
+       def set_kpi_instance
+       	if params.has_key?(:company_id)
+					@company = Company.find(params[:company_id])
+				elsif params.has_key?(:team_id)
+					@company = Team.find(params[:team_id]).company
+				elsif params.has_key?(:member_id)
+					@company = Member.find(params[:member_id]).team.company
+				end
        end
 end

@@ -7,4 +7,5 @@ class Company < ApplicationRecord
 	has_many :members, through: :teams
 
 	validates :name, presence: true
+
 end
