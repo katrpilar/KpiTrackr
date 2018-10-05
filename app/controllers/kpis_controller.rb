@@ -18,7 +18,7 @@ class KpisController < ApplicationController
 
 	def create
 		#abstract out strong params to a private method
-		@kpi = Kpi.new(params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date, :kpiable))
+		@kpi = Kpi.new(kpi_params)
 		if params.has_key?(:company_id)
 			@kpi.kpiable = Company.find(params[:company_id])
 		elsif params.has_key?(:team_id)
@@ -43,7 +43,7 @@ class KpisController < ApplicationController
 		@kpi = Kpi.find(params[:id])
 		
 		@company = current_user.company
-		if @kpi.update(params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date))
+		if @kpi.update(kpi_params)
 			kpiable_routes
 		else
 			render :edit
@@ -89,5 +89,9 @@ class KpisController < ApplicationController
 		else
 			redirect_to :root_path
 		end
-   end    
+   end 
+
+   def kpi_params
+   	params.require(:kpi).permit(:name, :unit, :target, :target_start_date, :target_end_date, :kpiable)
+   end   
 end

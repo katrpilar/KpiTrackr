@@ -20,7 +20,7 @@ class MetricsController < ApplicationController
 	def create
 
 		@kpi = Kpi.find(params[:kpi_id])
-		@metric = Metric.new(params.require(:metric).permit(:metric, :kpi_id, :company_id, :kpiable))
+		@metric = Metric.new(metric_params)
 		@metric.kpi = @kpi
 		if @metric.valid?
 			@metric.save
@@ -66,4 +66,10 @@ class MetricsController < ApplicationController
 				@kpiable = Member.find(params[:member_id])
 			end
 	end
+
+	private
+
+		def metric_params
+			params.require(:metric).permit(:metric, :kpi_id, :company_id, :kpiable)
+		end
 end

@@ -12,7 +12,7 @@ class MembersController < ApplicationController
 	end
 
 	def create
-		@member = Member.new(params.require(:member).permit(:name, :role, :picture))
+		@member = Member.new(member_params)
 		# binding.pry
 		@member.team = Team.find(params[:team_id])
 		@team = @member.team
@@ -40,7 +40,7 @@ class MembersController < ApplicationController
 	def update
 	  @member = Member.find(params[:id])
 	  @team = @member.team
-	  if @member.update(params.require(:member).permit(:name, :role, :picture))
+	  if @member.update(member_params)
 	  	redirect_to company_path(@team.company)
 	  else
 	  	render :edit
@@ -51,4 +51,9 @@ class MembersController < ApplicationController
 		Member.find(params[:id]).destroy
 		redirect_to company_path(current_user.company)
 	end
+
+	private
+		def member_params
+			params.require(:member).permit(:name, :role, :picture)
+		end
 end

@@ -4,7 +4,7 @@ class TeamsController < ApplicationController
 	end
 
 	def create
-		@team = Team.new(params.require(:team).permit(:name, :description, :company_id, :team_pic))
+		@team = Team.new(team_params)
 		@company = current_user.company
 		@team.company = @company
 		# binding.pry
@@ -28,7 +28,7 @@ class TeamsController < ApplicationController
 
 	def update
 		@team = Team.find(params[:id])
-		if @team.update(params.require(:team).permit(:name, :description, :company_id, :team_pic))
+		if @team.update(team_params)
 			redirect_to team_path(@team)
 		else
 			render :edit
@@ -42,4 +42,8 @@ class TeamsController < ApplicationController
 		@team.destroy
 		redirect_to (company_path(@company))
 	end
+	private
+		def team_params
+			params.require(:team).permit(:name, :description, :company_id, :team_pic)
+		end
 end
