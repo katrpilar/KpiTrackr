@@ -28,7 +28,8 @@
 	    <div class="nav-wrapper z-depth-1">
 	      <a href="/" class="brand-logo grey-text text-darken-2">KpiTrackr</a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        <li><a href="/" class="grey-text text-darken-2">Home</a></li>
+          <li><a href="/" class="grey-text text-darken-2">Home</a></li>
+          <li><a href="/" class="grey-text text-darken-2">Meetings</a></li>
 	        <% if user_signed_in?%>
 	          <li>
 	          <%= link_to('Logout', destroy_user_session_path, method: :delete, :class=>"grey-text text-darken-2") %>        

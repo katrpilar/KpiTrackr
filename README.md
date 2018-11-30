@@ -71,9 +71,9 @@ Materialized
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/katrpilar/teamkpiapp. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct found in [CONTRIBUTING.md](CONTRIBUTING.md.) Note: We do not plan to push any proposed contributions to the live deploy of [KpiTrackr](https://www.kpitrackr.herokuapp.com) at this time.
 
-## Authors
+## Authors 
 
-**Katrina Brinson**
+** Katrina Brinson**
 
 ## License
 

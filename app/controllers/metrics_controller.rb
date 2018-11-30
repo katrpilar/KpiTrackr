@@ -44,15 +44,15 @@ class MetricsController < ApplicationController
 		@kpi = @metric.kpi
 		@metric.destroy
 		case @kpi.kpiable_type
-			when "Company"
-				redirect_to company_path(@kpi.kpiable)
-			when "Team"
-				redirect_to team_path(@kpi.kpiable)
-			when "Member"
-				redirect_to member_path(@kpi.kpiable)
-			else
-				redirect_to company_path(current_user.company)
-			end
+		when "Company"
+			redirect_to company_path(@kpi.kpiable)
+		when "Team"
+			redirect_to team_path(@kpi.kpiable)
+		when "Member"
+			redirect_to member_path(@kpi.kpiable)
+		else
+			redirect_to company_path(current_user.company)
+		end
 
 		# redirect_to company_path(current_user.company)
 	end

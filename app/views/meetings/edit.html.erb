@@ -1,0 +1,7 @@
+
+<h1>Editing meeting</h1>
+
+<%= render partial: 'form', locals: {meeting: @meeting, company: @company}%>
+
+<%= link_to 'Show', @meeting %> |
+<%= link_to 'Back', company_meetings_path(@company) %>

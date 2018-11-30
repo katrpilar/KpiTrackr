@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180906221118) do
+ActiveRecord::Schema.define(version: 20181114011203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "comment"
+    t.integer "meeting_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -34,6 +41,15 @@ ActiveRecord::Schema.define(version: 20180906221118) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["kpiable_type", "kpiable_id"], name: "index_kpis_on_kpiable_type_and_kpiable_id"
+  end
+
+  create_table "meetings", force: :cascade do |t|
+    t.string "overview"
+    t.integer "company_id"
+    t.date "date"
+    t.string "takeaways"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "members", force: :cascade do |t|

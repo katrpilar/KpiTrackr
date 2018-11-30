@@ -1,0 +1,38 @@
+
+<p id="notice"><%= notice %></p>
+
+<h6>meetingPosts</h6>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody class="all-meetings">
+
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New meeting', new_meeting_path %>
+
+<script type="text/javascript" charset="utf-8">
+$(function () {
+    $.getJSON("/meetings.json", function(data) {
+      $.each(data, function(index, value){
+        console.log(value);
+        $(".all-meetings").append(`<tr>
+          <td>${value["date"]}</td>
+          <td>${value["overview"].split(" ").slice(0,10).join(" ") + "&#8230"}</td>
+          <td>${value["takeaways"].split(" ").slice(0,10).join(" ") + "&#8230"}</td>
+          <td><a href=${"meetings/" + value["id"]}>Show</a></td>
+          <td><a href=${"meetings/" + value["id"] + "/edit"}>Edit</a></td>
+          <td><a href=${"meetings/" + value["id"]} data-method="delete" rel="nofollow">Delete</a></td>
+        </tr>`);
+      });
+    });
+});
+</script>

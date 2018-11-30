@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       # current_user can view their companies, create a company, edit one of their companies, etc.
       resources :kpis, only: [:create, :new] # Kpi.create(company_id)
       resources :teams, only: [:create, :new]
+      resources :meetings, only: [:create, :new]
     end
 
     resources :teams do
@@ -27,11 +28,18 @@ Rails.application.routes.draw do
       resources :metrics, only: [:create, :new]
     end
 
+    resources :meetings do
+      resources :comments, only: [:create, :new]
+    end
+
     resources :metrics, only: [:edit, :update, :destroy]
+    resources :comments, only: [:edit, :update, :destroy]
 
     resources :members, only: [:edit, :update, :destroy] do
       resources :kpis, only: [:create, :new]
     end
+
+    get 'companymeetings', :to => 'meetings#all'
 
     resources :members, only: [:show]
   # end
@@ -86,5 +94,6 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'static_pages#home'
+  get '/ended', to: 'kpis#ended'
 
 end

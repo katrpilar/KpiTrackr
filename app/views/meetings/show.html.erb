@@ -1,0 +1,25 @@
+<a href="#" class="js-next" data-id="<%=@meeting.id%>">Next Meeting</a>
+<h5>Meeting Date:</h5>
+<h6 class="meetingDate"><%= @meeting.date %></h6>
+<h5>Overview:</h5>
+<p class="meetingOverview"><%= @meeting.overview %></p>
+<h5>Meeting Takeaways:</h5>
+<p class="meetingTakeaways"><%= @meeting.takeaways %></p>
+<a class="btn teal white-text" href="<%=edit_meeting_path(@meeting)%>">Edit</a>
+<a class="btn teal white-text" href="<%=new_meeting_comment_path(@meeting)%>">Add a Comment</a>
+
+
+<script type="text/javascript" charset="utf-8">
+$(function () {
+  $(".js-next").on("click", function() {
+    var nextId = parseInt($(".js-next").attr("data-id")) + 1;
+    $.getJSON("/meetings/" + nextId + ".json", function(data) {
+      $(".meetingDate").text(data["date"]);
+      $(".meetingOverview").text(data["overview"]);
+      $(".meetingTakeaways").text(data["takeaways"]);
+      // re-set the id to current on the link
+      $(".js-next").attr("data-id", data["id"]);
+    });
+  });
+});
+</script>

@@ -57,6 +57,10 @@ class KpisController < ApplicationController
 		kpiable_routes
 	end
 
+	def ended
+		@kpis = Kpi.ended
+	end
+
 	private 
    def set_kpiable
    		if params.has_key?(:company_id)
