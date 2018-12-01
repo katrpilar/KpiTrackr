@@ -20,11 +20,11 @@
   padding:0px !important;
 }
 .profile-orange{
-  background-color: #80cbc4 !important;
+  background-color: #039be5 !important;
 }
 
 .kpi-card-color{
-    background-color: #073269 !important;
+    background-color: #039be5 !important;
    
 /*    background-color: #FFA10A !important;
 */
@@ -32,15 +32,15 @@
   }
 
 .content-background-color{
-    background-color: #004d40 !important;
+    background-color: #039be5 !important;
 
   }
 
 .card-header-section{
-  background-color: #004d40 !important;
+  background-color: #f5f5f5 !important;
 }
 .card-action-section{
-  background-color: #004d40 !important;
+  background-color: #e0e0e0 !important;
 }
 
   #main-tabs{

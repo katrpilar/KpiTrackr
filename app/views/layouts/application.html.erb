@@ -24,19 +24,19 @@
   <title>KPI TRACKR</title>
   <link href="https://fonts.googleapis.com/css?family=Palanquin" rel="stylesheet">
 
-	<nav class="grey lighten-5">
+	<nav class="light-blue darken-1 white-text">
 	    <div class="nav-wrapper z-depth-1">
-	      <a href="/" class="brand-logo grey-text text-darken-2">KpiTrackr</a>
+	      <a href="/" class="brand-logo  text-darken-2">KpiTrackr</a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="/" class="grey-text text-darken-2">Home</a></li>
-          <li><a href="/" class="grey-text text-darken-2">Meetings</a></li>
+          <li><a href="/" class=" text-darken-2">Home</a></li>
+          <li><a href="/" class=" text-darken-2">Meetings</a></li>
 	        <% if user_signed_in?%>
 	          <li>
-	          <%= link_to('Logout', destroy_user_session_path, method: :delete, :class=>"grey-text text-darken-2") %>        
+	          <%= link_to('Logout', destroy_user_session_path, method: :delete, :class=>" text-darken-2") %>        
 	          </li>
 	        <% else %>
 	          <li>
-	          <%= link_to('Login', new_user_session_path, :class=>"grey-text text-darken-2")  %>  
+	          <%= link_to('Login', new_user_session_path, :class=>" text-darken-2")  %>  
 	          </li>
 	        <% end %>
 	      </ul>
@@ -69,7 +69,7 @@
     <%= yield %>
   </body>
 
-  <footer class="page-footer grey darken-4" >
+  <footer class="page-footer light-blue darken-3" >
   <span class="white-text">
           <div class="container">
             <div class="row">
