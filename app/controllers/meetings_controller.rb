@@ -15,7 +15,7 @@ class MeetingsController < ApplicationController
     end
   
     def edit
-      @meeting = Meeting.find(params[:id])
+      # @meeting = Meeting.find(params[:id])
       @company = current_user.company
     end
   
@@ -39,7 +39,7 @@ class MeetingsController < ApplicationController
     
   
     def show
-      @meeting = Meeting.find(params[:id])
+      # @meeting = Meeting.find(params[:id])
         #BEFORE using a serializer:
         # render json: @meeting, status: 200
          # AFTER USING OUR SERIALIZER

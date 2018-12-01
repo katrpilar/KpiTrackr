@@ -1,0 +1,24 @@
+<div class="row">
+	<div class="col s6 offset-s3">
+		<div class="container">
+<%= form_for([@meeting, @comment]) do |f| %>
+	<% if @comment.errors.any? %>
+	    <div id="error_explanation">
+	      <h2>There were some errors:</h2>
+	      <ul>
+	        <% @comment.errors.full_messages.each do |message| %>
+	          <li><%= message %></li>
+	        <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+	<%= f.label :name, 'Enter your name'%>
+    <%= f.text_field :name, :class =>'input-field' %>
+	<%= f.label :comment, 'Enter you Comment'%><br>
+    <%= f.text_field :comment, :class => "input-field" %>
+  <br>
+  <%= f.submit action_name == 'new' ? "Create comment" : "Update comment", :class => "waves-effect waves-light btn" %>
+<% end %>
+</div>
+</div>	
+</div>
