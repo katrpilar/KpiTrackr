@@ -111,5 +111,23 @@ function changeArrows(){
 
 });
 
-
+$(function(){
+    $('form').submit(function(e){
+        e.preventDefault();
+        console.log(this);
+        var values = $(this).serialize();
+        console.log(values);
+        var posting = $.post(window.location.pathname + '/comments', values);
+        posting.done(function(data){
+            console.log(data);
+            $(".all-comments").append(`<tr>
+              <td>${data["name"]}</td>
+              <td>${data["comment"].split(" ").slice(0,15).join(" ") + "&#8230"}</td>
+              <td>
+                <a href=${"/comments/" + data["id"]} data-method="delete" rel="nofollow">Delete</a>
+              </td>
+            </tr>`); 
+        });
+    });
+});
 </script>
