@@ -44,6 +44,7 @@ class MeetingsController < ApplicationController
         # render json: @meeting, status: 200
          # AFTER USING OUR SERIALIZER
         # render json: @post, status: 200
+        @comment = Comment.new
         respond_to do |format|
           format.html { render :show }
           format.json { render json: @meeting}

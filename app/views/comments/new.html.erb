@@ -1,3 +1,20 @@
 <h1>New Comment</h1>
 <h6><%=@meeting.date%></h6>
 <%= render 'form'%>
+
+<script>
+$(function(){
+    $('form').submit(function(e){
+        e.preventDefault();
+        console.log(this);
+        var values = $(this).serialize();
+        debugger;
+
+        console.log(values);
+        var posting = $.post(window.location.pathname.slice(0,-4), values);
+        posting.done(function(data){
+            console.log(data);
+        });
+    });
+});
+</script>

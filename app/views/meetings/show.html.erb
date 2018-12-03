@@ -24,6 +24,7 @@
 
   </tbody>
 </table>
+<%= render 'comments/form.html.erb'%>
 
 <a class="btn teal white-text" href="<%=new_meeting_comment_path(@meeting)%>">Add a Comment</a>
 
@@ -45,7 +46,8 @@ $(function () {
 
 //Control hiding and showing the previous button
 $(function () {
-  $(".js-next").on("click", function() {
+  $(".js-next").on("click", function(e) {
+    e.preventDefault();
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
     $.getJSON("/meetings/" + nextId + ".json", function(data) {
       $(".meetingDate").text(data["date"]);
@@ -61,7 +63,8 @@ $(function () {
 
 //Control hiding and showing the next button
 $(function () {
-  $(".js-previous").on("click", function() {
+  $(".js-previous").on("click", function(e) {
+    e.preventDefault();
     var nextId = parseInt($(".js-next").attr("data-id")) - 1;
     $.getJSON("/meetings/" + nextId + ".json", function(data) {
       $(".meetingDate").text(data["date"]);
@@ -83,8 +86,8 @@ $(function (){
         $(".all-comments").append(`<tr>
           <td>${value["name"]}</td>
           <td>${value["comment"].split(" ").slice(0,15).join(" ") + "&#8230"}</td>
-          <td><a href=${"comments/" + value["id"] + "/edit"}>Edit</a>
-            <a href=${"comments/" + value["id"]} data-method="delete" rel="nofollow">Delete</a>
+          <td>
+            <a href=${"/comments/" + value["id"]} data-method="delete" rel="nofollow">Delete</a>
           </td>
         </tr>`);        
       });

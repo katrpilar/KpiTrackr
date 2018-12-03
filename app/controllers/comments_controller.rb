@@ -74,7 +74,9 @@ class CommentsController < ApplicationController
 
     def destroy
       @comment = Comment.find(params[:id])
+      @meeting = @comment.meeting_id
       @comment.destroy
+      redirect_to meeting_path(@meeting)
     #   render "all"
     end
   
