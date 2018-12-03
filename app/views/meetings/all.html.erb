@@ -1,12 +1,29 @@
+<nav class="light-blue darken-3">
+	<div class="nav-wrapper light-blue darken-3 ">
+		<div class="row valign-wrapper">
+		<div class="col m8 l10">
+			<div class="valign-wrapper">
+        <h6>All Meetings</h6>
+		</div>
+		
+		</div>
+		<div class="col m4 l2">
+				<a class="btn-large white blue-text text-lighten-1 hide-on-small-only" href="<%= new_meeting_path%>">Add New</a>
+				<a class="btn white blue-text text-lighten-1 show-on-small hide-on-med-and-up" href="<%= new_meeting_path%>">Add New</a>
+		</div>
+	</div>
+	</div>
+</nav>
 
-<p id="notice"><%= notice %></p>
 
-<h6>meetingPosts</h6>
 
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>Date</th>
+      <th>Overview</th>
+      <th>Takeaways</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -17,8 +34,6 @@
 
 <br>
 
-<%= link_to 'New meeting', new_meeting_path %>
-
 <script type="text/javascript" charset="utf-8">
 $(function () {
     $.getJSON("/meetings.json", function(data) {
@@ -28,9 +43,10 @@ $(function () {
           <td>${value["date"]}</td>
           <td>${value["overview"].split(" ").slice(0,10).join(" ") + "&#8230"}</td>
           <td>${value["takeaways"].split(" ").slice(0,10).join(" ") + "&#8230"}</td>
-          <td><a href=${"meetings/" + value["id"]}>Show</a></td>
-          <td><a href=${"meetings/" + value["id"] + "/edit"}>Edit</a></td>
-          <td><a href=${"meetings/" + value["id"]} data-method="delete" rel="nofollow">Delete</a></td>
+          <td><a href=${"meetings/" + value["id"]}>Show</a>
+            <a href=${"meetings/" + value["id"] + "/edit"}>Edit</a>
+            <a href=${"meetings/" + value["id"]} data-method="delete" rel="nofollow">Delete</a>
+          </td>
         </tr>`);
       });
     });

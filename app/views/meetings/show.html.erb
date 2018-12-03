@@ -1,13 +1,16 @@
-<a href="#" class="js-next" data-id="<%=@meeting.id%>">Next Meeting</a>
-<h5>Meeting Date:</h5>
-<h6 class="meetingDate"><%= @meeting.date %></h6>
-<h5>Overview:</h5>
+<a href="#" class="js-previous" data-id="<%=@meeting.id%>" >
+  <i class="medium material-icons">navigate_before</i>
+</a>
+<a href="#" class="js-next" data-id="<%=@meeting.id%>">
+  <i class="medium material-icons">navigate_next</i>
+</a>
+<h5 class="meetingDate"><%= @meeting.date %></h5>
+<h5>Overview</h5>
 <p class="meetingOverview"><%= @meeting.overview %></p>
-<h5>Meeting Takeaways:</h5>
+<h5>Takeaways</h5>
 <p class="meetingTakeaways"><%= @meeting.takeaways %></p>
 <a class="btn teal white-text" href="<%=edit_meeting_path(@meeting)%>">Edit</a>
-<a class="btn teal white-text" href="<%=new_meeting_comment_path(@meeting)%>">Add a Comment</a>
-<h5>All Comments</h5>
+<h5>Comments</h5>
 <table>
   <thead>
     <tr>
@@ -22,8 +25,25 @@
   </tbody>
 </table>
 
+<a class="btn teal white-text" href="<%=new_meeting_comment_path(@meeting)%>">Add a Comment</a>
+
+
 
 <script type="text/javascript" charset="utf-8">
+$(window).load(function(){
+  let firstMeeting = 0;
+  $('.js-previous').hide();
+  let meetingCount = 0;
+
+//Set the total number of meetings
+$(function () {
+  $.getJSON("/meetings.json", function(data) {
+    meetingCount = data.length - 1;
+    console.log("Set meeting count request sent");
+  });
+});
+
+//Control hiding and showing the previous button
 $(function () {
   $(".js-next").on("click", function() {
     var nextId = parseInt($(".js-next").attr("data-id")) + 1;
@@ -33,10 +53,29 @@ $(function () {
       $(".meetingTakeaways").text(data["takeaways"]);
       // re-set the id to current on the link
       $(".js-next").attr("data-id", data["id"]);
+      firstMeeting = firstMeeting + 1;
+      changeArrows();
     });
   });
 });
 
+//Control hiding and showing the next button
+$(function () {
+  $(".js-previous").on("click", function() {
+    var nextId = parseInt($(".js-next").attr("data-id")) - 1;
+    $.getJSON("/meetings/" + nextId + ".json", function(data) {
+      $(".meetingDate").text(data["date"]);
+      $(".meetingOverview").text(data["overview"]);
+      $(".meetingTakeaways").text(data["takeaways"]);
+      // re-set the id to current on the link
+      $(".js-next").attr("data-id", data["id"]);
+      firstMeeting = firstMeeting - 1;
+      changeArrows();
+    });
+  });
+});
+
+//Fetch and display all of the comments for a meeting
 $(function (){ 
   $.getJSON(window.location.pathname + `/comments.json`, function(data) {
       $.each(data, function(index, value){
@@ -47,9 +86,27 @@ $(function (){
           <td><a href=${"comments/" + value["id"] + "/edit"}>Edit</a>
             <a href=${"comments/" + value["id"]} data-method="delete" rel="nofollow">Delete</a>
           </td>
-        </tr>`);
-        
+        </tr>`);        
       });
     });
 });
+
+function changeArrows(){
+    console.log("body changed");
+    if(firstMeeting !== 0){
+      $('.js-previous').show();    
+    }else{
+      $('.js-previous').hide();
+    }
+
+    if(firstMeeting !== meetingCount){
+      $('.js-next').show();    
+    }else{
+      $('.js-next').hide();
+    }
+  };
+
+});
+
+
 </script>
