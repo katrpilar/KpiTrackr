@@ -9,7 +9,7 @@
 <p class="meetingOverview"><%= @meeting.overview %></p>
 <h5>Takeaways</h5>
 <p class="meetingTakeaways"><%= @meeting.takeaways %></p>
-<a class="btn teal white-text" href="<%=edit_meeting_path(@meeting)%>">Edit</a>
+<a class="btn teal white-text" href="<%=edit_meeting_path(@meeting)%>">Edit Meeting Details</a>
 <h5>Comments</h5>
 <table>
   <thead>
@@ -24,10 +24,8 @@
 
   </tbody>
 </table>
+<h5>Add a Comment</h5>
 <%= render 'comments/form.html.erb'%>
-
-<a class="btn teal white-text" href="<%=new_meeting_comment_path(@meeting)%>">Add a Comment</a>
-
 
 
 <script type="text/javascript" charset="utf-8">
@@ -35,6 +33,8 @@ $(window).load(function(){
   let firstMeeting = 0;
   $('.js-previous').hide();
   let meetingCount = 0;
+
+  let mainId = 0;
 
 //Set the total number of meetings
 $(function () {
@@ -56,7 +56,9 @@ $(function () {
       // re-set the id to current on the link
       $(".js-next").attr("data-id", data["id"]);
       firstMeeting = firstMeeting + 1;
+      mainId = data["id"];
       changeArrows();
+      resetComments(nextId);
     });
   });
 });
@@ -72,8 +74,10 @@ $(function () {
       $(".meetingTakeaways").text(data["takeaways"]);
       // re-set the id to current on the link
       $(".js-next").attr("data-id", data["id"]);
+      mainId = data["id"];
       firstMeeting = firstMeeting - 1;
       changeArrows();
+      resetComments(nextId);
     });
   });
 });
@@ -94,6 +98,42 @@ $(function (){
     });
 });
 
+function resetComments(id){
+  $('.all-comments').empty();
+    $.getJSON(`/meetings/${id}/comments.json`, function(data) {
+        $.each(data, function(index, value){
+          console.log(value);
+          $(".all-comments").append(`<tr>
+            <td>${value["name"]}</td>
+            <td>${value["comment"].split(" ").slice(0,15).join(" ") + "&#8230"}</td>
+            <td>
+              <a href=${"/comments/" + value["id"]} data-method="delete" rel="nofollow">Delete</a>
+            </td>
+          </tr>`);        
+        });
+      });
+
+  $(function(){
+    $('form').submit(function(e){
+        e.preventDefault();
+        console.log(this);
+        var values = $(this).serialize();
+        console.log(values);
+        var posting = $.post(`/meetings/${mainId}` + '/comments', values);
+        posting.done(function(data){
+            console.log(data);
+            $(".all-comments").append(`<tr>
+              <td>${data["name"]}</td>
+              <td>${data["comment"].split(" ").slice(0,15).join(" ") + "&#8230"}</td>
+              <td>
+                <a href=${"/comments/" + data["id"]} data-method="delete" rel="nofollow">Delete</a>
+              </td>
+            </tr>`); 
+        });
+    });
+  });
+}
+
 function changeArrows(){
     console.log("body changed");
     if(firstMeeting !== 0){
@@ -111,23 +151,5 @@ function changeArrows(){
 
 });
 
-$(function(){
-    $('form').submit(function(e){
-        e.preventDefault();
-        console.log(this);
-        var values = $(this).serialize();
-        console.log(values);
-        var posting = $.post(window.location.pathname + '/comments', values);
-        posting.done(function(data){
-            console.log(data);
-            $(".all-comments").append(`<tr>
-              <td>${data["name"]}</td>
-              <td>${data["comment"].split(" ").slice(0,15).join(" ") + "&#8230"}</td>
-              <td>
-                <a href=${"/comments/" + data["id"]} data-method="delete" rel="nofollow">Delete</a>
-              </td>
-            </tr>`); 
-        });
-    });
-});
+
 </script>

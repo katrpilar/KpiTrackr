@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
       respond_to do |format|
         #   format.html { render :show }
           format.json { render json: @comment, status: 201}
-          format.any {redirect_to "/meetings/#{@meeting.id}"}
+          format.any {render meeting_path(@meeting.id)}
         end
     end
 
