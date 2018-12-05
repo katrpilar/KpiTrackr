@@ -13,12 +13,12 @@ class CommentsController < ApplicationController
     #   @company = current_user.company
     #   @meeting.company = @company
       @comment.save
-      # render json: @comment, status: 201
-      respond_to do |format|
-        #   format.html { render :show }
-          format.json { render json: @comment, status: 201}
-          format.any {redirect_to "/meetings/#{@meeting.id}"}
-        end
+      render json: @comment, status: 201
+      # respond_to do |format|
+      #   #   format.html { render :show }
+      #     format.json { render json: @comment, status: 201}
+      #     format.any {redirect_to "/meetings/#{@meeting.id}"}
+      #   end
     end
 
     # def show
