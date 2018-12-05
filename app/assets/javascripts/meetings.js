@@ -128,11 +128,24 @@ $(window).load( () =>{
     //Controls retrieving all meetings to show on the /companymeetings page
     $('.all').ready( () => {
         $.getJSON("/meetings.json", (data) => {
+            class Meeting {
+                constructor(date, overview, takeaways){
+                    this.date = date;
+                    this.overview = overview;
+                    this.takeaways = takeaways;
+                }            
+                //truncates the meeting text from a provided instance            
+                truncate (text){
+                    return text.split(" ").slice(0,10).join(" ") + "&#8230";
+                }
+            }
+
           $.each(data, (index, value) => {
+            let meet = new Meeting(value["date"], value["overview"], value["takeaways"]);
             $(".all-meetings").append(`<tr>
-              <td>${value["date"]}</td>
-              <td>${value["overview"].split(" ").slice(0,10).join(" ") + "&#8230"}</td>
-              <td>${value["takeaways"].split(" ").slice(0,10).join(" ") + "&#8230"}</td>
+              <td>${meet.date}</td>
+              <td>${meet.truncate(meet.overview)}</td>
+              <td>${meet.truncate(meet.takeaways)}</td>
               <td><a href=${"meetings/" + value["id"]}>Show</a>
                 <a href=${"meetings/" + value["id"] + "/edit"}>Edit</a>
                 <a href=${"meetings/" + value["id"]} data-method="delete" rel="nofollow">Delete</a>
