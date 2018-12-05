@@ -30,33 +30,48 @@
 
 <script type="text/javascript" charset="utf-8">
 $(window).load(function(){
-  let firstMeeting = 0;
   $('.js-previous').hide();
-  let meetingCount = 0;
-
-  let mainId = 0;
+  let meetingCount;
+  let meetingIdList = [];
+  let firstMeeting = parseInt(window.location.pathname.slice(-1));
+  let currentPosition;  
+  console.log("Window has loaded");
 
 //Set the total number of meetings
 $(function () {
-  $.getJSON("/meetings.json", function(data) {
-    meetingCount = data.length - 1;
+  var retrieve = $.getJSON("/meetings.json", function(data) {
+    $.each(data, function(index, value){
+      console.log(value["id"]);
+      meetingIdList.push(value["id"]);
+    });
     console.log("Set meeting count request sent");
   });
+  retrieve.done(function(data){
+    meetingIdList.sort();
+    currentPosition = meetingIdList.indexOf(firstMeeting);
+    meetingCount = meetingIdList.length;
+    console.log("meetingIdList: " + meetingIdList);
+    console.log("meetingCount: " + meetingCount);
+    console.log("firstMeeting: " + firstMeeting);
+    console.log("currentPosition: " + currentPosition);
+    changeArrows();
+  });
 });
+
 
 //Control hiding and showing the previous button
 $(function () {
   $(".js-next").on("click", function(e) {
     e.preventDefault();
-    var nextId = parseInt($(".js-next").attr("data-id")) + 1;
+    var nextId = meetingIdList[currentPosition + 1]
+    currentPosition++;
     $.getJSON("/meetings/" + nextId + ".json", function(data) {
       $(".meetingDate").text(data["date"]);
       $(".meetingOverview").text(data["overview"]);
       $(".meetingTakeaways").text(data["takeaways"]);
       // re-set the id to current on the link
       $(".js-next").attr("data-id", data["id"]);
-      firstMeeting = firstMeeting + 1;
-      mainId = data["id"];
+      history.pushState(null, '', `/meetings/${data["id"]}`);
       changeArrows();
       resetComments(nextId);
     });
@@ -67,16 +82,16 @@ $(function () {
 $(function () {
   $(".js-previous").on("click", function(e) {
     e.preventDefault();
-    var nextId = parseInt($(".js-next").attr("data-id")) - 1;
+    var nextId = meetingIdList[currentPosition - 1]
+    currentPosition--;
     $.getJSON("/meetings/" + nextId + ".json", function(data) {
       $(".meetingDate").text(data["date"]);
       $(".meetingOverview").text(data["overview"]);
       $(".meetingTakeaways").text(data["takeaways"]);
       // re-set the id to current on the link
-      $(".js-next").attr("data-id", data["id"]);
-      mainId = data["id"];
-      firstMeeting = firstMeeting - 1;
+      $(".js-previous").attr("data-id", data["id"]);
       changeArrows();
+      history.pushState(null, '', `/meetings/${data["id"]}`);
       resetComments(nextId);
     });
   });
@@ -84,9 +99,10 @@ $(function () {
 
 //Fetch and display all of the comments for a meeting
 $(function (){ 
-  $.getJSON(window.location.pathname + `/comments.json`, function(data) {
+$.getJSON(window.location.pathname + `/comments.json`, function(data) {
+  console.log(data);
       $.each(data, function(index, value){
-        console.log(value);
+        //console.log(value);
         $(".all-comments").append(`<tr>
           <td>${value["name"]}</td>
           <td>${value["comment"].split(" ").slice(0,15).join(" ") + "&#8230"}</td>
@@ -96,13 +112,14 @@ $(function (){
         </tr>`);        
       });
     });
+  
 });
 
 function resetComments(id){
   $('.all-comments').empty();
     $.getJSON(`/meetings/${id}/comments.json`, function(data) {
         $.each(data, function(index, value){
-          console.log(value);
+          // console.log(value);
           $(".all-comments").append(`<tr>
             <td>${value["name"]}</td>
             <td>${value["comment"].split(" ").slice(0,15).join(" ") + "&#8230"}</td>
@@ -136,18 +153,23 @@ function resetComments(id){
 
 function changeArrows(){
     console.log("body changed");
-    if(firstMeeting !== 0){
-      $('.js-previous').show();    
+    console.log("meetingIdList: " + meetingIdList);
+    console.log("meetingCount: " + meetingCount);
+    console.log("firstMeeting: " + firstMeeting);
+    console.log("currentPosition: " + currentPosition);
+    if(currentPosition === 0){
+      $('.js-previous').hide();    
     }else{
-      $('.js-previous').hide();
+      $('.js-previous').show();
     }
-
-    if(firstMeeting !== meetingCount){
-      $('.js-next').show();    
+    if(meetingIdList[currentPosition] === meetingIdList.slice(-1)[0]){
+      $('.js-next').hide();    
     }else{
-      $('.js-next').hide();
+      $('.js-next').show();
     }
   };
+
+  
 
 });
 
