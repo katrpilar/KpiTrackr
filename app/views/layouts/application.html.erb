@@ -26,7 +26,8 @@
 
 	<nav class="light-blue darken-1 white-text">
 	    <div class="nav-wrapper z-depth-1">
-	      <a href="/" class="brand-logo  text-darken-2">KpiTrackr</a>
+        <a href="/" class="brand-logo  text-darken-2">KpiTrackr</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><a href="/" class=" text-darken-2">Home</a></li>
           <li><a href="/companymeetings" class=" text-darken-2">Meetings</a></li>
@@ -41,7 +42,22 @@
 	        <% end %>
 	      </ul>
 	    </div>
-	  </nav>
+    </nav>
+    
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="/" class=" text-darken-2">Home</a></li>
+      <li><a href="/companymeetings" class=" text-darken-2">Meetings</a></li>
+      <% if user_signed_in?%>
+        <li>
+        <%= link_to('Logout', destroy_user_session_path, method: :delete, :class=>" text-darken-2") %>        
+        </li>
+      <% else %>
+        <li>
+        <%= link_to('Login', new_user_session_path, :class=>" text-darken-2")  %>  
+        </li>
+      <% end %>
+    </ul>
+          
 
 	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	  <%=stylesheet_link_tag "materialize.css"%>

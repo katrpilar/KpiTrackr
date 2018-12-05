@@ -1,32 +1,20 @@
 $(window).load( () =>{
-    $('.js-previous').hide();
-    let meetingCount;
-    let meetingIdList = [];
-    let firstMeeting = parseInt(window.location.pathname.slice(-1));
-    let currentPosition;  
-    //console.log("Window has loaded");
-    var isSubmitting = false;
+    let meetingIdList = []; //The Ids of all existing meetings
+    let firstMeeting = parseInt(window.location.pathname.slice(-1)); //The starting show page id
+    let currentPosition; //the user's current location in the meetingIdList  
   
   //Set the total number of meetings
   $( () => {
     var retrieve = $.getJSON("/meetings.json", (data) => {
       $.each(data, (index, value) => {
-        //console.log(value["id"]);
-        meetingIdList.push(value["id"]);
+        meetingIdList.push(value["id"]); //adds each meeting id to array
       });
-      //console.log("Set meeting count request sent");
     });
     retrieve.done( (data) => {
-      meetingIdList.sort();
-      currentPosition = meetingIdList.indexOf(firstMeeting);
-      meetingCount = meetingIdList.length;
-      /*
-      console.log("meetingIdList: " + meetingIdList);
-      console.log("meetingCount: " + meetingCount);
-      console.log("firstMeeting: " + firstMeeting);
-      console.log("currentPosition: " + currentPosition);
-      */
-      changeArrows();
+      meetingIdList.sort(); //sort the meeting list by id
+      currentPosition = meetingIdList.indexOf(firstMeeting); //detemines current position in meetingIdList
+      changeArrows(); //set the initial nav arrows depending on meeting shown
+      resetComments(firstMeeting)
     });
   });
   
@@ -50,7 +38,7 @@ $(window).load( () =>{
     });
   });
   
-  //Control hiding and showing the next button
+  //Control showing the next meeting show page
   $(() => {
     $(".js-previous").on("click", (event) => {
       event.preventDefault();
@@ -61,68 +49,51 @@ $(window).load( () =>{
         $(".meetingOverview").text(data["overview"]);
         $(".meetingTakeaways").text(data["takeaways"]);
         // re-set the id to current on the link
-        $(".js-previous").attr("data-id", data["id"]);
-        changeArrows();
-        history.pushState(null, '', `/meetings/${data["id"]}`);
-        resetComments(nextId);
+        $(".js-previous").attr("data-id", data["id"]);        
+        changeArrows(); //updates nav arrows
+        history.pushState(null, '', `/meetings/${data["id"]}`); //changes page url
+        resetComments(nextId); //resets the comments list for the new show page
       });
     });
   });
   
-  //Turn comments into class format
-  $(()=>{ 
+  //Turn comments into class format    
+  //Resets the listed comments as the user clicks through the nav arrows on meeting show page  
+  let resetComments = (id) =>{
+    $('.all-comments').empty();
     $.getJSON(window.location.pathname + `/comments.json`, (data) => {
-      //console.log(data);
+
+        //creates a comment object model
         class Comment {
             constructor(name, comment){
                 this.name = name;
                 this.comment = comment;
             }            
+            //truncates the comment instance            
             truncate (){
                 return this.comment.split(" ").slice(0,15).join(" ") + "&#8230";
             }
         }
-          $.each(data, (index, value) => {
-            //console.log(value);
+        $.each(data, (index, value) => {
             let com = new Comment(value["name"], value["comment"]);
             $(".all-comments").append(`<tr>
-              <td>${com.name}</td>
-              <td>${com.truncate()}</td>
-              <td>
+                <td>${com.name}</td>
+                <td>${com.truncate()}</td>
+                <td>
                 <a href=${"/comments/" + value["id"]} data-method="delete" rel="nofollow">Delete</a>
-              </td>
+                </td>
             </tr>`);        
-          });
-        });
-      
-    });
-  
-  let resetComments = (id) =>{
-    $('.all-comments').empty();
-      $.getJSON(`/meetings/${id}/comments.json`, (data) => {
-          $.each(data, (index, value) => {
-            // console.log(value);
-            $(".all-comments").append(`<tr>
-              <td>${value["name"]}</td>
-              <td>${value["comment"].split(" ").slice(0,15).join(" ") + "&#8230"}</td>
-              <td>
-                <a href=${"/comments/" + value["id"]} data-method="delete" rel="nofollow">Delete</a>
-              </td>
-            </tr>`);        
-          });
+            });
         });
   }
   
-  
+  //Submits the comment form on the meetings show views via ajax
   $( () => {
     $('form').submit(function(event){
         event.preventDefault();
-        //console.log(this);
         var values = $(this).serialize();
-        //console.log(values);
         var posting = $.post(`/meetings/${meetingIdList[currentPosition]}` + '/comments.json', values);
         posting.done( (data) => {
-            //console.log(data);
             $(".all-comments").append(`<tr>
               <td>${data["name"]}</td>
               <td>${data["comment"].split(" ").slice(0,15).join(" ") + "&#8230"}</td>
@@ -134,18 +105,19 @@ $(window).load( () =>{
     });
   });
   
+  //Controls hiding and showing the meeting nav arrows depending on current show view
   let changeArrows = () => {
-      /*console.log("body changed");
-      console.log("meetingIdList: " + meetingIdList);
-      console.log("meetingCount: " + meetingCount);
-      console.log("firstMeeting: " + firstMeeting);
-      console.log("currentPosition: " + currentPosition); */
+      //ensures the proper form is submitting after having changed history.pushstate upon nav arrow click
       $('form').attr("action", `/meetings/${meetingIdList[currentPosition]}` + '/comments');
+
+      //hide or show previous arrow
       if(currentPosition === 0){
         $('.js-previous').hide();    
       }else{
         $('.js-previous').show();
       }
+
+      //hide or show next arrow
       if(meetingIdList[currentPosition] === meetingIdList.slice(-1)[0]){
         $('.js-next').hide();    
       }else{
@@ -153,10 +125,10 @@ $(window).load( () =>{
       }
     };
   
+    //Controls retrieving all meetings to show on the /companymeetings page
     $('.all').ready( () => {
         $.getJSON("/meetings.json", (data) => {
           $.each(data, (index, value) => {
-            //console.log(value);
             $(".all-meetings").append(`<tr>
               <td>${value["date"]}</td>
               <td>${value["overview"].split(" ").slice(0,10).join(" ") + "&#8230"}</td>
