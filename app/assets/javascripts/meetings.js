@@ -1,6 +1,6 @@
 $(window).load( function(){
     let meetingIdList = []; //The Ids of all existing meetings
-    let firstMeeting = parseInt(window.location.pathname.slice(-1)); //The starting show page id
+    let firstMeeting = parseInt(window.location.pathname.split('/')[2]); //The starting show page id
     let currentPosition; //the user's current location in the meetingIdList  
   
   //Set the total number of meetings
@@ -14,6 +14,7 @@ $(window).load( function(){
       meetingIdList.sort(function(a, b){return a - b}); //sort the meeting list by id
       currentPosition = meetingIdList.indexOf(firstMeeting); //detemines current position in meetingIdList
       changeArrows(); //set the initial nav arrows depending on meeting shown
+      // debugger;
       resetComments(firstMeeting);
       console.log(meetingIdList);
     });
