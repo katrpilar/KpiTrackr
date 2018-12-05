@@ -67,7 +67,37 @@ $(window).load(function(){
     });
   });
   
-  //Fetch and display all of the comments for a meeting
+  //Turn comments into class format
+  $(function (){ 
+    $.getJSON(window.location.pathname + `/comments.json`, function(data) {
+      console.log(data);
+        class Comment {
+            constructor(name, comment){
+                this.name = name;
+                this.comment = comment;
+            }            
+            truncate (){
+                return this.comment.split(" ").slice(0,15).join(" ") + "&#8230";
+            }
+        }
+          $.each(data, function(index, value){
+            //console.log(value);
+            let com = new Comment(value["name"], value["comment"]);
+            $(".all-comments").append(`<tr>
+              <td>${com.name}</td>
+              <td>${com.truncate()}</td>
+              <td>
+                <a href=${"/comments/" + value["id"]} data-method="delete" rel="nofollow">Delete</a>
+              </td>
+            </tr>`);        
+          });
+        });
+      
+    });
+    
+
+
+  /*Fetch and display all of the comments for a meeting
   $(function (){ 
   $.getJSON(window.location.pathname + `/comments.json`, function(data) {
     console.log(data);
@@ -83,7 +113,7 @@ $(window).load(function(){
         });
       });
     
-  });
+  }); */
   
   function resetComments(id){
     $('.all-comments').empty();
