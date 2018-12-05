@@ -1,5 +1,4 @@
-$(window).load( () =>{
-  if(window.location.pathname.includes("/meetings/")){
+$(window).load( function(){
     let meetingIdList = []; //The Ids of all existing meetings
     let firstMeeting = parseInt(window.location.pathname.slice(-1)); //The starting show page id
     let currentPosition; //the user's current location in the meetingIdList  
@@ -12,10 +11,11 @@ $(window).load( () =>{
       });
     });
     retrieve.done( (data) => {
-      meetingIdList.sort(); //sort the meeting list by id
+      meetingIdList.sort(function(a, b){return a - b}); //sort the meeting list by id
       currentPosition = meetingIdList.indexOf(firstMeeting); //detemines current position in meetingIdList
       changeArrows(); //set the initial nav arrows depending on meeting shown
-      resetComments(firstMeeting)
+      resetComments(firstMeeting);
+      console.log(meetingIdList);
     });
   });
   
@@ -125,7 +125,6 @@ $(window).load( () =>{
         $('.js-next').show();
       }
     };
-  }
   
     //Controls retrieving all meetings to show on the /companymeetings page
     $('.all').ready( () => {
