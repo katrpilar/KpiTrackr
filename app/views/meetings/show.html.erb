@@ -1,28 +1,30 @@
-<a href="#" class="js-previous" data-id="<%=@meeting.id%>" >
-  <i class="medium material-icons">navigate_before</i>
-</a>
-<a href="#" class="js-next" data-id="<%=@meeting.id%>">
-  <i class="medium material-icons">navigate_next</i>
-</a>
-<h5 class="meetingDate"><%= @meeting.date %></h5>
-<h5>Overview</h5>
-<p class="meetingOverview"><%= @meeting.overview %></p>
-<h5>Takeaways</h5>
-<p class="meetingTakeaways"><%= @meeting.takeaways %></p>
-<a class="btn teal white-text" href="<%=edit_meeting_path(@meeting)%>">Edit Meeting Details</a>
-<h5>Comments</h5>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Comment</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
+<div class="show">
+  <a href="#" class="js-previous" data-id="<%=@meeting.id%>" >
+    <i class="medium material-icons">navigate_before</i>
+  </a>
+  <a href="#" class="js-next" data-id="<%=@meeting.id%>">
+    <i class="medium material-icons">navigate_next</i>
+  </a>
+  <h5 class="meetingDate"><%= @meeting.date %></h5>
+  <h5>Overview</h5>
+  <p class="meetingOverview"><%= @meeting.overview %></p>
+  <h5>Takeaways</h5>
+  <p class="meetingTakeaways"><%= @meeting.takeaways %></p>
+  <a class="btn teal white-text" href="<%=edit_meeting_path(@meeting)%>">Edit Meeting Details</a>
+  <h5>Comments</h5>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Comment</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
 
-  <tbody class="all-comments">
+    <tbody class="all-comments">
 
-  </tbody>
-</table>
-<h5>Add a Comment</h5>
-<%= render 'comments/form.html.erb'%>
+    </tbody>
+  </table>
+  <h5>Add a Comment</h5>
+  <%= render 'comments/form.html.erb'%>
+</div>

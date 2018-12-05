@@ -174,7 +174,23 @@ $(window).load(function(){
       }
     };
   
-    
+    $('.all').ready(function () {
+        $.getJSON("/meetings.json", function(data) {
+          $.each(data, function(index, value){
+            console.log(value);
+            $(".all-meetings").append(`<tr>
+              <td>${value["date"]}</td>
+              <td>${value["overview"].split(" ").slice(0,10).join(" ") + "&#8230"}</td>
+              <td>${value["takeaways"].split(" ").slice(0,10).join(" ") + "&#8230"}</td>
+              <td><a href=${"meetings/" + value["id"]}>Show</a>
+                <a href=${"meetings/" + value["id"] + "/edit"}>Edit</a>
+                <a href=${"meetings/" + value["id"]} data-method="delete" rel="nofollow">Delete</a>
+              </td>
+            </tr>`);
+          });
+        });
+    });
   
   });
   
+ 
