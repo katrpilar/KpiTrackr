@@ -16,6 +16,7 @@
 					var mets = []
 
 					<%kpi.metrics.each do |i|%>
+						console.log(moment("<%=i.created_at.to_time.iso8601%>").fromNow());
 						var v = [new Date(<%=i.created_at.to_f*1000%>)]
 						v.push(<%=i.metric%>)
 						mets.push(v)
@@ -25,8 +26,9 @@
 
 					var options = {
 					width: chartwidth,
-					hAxis: {	
-
+					hAxis: {
+					textPosition: 'none',	
+					format: 'M/d/yy HH:mm',	
 					gridlines: {
 					color: 'transparent'
 					},
@@ -81,7 +83,7 @@
 				<%else%>
 					<%currprogress = 0%>
 				<%end%>
-				<div class="card card-header-section" id="card-<%=kpi.id%>">
+				<div class="card" id="card-<%=kpi.id%>">
 					<div class="section transparent grey-text text-darken-4 center-align ">
 					<%=kpi.target_start_date.to_formatted_s(:long)%>-<%=kpi.target_end_date.to_formatted_s(:long)%><br>
 					<span class="card-title"><%=kpi.target%> <%=kpi.name%> (<%=kpi.unit%>)</span><br>
@@ -95,14 +97,14 @@
 					<span class="dark-grey-text">
 					<div class="card-content" style="padding-top: 0px !important;">
 						<div class="center-align">
-								<div class="col s12 m12 card-header-section">
+								<div class="col s12 m12">
 										<div id="chart_div-<%=kpi.id%>" class="chart"></div>
 									</div>
 
 		
 						<ul class="collapsible z-depth-0">
 							<li>
-								<div class="collapsible-header center-align card-header-section grey-text text-darken-4">
+								<div class="collapsible-header center-align grey-text text-darken-4">
 									<div class="col s6 left-align">
 	       						<p>ALL UPDATES</p>
 	       					</div>
@@ -114,12 +116,13 @@
 									<ul class="collection white">
 										<script type="text/javascript">
 											var m = moment();
-										var userzone = moment.parseZone(m).utcOffset();
+											var userzone = moment.parseZone(m).utcOffset();
+											console.log(userzone);
 										</script>
 									<%kpi.metrics.order(created_at: :desc).each do |mt|%>
-										<li class="collection-item card-header-section grey-text text-darken-4 left-align">
+										<li class="collection-item grey-text text-darken-4 left-align">
 										<script type="text/javascript">								      				
-										var newdate = moment("<%=mt.created_at%>").utcOffset(userzone).format('LLLL');
+										var newdate = moment("<%=mt.created_at.to_time.iso8601%>").fromNow();
 										</script>
 											<div class="row valign-center">
 												<div class="col s4 left-align">

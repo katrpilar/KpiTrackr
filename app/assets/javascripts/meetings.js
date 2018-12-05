@@ -1,4 +1,5 @@
 $(window).load( () =>{
+  if(window.location.pathname.includes("/meetings/")){
     let meetingIdList = []; //The Ids of all existing meetings
     let firstMeeting = parseInt(window.location.pathname.slice(-1)); //The starting show page id
     let currentPosition; //the user's current location in the meetingIdList  
@@ -89,7 +90,7 @@ $(window).load( () =>{
   
   //Submits the comment form on the meetings show views via ajax
   $( () => {
-    $('form').submit(function(event){
+    $('#commentform').submit(function(event){
         event.preventDefault();
         var values = $(this).serialize();
         var posting = $.post(`/meetings/${meetingIdList[currentPosition]}` + '/comments.json', values);
@@ -108,7 +109,7 @@ $(window).load( () =>{
   //Controls hiding and showing the meeting nav arrows depending on current show view
   let changeArrows = () => {
       //ensures the proper form is submitting after having changed history.pushstate upon nav arrow click
-      $('form').attr("action", `/meetings/${meetingIdList[currentPosition]}` + '/comments');
+      $('#commentform').attr("action", `/meetings/${meetingIdList[currentPosition]}` + '/comments');
 
       //hide or show previous arrow
       if(currentPosition === 0){
@@ -124,6 +125,7 @@ $(window).load( () =>{
         $('.js-next').show();
       }
     };
+  }
   
     //Controls retrieving all meetings to show on the /companymeetings page
     $('.all').ready( () => {

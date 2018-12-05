@@ -11,7 +11,11 @@ class MeetingsController < ApplicationController
       @company = current_user.company
       @meeting.company = @company
       @meeting.save
-      render json: @meeting, status: 201
+      # render json: @meeting, status: 201
+      respond_to do |format|
+        format.html { redirect_to '/companymeetings' }
+        format.json { render json: @meeting, status: 201}
+      end
     end
   
     def edit
@@ -21,8 +25,10 @@ class MeetingsController < ApplicationController
   
     def update
       @meeting.update(meeting_params)
-      render json: @meeting, status: 202
-    end
+      respond_to do |format|
+        format.html { redirect_to meeting_path(@meeting) }
+        format.json { render json: @meeting, status: 201}
+      end    end
 
     def all
       render "all"
