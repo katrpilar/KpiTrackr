@@ -60,7 +60,7 @@ class MeetingsController < ApplicationController
     def destroy
       @meeting = Meeting.find(params[:id])
       @meeting.destroy
-      render "all"
+      redirect_to "/companymeetings"
     end
   
   
