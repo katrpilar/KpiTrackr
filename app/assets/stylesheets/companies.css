@@ -40,7 +40,11 @@
   background-color: #e0e0e0 !important;
 }
 .card-action-section{
-  background-color: #e0e0e0 !important;
+  background-color: #01579b !important;
+}
+
+.card-action-section a i{
+  color: white !important;
 }
 
   #main-tabs{
@@ -115,3 +119,8 @@ span div div ul.collapsible{
 
 /*     background-color: #4db6ac !important;
 */  
+
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating){
+  margin-right: 0px !important;
+}

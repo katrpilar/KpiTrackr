@@ -20,7 +20,15 @@ class CompaniesController < ApplicationController
   def show
   	if Company.find(params[:id]).user == current_user
   		@company = Company.find(params[:id])
-  		@kpis = @company.kpis
+		@kpis = @company.kpis
+		@allteammembers = [];
+		@allteamkpis = []
+		# @company.teams.each do |t|
+		# 	@allteamkpis.push(t.kpis)
+		# end
+		# @company.teams.each do |t|
+		# 	@allteammembers.push(t.members)
+		# end
   	else
   		redirect_to '/'
   	end

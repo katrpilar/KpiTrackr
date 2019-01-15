@@ -2,6 +2,7 @@
     $('.tabs').tabs();
     $('.sidenav').sidenav();
     $('.slider').slider();
+    
     $('.chips').chips();
 
     $('.button-collapse').sidenav({

@@ -11,7 +11,9 @@
   <h5>Takeaways</h5>
   <p class="meetingTakeaways"><%= @meeting.takeaways %></p>
   <a class="btn teal white-text" href="<%=edit_meeting_path(@meeting)%>">Edit Meeting Details</a>
+
   <h5>Comments</h5>
+  <a class="btn teal white-text" id="sort" href="#">Sort Comments</a>
   <table>
     <thead>
       <tr>
