@@ -1,0 +1,126 @@
+// Place all the styles related to the Companies controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.chart {
+  width: 100%; 
+  min-height: auto;
+}
+
+.fixed-action-btn {
+  float: right !important;
+  position: absolute !important;
+  right: 5px !important;
+  top: 5px !important;
+}
+
+ /* .sidenav-overlay{
+      opacity: 0 !important;
+    }*/
+.collapsible-body {
+  padding:0px !important;
+}
+.profile-orange{
+  background-color: #039be5 !important;
+}
+
+.kpi-card-color{
+    background-color: #039be5 !important;
+   
+/*    background-color: #FFA10A !important;
+*/
+
+  }
+
+.content-background-color{
+    background-color: #039be5 !important;
+
+  }
+
+.card-header-section{
+  background-color: #e0e0e0 !important;
+}
+.card-action-section{
+  background-color: #01579b !important;
+}
+
+.card-action-section a i{
+  color: white !important;
+}
+
+  #main-tabs{
+    background-color: transparent !important;
+  }
+
+  #main-tabs .tab a{
+    color: #ffffff;
+  }
+
+  #main-tabs .indicator{
+    background-color: #ffffff !important;
+    height: 2px !important;
+  }
+
+  .tabs .tab a.active{
+    font-weight: 900;
+  }
+
+  .side-tabs .tab a{
+    color: #26a69a !important;
+  }
+
+  .side-tabs .indicator{
+    background-color: #26a69a !important;
+/*    height: 4px !important;
+*/  }
+.card-content{
+  padding: 0 !important;
+}
+  .side-tabs .tab a.active{
+     font-weight: 900;
+}
+
+.collapsible{
+  margin-bottom: 0px !important;
+}
+
+span div div ul.collapsible{
+  margin-bottom: 0px !important;
+}
+
+.collapsible li.active .collapsible-header i {
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+  transform: rotate(180deg);
+}
+
+.spinner-layer {
+    border-color: white !important;
+      }
+
+  #overlay {
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #5886C1; /* Green background with opacity */
+    z-index: 2000; /* Specify a stack order in case you're using a different order for other elements */
+    }
+
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* bring your own prefixes transform: translate(-50%, -50%);*/
+
+    }
+
+/*     background-color: #4db6ac !important;
+*/  
+
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating){
+  margin-right: 0px !important;
+}
