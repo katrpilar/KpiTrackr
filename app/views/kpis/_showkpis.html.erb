@@ -17,7 +17,7 @@
 
 					<%kpi.metrics.each do |i|%>
 						console.log(moment("<%=i.created_at.to_time.iso8601%>").fromNow());
-						var v = [new Date(<%=i.created_at.to_f*1000%>)]
+						var v = [new Date(<%=i.created_at.year%>, <%=i.created_at.month%>, <%=i.created_at.day%>)]
 						v.push(<%=i.metric%>)
 						mets.push(v)
 					<%end%>
@@ -27,8 +27,7 @@
 					var options = {
 					width: chartwidth,
 					hAxis: {
-					textPosition: 'none',	
-					format: 'M/d/yy HH:mm',	
+					format: 'MMM d',	
 					gridlines: {
 					color: 'transparent'
 					},
@@ -37,6 +36,7 @@
 					color: '#212121'
 					}
 					},
+					pointSize: 5,
 					vAxis: {	
 					gridlines: {
 					color: 'transparent'
