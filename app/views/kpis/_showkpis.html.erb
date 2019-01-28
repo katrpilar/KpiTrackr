@@ -10,22 +10,34 @@
 				google.charts.setOnLoadCallback(drawBackgroundColor);
 
 				function drawBackgroundColor() {
-					var data = new google.visualization.DataTable();
-					data.addColumn('date', 'Updated');
-					data.addColumn('number', 'Amount');
-					var mets = []
+					// var data = new google.visualization.DataTable();
+					// data.addColumn('date', 'Updated');
+					// data.addColumn('number', 'Amount');
+					var mets = [['Updated', 'Amount']]
 
 					<%kpi.metrics.each do |i|%>
 						console.log(moment("<%=i.created_at.to_time.iso8601%>").fromNow());
-						var v = [new Date(<%=i.created_at.year%>, <%=i.created_at.month - 1%>, <%=i.created_at.day%>)]
+						console.log(<%=i.created_at.to_f*1000%>)
+						var v = [new Date(<%=i.created_at.to_f*1000%>)]
 						v.push(<%=i.metric%>)
 						mets.push(v)
+						console.log(`Metrics: ${mets}`);
 					<%end%>
-					data.addRows(mets)
+					//if (mets.length == 1) {
+					//	data.addRow(mets[0])
+					//	console.log(`Data Length: ${mets}`);
+					//} else {
+					//	data.addRows(mets)
+					//}
+
+					// data.addRows(mets)
+					var data = google.visualization.arrayToDataTable(mets)
+
 					var chartwidth = $('.card').width();
 
 					var options = {
-					width: chartwidth,
+					width: `${chartwidth}`,
+					theme: 'material',
 					hAxis: {
 					format: 'M/d',	
 					gridlines: {
@@ -53,6 +65,11 @@
 					legend: 'none',
 					backgroundColor: 'transparent',
 					};
+
+					//if (data.getNumberOfRows() === 1) {
+					//	options.pointSize = 5;
+					//	console.log(options.pointSize);
+					//}
 
 					var chart<%=kpi.id%> = new google.visualization.AreaChart(document.getElementById('chart_div-<%=kpi.id%>'));
 					chart<%=kpi.id%>.draw(data, options);
