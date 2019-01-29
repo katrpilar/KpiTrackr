@@ -3,113 +3,72 @@
 		<% if @kpis %>
 			<div class="row">
 				<div class="container">
-		<%@kpis.each do |kpi|%>
-			<%metriccount = kpi.metrics.length%>
+					<%@kpis.each do |kpi|%>
+						<%if kpi.metrics.exists?%>
+							<script type="text/javascript">
+							google.charts.load('current', {packages: ['corechart']});
+							google.charts.setOnLoadCallback(drawBackgroundColor);
 
-			<%if kpi.metrics.exists?%>
-				<script type="text/javascript">
-				google.charts.load('current', {packages: ['corechart', 'line']});
-				google.charts.setOnLoadCallback(drawBackgroundColor);
+							function drawBackgroundColor() {
+									var data = new google.visualization.DataTable();
+									data.addColumn('datetime', 'Updated');
+									data.addColumn('number', 'Amount');
+									var mets = [];
+									<%kpi.metrics.each do |i|%>
+										console.log(<%=i.created_at.to_f*1000%>)
+										var v = [new Date(<%=i.created_at.to_f*1000%>)]
+										v.push(<%=i.metric%>)
+										mets.push(v)
+										console.log(`Metrics: ${mets}`);
+									<%end%>
+									data.addRows(mets)	
 
-				function drawBackgroundColor() {
-					let numb = <%=kpi.metrics.length%>;	    			
+									var oneDay = (24 * 60 * 60 * 1000);
+									var dateRange = data.getColumnRange(0);
+									if (data.getNumberOfRows() === 1) {
+										dateRange.min = new Date(dateRange.min.getTime() - oneDay);
+										dateRange.max = new Date(dateRange.max.getTime() + oneDay);
+									}
 
-					if(numb > 1){
-						//do something
-						var data = new google.visualization.DataTable();
-						data.addColumn('datetime', 'Updated');
-						data.addColumn('number', 'Amount');
-						var mets = [];
-						<%kpi.metrics.each do |i|%>
-							console.log(<%=i.created_at.to_f*1000%>)
-							var v = [new Date(<%=i.created_at.to_f*1000%>)]
-							v.push(<%=i.metric%>)
-							mets.push(v)
-							console.log(`Metrics: ${mets}`);
+								var chartwidth = $('.card').width();
+
+								var options = {
+								width: `${chartwidth}`,
+								hAxis: {
+								format: 'M/d',
+								viewWindow: dateRange,	
+								gridlines: {
+								color: 'transparent'
+								},
+								baselineColor: '#212121',
+								textStyle: {
+								color: '#212121'
+								}
+								},
+								pointSize: 5,
+								vAxis: {	
+								gridlines: {
+								color: 'transparent'
+								},
+								baselineColor: '#212121',
+								textStyle: {
+								color: '#212121'
+								}
+								},
+								series: {
+								0: { color: '#039be5', lineWidth: 2 },
+								1: { color: '#039be5', lineWidth: 2 }
+								},
+								legend: 'none',
+								backgroundColor: 'transparent',
+								};
+
+								var chart<%=kpi.id%> = new google.visualization.AreaChart(document.getElementById('chart_div-<%=kpi.id%>'));
+								chart<%=kpi.id%>.draw(data, options);
+
+							}
+							</script>
 						<%end%>
-						data.addRows(mets)	
-					}else{
-						//do something else
-						var mets = [['Updated', 'Amount']]
-						<%kpi.metrics.each do |i|%>
-							var v = [`${new Date(<%=i.created_at.to_f*1000%>).getMonth() + 1}/${new Date(<%=i.created_at.to_f*1000%>).getDate()}`]
-							v.push(<%=i.metric%>)
-							mets.push(v)
-							console.log(`Metrics: ${mets}`);
-						<%end%>
-						var data = google.visualization.arrayToDataTable(mets)
-					}		
-					
-					//if (mets.length == 1) {
-					//	data.addRow(mets[0])
-					//	console.log(`Data Length: ${mets}`);
-					//} else {
-					//	data.addRows(mets)
-					//}
-
-					// data.addRows(mets)
-
-					var chartwidth = $('.card').width();
-
-					var options = {
-					width: `${chartwidth}`,
-					theme: 'material',
-					hAxis: {
-					format: 'M/d',	
-					gridlines: {
-					color: 'transparent'
-					},
-					baselineColor: '#212121',
-					textStyle: {
-					color: '#212121'
-					}
-					},
-					pointSize: 5,
-					vAxis: {	
-					gridlines: {
-					color: 'transparent'
-					},
-					baselineColor: '#212121',
-					textStyle: {
-					color: '#212121'
-					}
-					},
-					series: {
-					0: { color: '#039be5', lineWidth: 2 },
-					1: { color: '#039be5', lineWidth: 2 }
-					},
-					legend: 'none',
-					backgroundColor: 'transparent',
-					};
-
-					//if (data.getNumberOfRows() === 1) {
-					//	options.pointSize = 5;
-					//	console.log(options.pointSize);
-					//}
-
-					var chart<%=kpi.id%> = new google.visualization.AreaChart(document.getElementById('chart_div-<%=kpi.id%>'));
-					chart<%=kpi.id%>.draw(data, options);
-
-
-
-					// google.visualization.events.addListener(chart<%=kpi.id%>, 'select', selectHandler);
-					// function selectHandler() {
-					//   var selection = chart<%=kpi.id%>.getSelection();
-					//   var message = '';
-					//     for (var i = 0; i < selection.length; i++) {
-					//       var item = selection[i];
-					//         var props = data.getValue(i, i);
-					//         var vals = data.getValue(i++, i);
-					//         message += vals;					     
-					//     }
-					//     if(confirm('Do you want to DELETE the metric update ' + message) == true){
-					//     	alert('Deleted');
-					//     }
-					// }
-
-				}
-				</script>
-			<%end%>
 			<div class="col s12 m12 l12 xl6">
 				<%if kpi.current_actual != nil %>
 					<%currprogress = (kpi.current_actual.to_f/kpi.target.to_f)*100%>
