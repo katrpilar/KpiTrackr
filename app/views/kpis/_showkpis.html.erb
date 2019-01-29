@@ -4,25 +4,42 @@
 			<div class="row">
 				<div class="container">
 		<%@kpis.each do |kpi|%>
-			<%if kpi.metrics.exists?%>	    			
+			<%metriccount = kpi.metrics.length%>
+
+			<%if kpi.metrics.exists?%>
 				<script type="text/javascript">
 				google.charts.load('current', {packages: ['corechart', 'line']});
 				google.charts.setOnLoadCallback(drawBackgroundColor);
 
 				function drawBackgroundColor() {
-					// var data = new google.visualization.DataTable();
-					// data.addColumn('date', 'Updated');
-					// data.addColumn('number', 'Amount');
-					var mets = [['Updated', 'Amount']]
+					let numb = <%=kpi.metrics.length%>;	    			
 
-					<%kpi.metrics.each do |i|%>
-						console.log(moment("<%=i.created_at.to_time.iso8601%>").fromNow());
-						console.log(<%=i.created_at.to_f*1000%>)
-						var v = [new Date(<%=i.created_at.to_f*1000%>)]
-						v.push(<%=i.metric%>)
-						mets.push(v)
-						console.log(`Metrics: ${mets}`);
-					<%end%>
+					if(numb > 1){
+						//do something
+						var data = new google.visualization.DataTable();
+						data.addColumn('datetime', 'Updated');
+						data.addColumn('number', 'Amount');
+						var mets = [];
+						<%kpi.metrics.each do |i|%>
+							console.log(<%=i.created_at.to_f*1000%>)
+							var v = [new Date(<%=i.created_at.to_f*1000%>)]
+							v.push(<%=i.metric%>)
+							mets.push(v)
+							console.log(`Metrics: ${mets}`);
+						<%end%>
+						data.addRows(mets)	
+					}else{
+						//do something else
+						var mets = [['Updated', 'Amount']]
+						<%kpi.metrics.each do |i|%>
+							var v = [`${new Date(<%=i.created_at.to_f*1000%>).getMonth() + 1}/${new Date(<%=i.created_at.to_f*1000%>).getDate()}`]
+							v.push(<%=i.metric%>)
+							mets.push(v)
+							console.log(`Metrics: ${mets}`);
+						<%end%>
+						var data = google.visualization.arrayToDataTable(mets)
+					}		
+					
 					//if (mets.length == 1) {
 					//	data.addRow(mets[0])
 					//	console.log(`Data Length: ${mets}`);
@@ -31,7 +48,6 @@
 					//}
 
 					// data.addRows(mets)
-					var data = google.visualization.arrayToDataTable(mets)
 
 					var chartwidth = $('.card').width();
 
