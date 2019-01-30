@@ -2,7 +2,6 @@ module KpisHelper
 	def find_all_kpis
 		case controller_name
 		when "Company"
-			binding.pry
 			all_kpis = @company.kpis.where("kpiable_type = ?", "Company")
 			return all_kpis
 		when "Team"
