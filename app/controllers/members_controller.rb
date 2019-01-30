@@ -2,8 +2,7 @@ class MembersController < ApplicationController
 	before_action :authenticate_user!
 
 	def new
-		@member = Member.new #(team_id: params[:team_id])
-		# binding.pry
+		@member = Member.new
 		if !@member.team_id
 			@team = Team.find(params[:team_id]) unless @member.team
 		else 
@@ -13,10 +12,8 @@ class MembersController < ApplicationController
 
 	def create
 		@member = Member.new(member_params)
-		# binding.pry
 		@member.team = Team.find(params[:team_id])
 		@team = @member.team
-		# binding.pry
 	  if @member.valid?
 	  	@member.save
 	  	redirect_to company_path(current_user.company)
@@ -32,7 +29,6 @@ class MembersController < ApplicationController
 	end
 
 	def edit
-		# binding.pry
 		@member = Member.find(params[:id])
 		@team = @member.team
 	end

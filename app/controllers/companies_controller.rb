@@ -23,12 +23,6 @@ class CompaniesController < ApplicationController
 		@kpis = @company.kpis
 		@allteammembers = [];
 		@allteamkpis = []
-		# @company.teams.each do |t|
-		# 	@allteamkpis.push(t.kpis)
-		# end
-		# @company.teams.each do |t|
-		# 	@allteammembers.push(t.members)
-		# end
   	else
   		redirect_to '/'
   	end

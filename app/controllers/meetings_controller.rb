@@ -11,7 +11,6 @@ class MeetingsController < ApplicationController
       @company = current_user.company
       @meeting.company = @company
       @meeting.save
-      # render json: @meeting, status: 201
       respond_to do |format|
         format.html { redirect_to '/companymeetings' }
         format.json { render json: @meeting, status: 201}
@@ -19,7 +18,6 @@ class MeetingsController < ApplicationController
     end
   
     def edit
-      # @meeting = Meeting.find(params[:id])
       @company = current_user.company
     end
   
@@ -37,19 +35,10 @@ class MeetingsController < ApplicationController
     def index 
       @meetings = Meeting.all
       render json: @meetings, status: 200
-      # respond_to do |format|
-      #   format.html { render :index }
-      #   format.json { render json: @meetings}
-      # end
     end
     
   
     def show
-      # @meeting = Meeting.find(params[:id])
-        #BEFORE using a serializer:
-        # render json: @meeting, status: 200
-         # AFTER USING OUR SERIALIZER
-        # render json: @post, status: 200
         @comment = Comment.new
         respond_to do |format|
           format.html { render :show }

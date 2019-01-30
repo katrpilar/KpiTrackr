@@ -1,9 +1,4 @@
 module KpisHelper
-
-	def create_new
-		
-	end
-
 	def find_all_kpis
 		case controller_name
 		when "Company"

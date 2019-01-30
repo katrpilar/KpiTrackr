@@ -7,8 +7,6 @@ class TeamsController < ApplicationController
 		@team = Team.new(team_params)
 		@company = current_user.company
 		@team.company = @company
-		# binding.pry
-
 		if @team.valid?
 			@team.save
 			redirect_to company_path(@company)
@@ -33,7 +31,6 @@ class TeamsController < ApplicationController
 		else
 			render :edit
 		end
-		# redirect_to company_path(current_user.company)
 	end
 
 	def destroy

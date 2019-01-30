@@ -1,6 +1,5 @@
 class KpisController < ApplicationController
 	before_action :authenticate_user!
-	# before_action :set_owner
 	before_action :set_kpiable
 
 	def index
@@ -48,7 +47,6 @@ class KpisController < ApplicationController
 		else
 			render :edit
 		end
-		# redirect_to company_path(@company)
 	end
 
 	def destroy

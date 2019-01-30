@@ -6,14 +6,6 @@ class MetricsController < ApplicationController
 		@kpi = Kpi.find(params[:kpi_id])
 		@metric = Metric.new(kpi: @kpi)
 		@company = current_user.company
-
-		# if params.has_key?(:company_id)
-		# 	@company = Company.find(params[:company_id])
-		# elsif params.has_key?(:team_id)
-		# 	@company = Team.find(params[:team_id]).company
-		# elsif params.has_key?(:member_id)
-		# 	@company = Member.find(params[:member_id]).team.company
-		# end
 	end
 
 
@@ -53,8 +45,6 @@ class MetricsController < ApplicationController
 		else
 			redirect_to company_path(current_user.company)
 		end
-
-		# redirect_to company_path(current_user.company)
 	end
 
 	def set_kpiable

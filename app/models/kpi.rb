@@ -1,8 +1,5 @@
 class Kpi < ApplicationRecord
 	include ActionView::Helpers::DateHelper
-	# belongs_to :user
-	# belongs_to :company, polymorphic: true
-	# belongs_to :team, polymorphic: true
 	belongs_to :kpiable, polymorphic: true
 	has_many :metrics
 	validates :name, presence: true
@@ -16,9 +13,7 @@ class Kpi < ApplicationRecord
   end
 
 	def current_actual
-		# binding.pry
 		if self.metrics === [] || self.metrics === nil
-			# binding.pry
 			return 0
 		else
 			self.metrics.last.metric

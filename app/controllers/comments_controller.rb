@@ -4,41 +4,24 @@ class CommentsController < ApplicationController
 
     def new
       @comment = Comment.new
-    #   @comment.meeting = @meeting
     end
   
     def create
       @comment = Comment.create(comment_params)
       @comment.meeting_id = @meeting.id
-    #   @company = current_user.company
-    #   @meeting.company = @company
       @comment.save
       render json: @comment, status: 201
-      # respond_to do |format|
-      #   #   format.html { render :show }
-      #     format.json { render json: @comment, status: 201}
-      #     format.any {redirect_to "/meetings/#{@meeting.id}"}
-      #   end
     end
-
-    # def show
-    #     respond_to do |format|
-    #         format.json { render json: @comment}
-    #         # format.any {redirect_to "/meetings/#{@meeting.id}"}
-    #     end
-    # end
     
     def index
         @comments = Comment.where(meeting_id: params[:meeting_id]) 
         respond_to do |format|
             format.json { render json: @comments}
-            # format.any {redirect_to "/meetings/#{@meeting.id}"}
         end
     end
   
     def edit
       @comment = Comment.find(params[:id])
-    #   @company = current_user.company
     end
   
     def update
@@ -46,38 +29,11 @@ class CommentsController < ApplicationController
       render json: @comment, status: 202
     end
 
-    # def thread
-    #   render "all"
-    # end
-
-    # def index 
-    #   @meetings = Comment.all
-    #   render json: @meetings, status: 200
-    #   # respond_to do |format|
-    #   #   format.html { render :index }
-    #   #   format.json { render json: @meetings}
-    #   # end
-    # end
-    
-  
-    # def show
-    #   @meeting = Comment.find(params[:id])
-    #     #BEFORE using a serializer:
-    #     # render json: @meeting, status: 200
-    #      # AFTER USING OUR SERIALIZER
-    #     # render json: @post, status: 200
-    #     respond_to do |format|
-    #       format.html { render :show }
-    #       format.json { render json: @meeting}
-    #     end
-    # end
-
     def destroy
       @comment = Comment.find(params[:id])
       @meeting = @comment.meeting_id
       @comment.destroy
       redirect_to meeting_path(@meeting)
-    #   render "all"
     end
   
   
