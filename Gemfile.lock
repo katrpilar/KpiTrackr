@@ -112,6 +112,13 @@ GEM
       railties (>= 3.2, < 6.0)
     erubi (1.8.0)
     execjs (2.7.0)
+    factory_bot (4.11.1)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
+      railties (>= 3.0.0)
+    faker (1.9.1)
+      i18n (>= 0.7)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.10.0)
@@ -301,6 +308,8 @@ DEPENDENCIES
   devise
   devise_invitable (~> 1.7.0)
   dotenv-rails
+  factory_bot_rails (~> 4.11, >= 4.11.1)
+  faker
   ffi (>= 1.9.24)
   jbuilder (~> 2.5)
   jquery-rails
