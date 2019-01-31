@@ -5,11 +5,12 @@ FactoryBot.define do
     #   password_confirmation "password"
     #   #confirmed_at Date.today
     # end
+    # passwordy = Faker::Internet.password
     factory :user do
       email { Faker::Internet.email }
-      password "password"
-      password_confirmation "password" 
-      username "Rspec Test"
+      password 'passwordy'
+      password_confirmation 'passwordy' 
+      username { Faker::Internet.username }
       #confirmed_at Date.today
     end
 end

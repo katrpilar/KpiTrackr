@@ -65,5 +65,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
     config.extend ControllerMacros, :type => :controller
+    config.include Capybara::DSL
+
 
 end
